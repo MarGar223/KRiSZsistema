@@ -5,6 +5,7 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,12 +25,15 @@ Route::get('/pagrindinis', [DashboardController::class, 'index'])->name('dashboa
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
 
-Route::get('/register', [RegisterController::class, 'index'])->name('register');
-Route::post('/register', [RegisterController::class, 'addUser']);
+Route::get('/registracija', [RegisterController::class, 'index'])->name('register');
+Route::post('/registracija', [RegisterController::class, 'addUser']);
 
-Route::get('/login', [LoginController::class, 'index'])->name('auth.login');
-Route::post('/login', [LoginController::class, 'loginUser']);
+Route::get('/prisijungti', [LoginController::class, 'index'])->name('auth.login');
+Route::post('/prisijungti', [LoginController::class, 'loginUser']);
 
-Route::post('/logout', [LogoutController::class, 'logoutUser'])->name('logout');
+Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logout');
+
+Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
+Route::post('/rezervacijos', [ReservationController::class, 'createReservation']);
 
 

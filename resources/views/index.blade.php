@@ -54,14 +54,16 @@
                             <a href="{{ route('dashboard') }}">Pagrindinis</a>
                         </li>
                         <li class="p-4">
-                            <a href="">Rezervacijos</a>
+                            <a href="{{ route('reservation') }}">Rezervacijos</a>
                         </li>
+                        @auth
                         <li class="p-4">
                             <a href="">Užrašai</a>
                         </li>
                         <li class="p-4">
                             <a href="{{ route('register') }}">Registruoti</a>
                         </li>
+                        @endauth
                         <li class="p-4">
                             <a href="">HelpDesk</a>
                         </li>
