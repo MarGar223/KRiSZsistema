@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['guest']);
+    }
     public function index()
     {
         return view('auth.login');
@@ -19,12 +24,13 @@ class LoginController extends Controller
            'password' => 'required',
        ]);
 
-       if(!auth()->attempt($request->only('email', 'password'))){
-           echo $request->email;
-           echo $request->password;
+       if(!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+
            return back()->with('status', 'Neteisingi prisijungimo duomenys');
        }
 
        return redirect()->route('dashboard');
     }
+
+
 }

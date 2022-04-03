@@ -17,15 +17,28 @@
                 </li>
             </ul>
             <ul class="flex item-center p-4">
+                @auth
                 <li class="p-4">
-                    <a href="">Marius</a>
+                    <a href="">{{ auth()->user()->name }} {{ auth()->user()->surname }} {{ auth()->user()->role }}</a>
                 </li>
+
+                <form action="{{ route('logout') }}" method="POST">
+                <li class="p-4">
+                        @csrf
+                        <button type="submit">Atsijungti</button>
+                </li>
+                </form>
+                @endauth
+
+                @guest
                 <li  class="p-4">
                     <a href="{{ route('auth.login') }}">Prisijungti</a>
                 </li>
-                <li class="p-4">
-                    <a href="">Atsijungti</a>
-                </li>
+                @endguest
+
+
+
+
             </ul>
         </nav>
     </div>
