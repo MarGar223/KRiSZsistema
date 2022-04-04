@@ -14,8 +14,9 @@ class Zone extends Model
         'max_people_count'
     ];
 
-    public function showAll()
+    public function reservation()
     {
-        return Zone::getColumn('name');
+        return $this->hasMany(Reservation::class);
     }
+
 }

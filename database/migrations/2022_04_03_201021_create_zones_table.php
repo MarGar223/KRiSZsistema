@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('zone', function (Blueprint $table) {
+        Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('max_people_count');
@@ -21,10 +21,10 @@ return new class extends Migration
 
         });
 
-        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Kasis', 25]);
-        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Fule', 30]);
-        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Gronkes', 15]);
-        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Sale', 10]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Kasis', 25]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Fule', 30]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Gronkes', 15]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Sale', 10]);
 
     }
 
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zone');
+        Schema::dropIfExists('zones');
     }
 };

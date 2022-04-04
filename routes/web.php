@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\ZoneSelectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,5 +36,7 @@ Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logou
 
 Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
 Route::post('/rezervacijos', [ReservationController::class, 'createReservation']);
+
+
 
 
