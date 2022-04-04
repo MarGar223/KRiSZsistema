@@ -8,13 +8,16 @@
        <div>
             rezervacija
             <div>
-                <form action="{{ route('reservation') }}" method="POST">
+
+                <form action="{{ route('reservation') }}" method="POST" >
                     @csrf
+
+
 
 
                     <label for="">Zona</label>
                     <select name="" id="">
-                        <option value='Gronkes'>Gronkes</option>
+                        <option value=''></option>
                         <option value='Kasis'>Kasis</option>
                         <option value='Sale'>Sale</option>
                         <option value='Fule'>Fule</option>
@@ -34,6 +37,7 @@
 
                     <button type="submit">pateikti</button>
                 </form>
+
             </div>
        </div>
 

@@ -17,7 +17,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('max_people_count');
+
+
         });
+
+        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Kasis', 25]);
+        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Fule', 30]);
+        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Gronkes', 15]);
+        DB::insert('insert into zone (name, max_people_count) values (?, ?)', ['Sale', 10]);
+
     }
 
     /**
