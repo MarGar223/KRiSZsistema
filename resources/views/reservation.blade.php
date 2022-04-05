@@ -5,7 +5,20 @@
        <div class="bg-red-200 m-4 p-4 h-fit">
             @foreach ($reservations as $reservation)
                 <div>
-                    {{ $reservation->zone->name }}
+                    <p class="text-lg">
+                        {{ $reservation->user->name }} atliko rezervaciją <span class="text-sm">{{ $reservation->created_at->diffForHumans() }}</span>
+                    </p>
+
+                   <div>
+                       Rezervuota zona: {{ $reservation->name }} <br>
+                       Rezervuotas laikas nuo {{ $reservation->start_time }} iki {{ $reservation->end_time }}
+                       Rezervuota {{ $reservation->people_count }} @if ($reservation->people_count === 1)
+                           asmeniui
+                       @else
+                           asmenims
+                       @endif
+                   </div>
+
                 </div>
 
             @endforeach

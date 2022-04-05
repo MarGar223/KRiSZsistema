@@ -11,7 +11,7 @@ class ReservationController extends Controller
     public function index()
     {
         $zones = Zone::get();
-        $reservations = Reservation::get();
+        $reservations = Reservation::orderBy('created_at','desc')->get();
 
         return view('reservation', [
             'zones' => $zones,
