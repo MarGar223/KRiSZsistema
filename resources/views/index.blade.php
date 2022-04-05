@@ -56,13 +56,19 @@
                         <li class="p-4">
                             <a href="{{ route('reservation') }}">Rezervacijos</a>
                         </li>
+
                         @auth
+                        <li class="p-4">
+                            <a href="{{ route('createReservation') }}">Atlikti rezervaciją</a>
+                        </li>
+
                         <li class="p-4">
                             <a href="">Užrašai</a>
                         </li>
                         <li class="p-4">
                             <a href="{{ route('register') }}">Registruoti</a>
                         </li>
+
                         @endauth
                         <li class="p-4">
                             <a href="">HelpDesk</a>
@@ -82,7 +88,7 @@
 
 
 
-    <footer class="bg-gray-200 absolute bottom-0 w-full h-20 text-center mt-12">
+    <footer class="bg-gray-200 relative bottom-0 w-full h-20 text-center mt-12">
             Marius Garbenis IIST18
     </footer>
 </body>
