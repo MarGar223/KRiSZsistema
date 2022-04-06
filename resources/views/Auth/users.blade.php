@@ -70,9 +70,6 @@
                         </li>
                         @if (auth()->user()->level === 'Admin')
                         <li class="p-4">
-                            <a href="{{ route('allUsers') }}">Visi vartotojai</a>
-                        </li>
-                        <li class="p-4">
                             <a href="{{ route('register') }}">Registruoti</a>
                         </li>
                         @endif
