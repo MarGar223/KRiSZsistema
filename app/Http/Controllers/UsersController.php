@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     public function index() {
-        $users = User::sortBy('id', 'desc');
+        $users = User::orderBy('name', 'asc')->get();
 
         return view('Auth.users', [
             'users' => $users

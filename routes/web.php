@@ -45,8 +45,9 @@ Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createRes
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
 
 Route::get('/uzrasai/kurti', [NoteCreateController::class, 'index'])->name('createNote');
+Route::post('/uzrasai/kurti', [NoteCreateController::class, 'createNote']);
 
-Route::get('/vartotojai', [UsersController::class, 'index'])->name('notes');
+Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
 
 
 

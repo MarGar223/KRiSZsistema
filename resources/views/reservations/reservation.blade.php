@@ -1,11 +1,11 @@
 @extends('index')
 
 @section('content')
-   <div class="grid gird-rows-2 h-fit">
-       <div class="bg-red-200 m-4 p-4 h-fit">
+   <div class="h-fit">
+       <div class="bg-red-200 m-4 p-4 h-fit flex flex-wrap justify-between">
            @if ($reservations->count())
             @foreach ($reservations as $reservation)
-            <div>
+            <div class="p-4">
                 <p class="text-lg my-2 px-4">
                     {{ $reservation->user->name }} atliko rezervaciją <span class="text-sm">{{ $reservation->created_at->diffForHumans() }}</span>
                 </p>
@@ -29,17 +29,7 @@
                     Nėra sukurtų rezervacijų
                 </p>
            @endif
-
-
                     {{ $reservations->links() }}
-
-
-
        </div>
-       <div>
-
-
-       </div>
-
    </div>
 @endsection

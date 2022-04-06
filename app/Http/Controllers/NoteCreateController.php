@@ -11,16 +11,22 @@ class NoteCreateController extends Controller
         $this->middleware("auth");
     }
 
-    public function index()
-    {
+    public function index() {
         return view('notes.createNote');
     }
 
     public function createNote(Request $request){
-        dd($request);
 
         $this->validate($request, [
-
+            'title' => 'required',
+            'body' => 'required'
         ]);
+
+        $request->user()->notes()->create([
+            'title' => $request->title,
+            'body' => $request->body
+        ]);
+
+        return redirect()->route('notes');
     }
 }
