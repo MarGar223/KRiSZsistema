@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReservationController extends Controller
 {
@@ -15,6 +15,7 @@ class ReservationController extends Controller
         return view('reservations.reservation', [
             'reservations' => $reservations
         ]);
-
     }
+
+
 }

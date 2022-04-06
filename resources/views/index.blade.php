@@ -65,10 +65,11 @@
                         <li class="p-4">
                             <a href="">Užrašai</a>
                         </li>
+                        @if (auth()->user()->level === 'Admin')
                         <li class="p-4">
                             <a href="{{ route('register') }}">Registruoti</a>
                         </li>
-
+                        @endif
                         @endauth
                         <li class="p-4">
                             <a href="">HelpDesk</a>

@@ -12,6 +12,7 @@
 
                 <div class="bg-gray-200 px-4 rounded-lg w-96 shadow-lg ring-1 ring-blue-400 ring-offset-2">
                     Rezervuota zona: {{ $reservation->zone->name }} <br>
+                    Rezervuota data: {{ $reservation->date_when }} <br>
                     Rezervuotas laikas nuo {{ $reservation->start_time }} iki {{ $reservation->end_time }}
                     Rezervuota {{ $reservation->people_count }} @if ($reservation->people_count === 1)
                         asmeniui

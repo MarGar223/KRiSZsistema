@@ -5,7 +5,11 @@ module.exports = {
     "./resources/**/*.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+        scale: {
+            '102' : '1.02'
+        }
+    },
   },
   plugins: [],
 }

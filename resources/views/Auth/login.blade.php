@@ -39,7 +39,7 @@
                         @enderror
                 </div>
 
-                <button type="submit" value="Prisijungti" class="mt-3 px-3 py-2 bg-blue-500 text-white border shadow-sm hover:bg-blue-400 w-full rounded-md">Prisijungti</button>
+                <button type="submit" value="Prisijungti" class="mt-3 px-3 py-2 bg-blue-500 text-white border shadow-sm hover:bg-blue-400 hover:scale-102 w-full rounded-md">Prisijungti</button>
             </form>
 
         </div>
