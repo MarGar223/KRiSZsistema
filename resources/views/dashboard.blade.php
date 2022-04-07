@@ -24,6 +24,7 @@
                             @else
                                 asmenims
                             @endif
+
                         </div>
                     </div>
                 @endforeach

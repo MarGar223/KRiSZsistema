@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Reservation;
 use App\Models\Zone;
 use Illuminate\Http\Request;
 
@@ -35,5 +36,16 @@ class ReservationFormController extends Controller
             ]);
 
             return redirect()->route('reservation');
+    }
+
+    public function showReservation (Reservation $reservation){
+
+        return view('reservations.edit', [
+            'reservation' => $reservation
+        ]);
+    }
+
+    public function editReservation(){
+
     }
 }

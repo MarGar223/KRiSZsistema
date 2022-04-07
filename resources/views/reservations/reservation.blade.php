@@ -20,6 +20,9 @@
                         asmenims
                     @endif
                 </div>
+                <form action="{{ route('showReservation', $reservation) }}" action="GET">
+                    <button type="submit">Redaguoti</button>
+                </form>
             </div>
 
             @endforeach
