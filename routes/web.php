@@ -43,7 +43,7 @@ Route::get('/rezervacijos/kurti', [ReservationFormController::class, 'index'])->
 Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation']);
 
 Route::get('/rezervacijos/{reservation}', [ReservationFormController::class, 'showReservation'])->name('showReservation');
-// Route::get('/rezervacijos', [ReservationFormController::class, 'editReservation'])->name('editReservation');
+Route::post('/rezervacijos/{reservation}/redaguoti', [ReservationFormController::class, 'editReservation'])->name('editReservation');
 
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
 

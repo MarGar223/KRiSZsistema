@@ -40,12 +40,27 @@ class ReservationFormController extends Controller
 
     public function showReservation (Reservation $reservation){
 
+        $zones = Zone::get();
+
         return view('reservations.edit', [
-            'reservation' => $reservation
+            'reservation' => $reservation,
+            'zones' => $zones
         ]);
     }
 
-    public function editReservation(){
+    public function editReservation(Request $request, Reservation $reservation){
+
+        // dd($reservation);
+
+        $request->user()->reservations()->where('id',$reservation->id)->update([
+            'zone_id' => $request->zone,
+            'people_count' => $request->people_count,
+            'date_when' => $request->date_when,
+            'start_time' => $request->start_time,
+            'end_time' => $request->end_time
+    ]);
+
+        return redirect()->route('reservation');
 
     }
 }
