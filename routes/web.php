@@ -46,6 +46,10 @@ Route::get('/rezervacijos/{reservation}', [ReservationFormController::class, 'sh
 Route::post('/rezervacijos/{reservation}/redaguoti', [ReservationFormController::class, 'editReservation'])->name('editReservation');
 Route::get('/rezervacijos/{reservation}/trinti', [ReservationFormController::class, 'deleteReservation'])->name('deleteReservation');
 
+Route::get('/rezervacijos/{reservation}/trintiispagrindinio', [ReservationFormController::class, 'deleteReservationFromDashboard'])->name('deleteReservationFromDashboard');
+Route::get('/rezervacijos/{reservation}/redaguotiispagrindinio', [ReservationFormController::class, 'editReservationFromDashboard'])->name('editReservationFromDashboard');
+
+
 
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
 

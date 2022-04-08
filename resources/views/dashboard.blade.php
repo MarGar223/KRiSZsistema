@@ -29,7 +29,7 @@
                                     @csrf
                                     <button type="submit">Redaguoti</button>
                                 </form>
-                                <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
+                                <form action="{{ route('deleteReservationFromDashboard', $reservation) }}" action="GET">
                                     @csrf
                                     <button type="submit">Trinti</button>
                                 </form>

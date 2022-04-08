@@ -50,8 +50,6 @@ class ReservationFormController extends Controller
 
     public function editReservation(Request $request, Reservation $reservation){
 
-        // dd($reservation);
-
         $request->user()->reservations()->where('id',$reservation->id)->update([
             'zone_id' => $request->zone,
             'people_count' => $request->people_count,
@@ -64,9 +62,23 @@ class ReservationFormController extends Controller
 
     }
 
+    public function editReservationFromDashboard(Request $request, Reservation $reservation){
+
+        $request->user()->reservations()->where('id',$reservation->id)->update([
+            'zone_id' => $request->reservation->zone_id,
+            'people_count' => $request->reservation->people_count,
+            'date_when' => $request->reservation->date_when,
+            'start_time' => $request->reservation->start_time,
+            'end_time' => $request->reservation->end_time
+    ]);
+
+        return redirect()->route('dashboard');
+
+    }
+
     public function deleteReservation(Request $request, Reservation $reservation){
 
-        dd($request);
+        dd($request->all());
 
         if($request->user()->id == $reservation->user_id){
             $reservation->delete();
@@ -77,5 +89,11 @@ class ReservationFormController extends Controller
         // dd($request->user()->reservations()->where('id',$reservation->zone->id));
 
         return redirect()->route('reservation');
+    }
+
+    public function deleteReservationFromDashboard(Reservation $reservation){
+        $reservation->delete();
+
+        return redirect()->route('dashboard');
     }
 }
