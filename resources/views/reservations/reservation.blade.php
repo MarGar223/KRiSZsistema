@@ -21,8 +21,17 @@
                     @endif
                 </div>
                 <form action="{{ route('showReservation', $reservation) }}" action="GET">
+                    @csrf
                     <button type="submit">Redaguoti</button>
                 </form>
+
+                @if (auth()->user()->level == 'Admin' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
+                    <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
+                        @csrf
+                        <button type="submit">Trinti</button>
+                    </form>
+                @endif
+
             </div>
 
             @endforeach

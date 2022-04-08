@@ -33,7 +33,7 @@ class RegisterController extends Controller
             'level' => $request->level
         ]);
 
-        return view('dashboard');
+        return redirect()->route('dashboard');
 
     }
 }

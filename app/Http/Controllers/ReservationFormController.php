@@ -63,4 +63,19 @@ class ReservationFormController extends Controller
         return redirect()->route('reservation');
 
     }
+
+    public function deleteReservation(Request $request, Reservation $reservation){
+
+        dd($request);
+
+        if($request->user()->id == $reservation->user_id){
+            $reservation->delete();
+        } else if($request->user()->level == 'Admin' || $request->user()->level == 'Instructor'){
+            $reservation->delete();
+        }
+
+        // dd($request->user()->reservations()->where('id',$reservation->zone->id));
+
+        return redirect()->route('reservation');
+    }
 }

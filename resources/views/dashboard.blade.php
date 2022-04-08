@@ -24,9 +24,20 @@
                             @else
                                 asmenims
                             @endif
-
+                            @if (auth()->user()->id == $reservation->user_id)
+                                <form action="{{ route('showReservation', $reservation) }}" action="GET">
+                                    @csrf
+                                    <button type="submit">Redaguoti</button>
+                                </form>
+                                <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
+                                    @csrf
+                                    <button type="submit">Trinti</button>
+                                </form>
+                            @endif
                         </div>
+
                     </div>
+
                 @endforeach
             @endauth
 
