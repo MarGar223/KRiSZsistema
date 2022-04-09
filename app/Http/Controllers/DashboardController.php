@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Reservation;
 
+
 class DashboardController extends Controller
 {
     public function index()
@@ -21,6 +22,7 @@ class DashboardController extends Controller
         } else {
             return view('dashboard');
         }
+
 
     }
 }

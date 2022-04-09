@@ -10,7 +10,7 @@ class ReservationController extends Controller
     public function index()
     {
 
-        $reservations = Reservation::orderBy('created_at','desc')->paginate(5);
+        $reservations = Reservation::orderBy('created_at','desc')->get();
 
         return view('reservations.reservation', [
             'reservations' => $reservations

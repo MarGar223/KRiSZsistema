@@ -78,8 +78,6 @@ class ReservationFormController extends Controller
 
     public function deleteReservation(Request $request, Reservation $reservation){
 
-        dd($request->all());
-
         if($request->user()->id == $reservation->user_id){
             $reservation->delete();
         } else if($request->user()->level == 'Admin' || $request->user()->level == 'Instructor'){

@@ -1,50 +1,62 @@
 @extends('index')
 
 @section('content')
-   <div class="h-fit">
-       <div class="bg-red-200 m-4 p-4 h-fit justify-between">
-           @if ($reservations->count())
-            @foreach ($reservations as $reservation)
-            <div class="p-4">
-                <p class="text-lg my-2 px-4">
-                    {{ $reservation->user->name }} atliko rezervaciją <span class="text-sm">{{ $reservation->created_at->diffForHumans() }}</span>
-                </p>
 
-                <div class="bg-gray-200 px-4 rounded-lg w-96 shadow-lg ring-1 ring-blue-400 ring-offset-2">
-                    Rezervuota zona: {{ $reservation->zone->name }} <br>
-                    Rezervuota data: {{ $reservation->date_when }} <br>
-                    Rezervuotas laikas nuo {{ $reservation->start_time }} iki {{ $reservation->end_time }}
-                    Rezervuota {{ $reservation->people_count }} @if ($reservation->people_count === 1)
-                        asmeniui
-                    @else
-                        asmenims
-                    @endif
-                </div>
-                @if (auth()->user())
-                <form action="{{ route('showReservation', $reservation) }}" action="GET">
-                    @csrf
-                    <button type="submit">Redaguoti</button>
-                </form>
+    <div class="d-flex justify-content-center">
+        @if ($reservations->count())
+            <table class="table table-striped table-dark table-hover p-4 mt-4 w-75">
+                <thead>
+                    <tr class="text-center">
+                        <th scope="col">Rezervacija atlikta</th>
+                        <th scope="col">Rezervuotojas</th>
+                        <th scope="col">Zona</th>
+                        <th scope="col">Data</th>
+                        <th scope="col">Pradžios laikas</th>
+                        <th scope="col">Pabaigos laikas</th>
+                        <th scope="col">Asmenų skaičius</th>
+                        @if (auth()->user())
+                            @if (auth()->user()->level == 'Admin' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
+                                <th scope="col">Funkcijos</th>
+                            @endif
+                        @endif
+                    </tr>
+                </thead>
 
-                @if (auth()->user()->level == 'Admin' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
-                    <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
-                        @csrf
-                        <button type="submit">Trinti</button>
-                    </form>
-                @endif
-                @endif
+                <tbody>
+                    @foreach ($reservations as $reservation)
+                        <tr class="text-center">
 
+                            <td>{{ $reservation->created_at->diffForHumans() }}</td>
+                            <td>{{ $reservation->user->name }}</td>
+                            <td>{{ $reservation->zone->name }}</td>
+                            <td>{{ $reservation->date_when }}</td>
+                            <td>{{ $reservation->start_time }}</td>
+                            <td>{{ $reservation->end_time }}</td>
+                            <td>{{ $reservation->people_count }}</td>
 
-            </div>
-
-            @endforeach
-
-           @else
-                <p>
-                    Nėra sukurtų rezervacijų
-                </p>
-           @endif
-                    {{ $reservations->links() }}
-       </div>
-   </div>
+                            @if (auth()->user())
+                                @if (auth()->user()->level == 'Admin' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
+                                    <td>
+                                        <div class="d-flex">
+                                            <form action="{{ route('showReservation', $reservation) }}" action="GET">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success btn-sm mx-1">Redaguoti</button>
+                                            </form>
+                                            <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger btn-sm">Trinti</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                @endif
+                            @endif
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        @else
+            <p>Rezervacijų nėra
+            <p>
+        @endif
+    </div>
 @endsection
