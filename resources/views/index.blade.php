@@ -85,7 +85,7 @@
             </div>
         </div>
 
-        <div class="bg-blue-200 col-span-10 h-full">
+        <div class="bg-blue-200 col-span-10 h-screen">
 
             @yield('content')
 

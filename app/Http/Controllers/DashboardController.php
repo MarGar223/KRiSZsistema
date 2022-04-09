@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Reservation;
 
 class DashboardController extends Controller
 {
@@ -10,8 +10,17 @@ class DashboardController extends Controller
     {
         $user = auth()->user();
 
-        return view('dashboard', [
-            'user' => $user
-        ]);
+        if($user){
+            $reservations = Reservation::orderBy('created_at','desc')->where('user_id',$user->id)->paginate(2);
+
+
+            return view('dashboard', [
+                'user' => $user,
+                'reservations' => $reservations
+            ]);
+        } else {
+            return view('dashboard');
+        }
+
     }
 }

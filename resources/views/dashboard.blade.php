@@ -2,13 +2,17 @@
 
 @section('content')
     <div class="grid grid-cols-2">
-        <div class="w-full bg-yellow-600">
+        <div class="w-full bg-yellow-600 h-screen">
             <p class="text-center text-xl font-medium">Mano rezervacijos</p>
 
             @auth
 
 
-                @foreach ($user->reservations as $reservation)
+                @foreach ($reservations as $reservation)
+
+
+
+
                     <div class="p-4">
                         <p class="text-m my-2 px-4">
                             Rezervacija atlikta <span
@@ -39,6 +43,10 @@
                     </div>
 
                 @endforeach
+                <div>
+                    {{ $reservations->links() }}
+                </div>
+
             @endauth
 
 
@@ -60,8 +68,8 @@
 
                     </div>
                 @endforeach
-        @endauth
-    </div>
+            @endauth
+        </div>
 
 
     </div>

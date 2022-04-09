@@ -2,7 +2,7 @@
 
 @section('content')
    <div class="h-fit">
-       <div class="bg-red-200 m-4 p-4 h-fit flex flex-wrap justify-between">
+       <div class="bg-red-200 m-4 p-4 h-fit justify-between">
            @if ($reservations->count())
             @foreach ($reservations as $reservation)
             <div class="p-4">
@@ -20,6 +20,7 @@
                         asmenims
                     @endif
                 </div>
+                @if (auth()->user())
                 <form action="{{ route('showReservation', $reservation) }}" action="GET">
                     @csrf
                     <button type="submit">Redaguoti</button>
@@ -31,6 +32,8 @@
                         <button type="submit">Trinti</button>
                     </form>
                 @endif
+                @endif
+
 
             </div>
 

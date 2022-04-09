@@ -58,6 +58,11 @@ Route::post('/uzrasai/kurti', [NoteCreateController::class, 'createNote']);
 
 Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
 
+Route::get('/test', function(){
+    return view('layouts.app');
+});
+
+
 
 
 
