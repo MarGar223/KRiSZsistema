@@ -10,7 +10,6 @@ class DashboardController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         if($user){
             $reservations = Reservation::orderBy('created_at','desc')->where('user_id',$user->id)->paginate(2);
 
@@ -20,9 +19,10 @@ class DashboardController extends Controller
                 'reservations' => $reservations
             ]);
         } else {
-            return view('dashboard');
+            $reservation = Reservation::orderBy('created_at','desc')->first();
+            return view('dashboard', [
+                'reservation' => $reservation
+            ]);
         }
-
-
     }
 }

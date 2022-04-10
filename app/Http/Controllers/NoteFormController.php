@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Note;
 
-class NoteCreateController extends Controller
+class NoteFormController extends Controller
 {
     public function __construct()
     {
@@ -29,4 +30,22 @@ class NoteCreateController extends Controller
 
         return redirect()->route('notes');
     }
+
+    public function showNote(Note $note){
+
+        return view('notes.editNote',[
+            'note' => $note
+        ]);
+    }
+
+     public function editNote(Request $request, Note $note){
+
+         $request->user()->notes()->where('id',$note->id)->update([
+             'title' => $request->title,
+             'body' => $request->body,
+     ]);
+
+         return redirect()->route('notes');
+
+     }
 }

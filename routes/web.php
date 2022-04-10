@@ -6,11 +6,11 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\NoteController;
-use App\Http\Controllers\NoteCreateController;
+use App\Http\Controllers\NoteFormController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationFormController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\ZoneSelectController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 
 
 Route::get('/pagrindinis', [DashboardController::class, 'index'])->name('dashboard');
@@ -47,20 +46,18 @@ Route::post('/rezervacijos/{reservation}/redaguoti', [ReservationFormController:
 Route::get('/rezervacijos/{reservation}/trinti', [ReservationFormController::class, 'deleteReservation'])->name('deleteReservation');
 
 Route::get('/rezervacijos/{reservation}/trintiispagrindinio', [ReservationFormController::class, 'deleteReservationFromDashboard'])->name('deleteReservationFromDashboard');
-Route::get('/rezervacijos/{reservation}/redaguotiispagrindinio', [ReservationFormController::class, 'editReservationFromDashboard'])->name('editReservationFromDashboard');
-
-
+Route::post('/rezervacijos/{reservation}/redaguotiispagrindinio', [ReservationFormController::class, 'editReservationFromDashboard'])->name('editReservationFromDashboard');
 
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
 
-Route::get('/uzrasai/kurti', [NoteCreateController::class, 'index'])->name('createNote');
-Route::post('/uzrasai/kurti', [NoteCreateController::class, 'createNote']);
+Route::get('/uzrasai/kurti', [NoteFormController::class, 'index'])->name('createNote');
+Route::post('/uzrasai/kurti', [NoteFormController::class, 'createNote']);
+
+Route::get('/usrasai/{note}', [NoteFormController::class, 'showNote'])->name('showNote');
+Route::get('/usrasai/{note}/trinti', [NoteFormController::class, 'deleteNote'])->name('deleteNote');
+Route::post('/usrasai/{note}/redaguoti', [NoteFormController::class, 'editNote'])->name('editNote');
 
 Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
-
-Route::get('/test', function(){
-    return view('layouts.app');
-});
 
 
 
