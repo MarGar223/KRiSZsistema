@@ -6,7 +6,7 @@
 
         <div class="container-fluid w-50 bg-light p-4 rounded-3 shadow">
 
-            <form action="" method="POST">
+            <form action="{{ route('editUser', $user) }}" method="POST">
                 @csrf
                 <div class="grid">
                     <div class="row">
@@ -118,7 +118,7 @@
                     </div>
 
                     <div class="d-flex justify-content-center mt-3">
-                        <button type="submit" class="btn btn-primary w-50">Registruoti</button>
+                        <button type="submit" class="btn btn-primary w-50">Redaguoti</button>
                     </div>
             </form>
         </div>

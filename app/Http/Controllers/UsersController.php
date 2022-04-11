@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\UserLevel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -19,11 +20,40 @@ class UsersController extends Controller
             'users' => $users
         ]);
     }
-    public function editUser(User $user){
+    public function editUserView(User $user){
         $userLevels = UserLevel::get();
         return view('Auth.editUser', [
             'user' => $user,
             'userLevels' => $userLevels
         ]);
+    }
+
+    public function editUser(Request $request, User $user){
+
+        $this->validate($request,[
+            'name' => 'required|max:255',
+            'surname' => 'required|max:255',
+            'role' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'password' => 'required|confirmed',
+            'level' => 'required'
+        ]);
+
+        $request->user()->where('id', $user->id)->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'role' => $request->role,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'level' => $request->level
+        ]);
+
+        return redirect()->route('allUsers');
+    }
+
+    public function deleteUser(Request $request, User $user){
+        $request->user()->where('id', $user->id)->delete();
+
+        return redirect()->route('allUsers');
     }
 }

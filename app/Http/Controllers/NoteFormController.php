@@ -40,6 +40,11 @@ class NoteFormController extends Controller
 
      public function editNote(Request $request, Note $note){
 
+        $this->validate($request, [
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
          $request->user()->notes()->where('id',$note->id)->update([
              'title' => $request->title,
              'body' => $request->body,

@@ -51,7 +51,7 @@
                                                         </form>
                                                     </li>
                                                     <li class="text-center">
-                                                        <form action="" action="GET">
+                                                        <form action="{{ route('deleteUser', $user) }}" action="GET">
                                                             @csrf
                                                             <button type="submit"
                                                                 class="btn-sm btn-danger align-middle border-0 w-75 mt-1" title="Trinti"><i data-feather="trash-2"></i> Trinti </button>
