@@ -68,7 +68,7 @@
                         <li class="nav-item">
                             <a href="{{ route('createNote') }}" class="nav-link text-white">Kurti užrašą</a>
                         </li>
-                        @if (auth()->user()->level === 'Admin')
+                        @if (auth()->user()->level === 'Administratorius')
                             <li class="nav-item">
                                 <a href="{{ route('allUsers') }}" class="nav-link text-white">Visi vartotojai</a>
                             </li>

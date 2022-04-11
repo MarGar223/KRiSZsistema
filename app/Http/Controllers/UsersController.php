@@ -52,7 +52,10 @@ class UsersController extends Controller
     }
 
     public function deleteUser(Request $request, User $user){
-        $request->user()->where('id', $user->id)->delete();
+
+        if($user->level != 'Administratorius'){
+            $request->user()->where('id', $user->id)->delete();
+        }
 
         return redirect()->route('allUsers');
     }

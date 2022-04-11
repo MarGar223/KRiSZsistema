@@ -20,7 +20,7 @@
                             <th scope="col">El. pašto adresas</th>
                             <th scope="col">Vartotojo lygis</th>
                             @if (auth()->user())
-                                @if (auth()->user()->level == 'Admin')
+                                @if (auth()->user()->level == 'Administratorius')
                                     <th scope="col">Funkcijos</th>
                                 @endif
                             @endif
@@ -35,7 +35,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->level }}</td>
                                 @if (auth()->user())
-                                    @if (auth()->user()->level == 'Admin' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
+                                    @if (auth()->user()->level == 'Administratorius' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
                                         <td>
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
