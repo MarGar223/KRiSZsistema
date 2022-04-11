@@ -14,7 +14,7 @@
                     <div class="mb-3">
                         <label for="zone" class="form-label">Zona</label>
                         <select name="zone" id="zone"
-                            class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
+                            class="form-select shadow-sm @error('zone') border border-danger text-danger @enderror">
                             <option value="{{ old('zone') }}" id="zone_id" selected>Pasirinkti zoną</option>
                             @foreach ($zones as $zone)
                                     <option value="{{ $zone->id }}" id="zone_id">{{ $zone->name }}</option>
@@ -73,7 +73,9 @@
                 </div>
 
 
-                <button type="submit" class="btn btn-primary">Rezervuoti</button>
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="submit" class="btn btn-primary w-50">Rezervuoti</button>
+                </div>
 
             </form>
         </div>

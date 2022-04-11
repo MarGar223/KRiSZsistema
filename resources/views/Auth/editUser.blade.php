@@ -6,7 +6,7 @@
 
         <div class="container-fluid w-50 bg-light p-4 rounded-3 shadow">
 
-            <form action="{{ route('register') }}" method="POST">
+            <form action="" method="POST">
                 @csrf
                 <div class="grid">
                     <div class="row">
@@ -14,7 +14,7 @@
                             <div>
                                 <label for="name" class="form-label">Vardas<span class="text-danger">*</span></label>
                                 <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą"
-                                    value="{{ old('name') }}"
+                                    value="{{ $user->name }}"
                                     class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
 
                                 @error('name')
@@ -29,7 +29,7 @@
                                 <label for="surname" class="form-label">Pavardė<span
                                         class="text-danger">*</span></label>
                                 <input type="text" name="surname" id="surname" placeholder="Įveskite vartotojo pavardę"
-                                    value="{{ old('surname') }}"
+                                    value="{{ $user->surname }}"
                                     class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
 
                                 @error('surname')
@@ -44,7 +44,7 @@
                                 <label for="role" class="form-label">Pareigos<span
                                         class="text-danger">*</span></label>
                                 <input type="text" name="role" id="role" placeholder="Įveskite vartotojo pareigas"
-                                    value="{{ old('role') }}"
+                                    value="{{ $user->role }}"
                                     class="form-control shadow-sm @error('role') border border-danger text-danger @enderror">
 
                                 @error('role')
@@ -58,7 +58,7 @@
                                 <label for="email" class="form-label">El. paštas<span
                                         class="text-danger">*</span></label>
                                 <input type="email" name="email" id="email"
-                                    placeholder="Įveskite vartotojo el. pašto adresą" value="{{ old('email') }}"
+                                    placeholder="Įveskite vartotojo el. pašto adresą" value="{{ $user->email }}"
                                     class="form-control shadow-sm @error('email') border border-danger text-danger @enderror">
 
                                 @error('email')
@@ -102,10 +102,10 @@
                                         class="text-danger">*</span></label><br>
                                 <select name="level"
                                     class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
-                                    <option value=”” disabled selected>Priskirkite vartotojo lygį</option>
+                                        <option value='{{ $user->level }}'>{{ $user->level }}</option>
                                     @foreach ($userLevels as $userLevel)
                                         <option value='{{ $userLevel->name }}'>{{ $userLevel->name }}</option>
-                                    @endforeach
+                                    @endforeach>
                                 </select>
 
                                 @error('level')

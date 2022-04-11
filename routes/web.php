@@ -58,6 +58,7 @@ Route::get('/usrasai/{note}/trinti', [NoteFormController::class, 'deleteNote'])-
 Route::post('/usrasai/{note}/redaguoti', [NoteFormController::class, 'editNote'])->name('editNote');
 
 Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
+Route::get('/vartotojai/{user:name}', [UsersController::class, 'editUser'])->name('editUser');
 
 
 

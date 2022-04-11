@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Reservation;
 use App\Models\Note;
+use App\Models\UserLevel;
 
 class User extends Authenticatable
 {
@@ -54,6 +55,10 @@ class User extends Authenticatable
 
     public function notes(){
         return $this->hasMany(Note::class);
+    }
+
+    public function userLevel(){
+        return $this->hasOne(UserLevel::class);
     }
 
 

@@ -83,7 +83,7 @@
                 <div>
                     <p class="text-center pt-4 fs-3">Mano užrašai</p>
                     @auth
-                        @foreach ($user->notes as $note)
+                        @foreach ($notes as $note)
                             <div class="card my-4">
                                 <div class="card-header ">
                                     Užrašas sukurtas <span
@@ -96,6 +96,9 @@
                                 </div>
                             </div>
                         @endforeach
+                        <div>
+                            {{ $notes->links() }}
+                        </div>
                     @endauth
                 </div>
             </div>

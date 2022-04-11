@@ -48,4 +48,12 @@ class NoteFormController extends Controller
          return redirect()->route('notes');
 
      }
+
+     public function deleteNote(Request $request, Note $note){
+
+        $request->user()->notes()->where('id',$note->id)->delete();
+
+        return redirect()->route('notes');
+
+    }
 }

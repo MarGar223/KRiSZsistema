@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -10,7 +11,11 @@ class RegisterController extends Controller
 {
     public function index()
     {
-        return view('auth.register');
+        $userLevels = UserLevel::get();
+
+        return view('auth.register',[
+            'userLevels' => $userLevels
+        ]);
     }
 
     public function addUser(Request $request)
@@ -33,7 +38,7 @@ class RegisterController extends Controller
             'level' => $request->level
         ]);
 
-        return redirect()->route('dashboard');
+        return redirect()->route('allUsers');
 
     }
 }

@@ -45,7 +45,7 @@
                                                 <ul class="dropdown-menu bg-light py-1"
                                                     aria-labelledby="dropdownMenuLink">
                                                     <li class="text-center">
-                                                        <form action="" action="GET">
+                                                        <form action="{{ route('editUser', $user) }}" action="GET">
                                                             @csrf
                                                             <button type="submit" class="btn-sm btn-success align-middle border-0 w-75" title="Redaguoti"><i data-feather="edit"></i> Redaguoti </button>
                                                         </form>
