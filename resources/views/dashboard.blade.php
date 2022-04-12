@@ -76,7 +76,7 @@
                             </div>
                         @endforeach
                         <div>
-                            {{ $reservations->links() }}
+                            {{ $reservations->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
                         </div>
                     @endauth
                 </div>
@@ -98,7 +98,7 @@
                                 </div>
                             @endforeach
                             <div>
-                                {{ $notes->links() }}
+                                {{ $notes->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
                             </div>
                         @endauth
                     </div>

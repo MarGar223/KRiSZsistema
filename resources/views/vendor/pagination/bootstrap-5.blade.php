@@ -1,3 +1,5 @@
+
+
 @if ($paginator->hasPages())
     <nav class="d-flex justify-items-center justify-content-between">
         <div class="d-flex justify-content-between flex-fill d-sm-none">
@@ -28,6 +30,17 @@
 
         <div class="d-none flex-sm-fill d-sm-flex align-items-sm-center justify-content-sm-between">
             <div>
+                @if ($uri == 'vartotojai')
+                <p class="small text-muted">
+                    {!! __('Rodomos') !!}
+                    <span class="font-medium">{{ $paginator->firstItem() }}</span>
+                    {!! __('iki') !!}
+                    <span class="font-medium">{{ $paginator->lastItem() }}</span>
+                    {!! __('iš') !!}
+                    <span class="font-medium">{{ $paginator->total() }}</span>
+                    {!! __('vartotojų') !!}
+                </p>
+                @else
                 <p class="small text-muted">
                     {!! __('Rodomos') !!}
                     <span class="font-medium">{{ $paginator->firstItem() }}</span>
@@ -37,7 +50,9 @@
                     <span class="font-medium">{{ $paginator->total() }}</span>
                     {!! __('rezervacijų') !!}
                 </p>
+                @endif
             </div>
+
 
             <div>
                 <ul class="pagination">

@@ -94,4 +94,5 @@ class ReservationFormController extends Controller
 
         return redirect()->route('dashboard');
     }
+
 }

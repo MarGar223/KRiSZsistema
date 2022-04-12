@@ -61,6 +61,12 @@ class User extends Authenticatable
         return $this->hasOne(UserLevel::class);
     }
 
+    public function run(){
+        User::factory()
+            ->count(10)
+            ->create();
+    }
+
 
 
 }

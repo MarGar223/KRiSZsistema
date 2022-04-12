@@ -13,11 +13,13 @@ class UsersController extends Controller
     {
        $this->middleware('auth');
     }
-    public function index() {
-        $users = User::orderBy('name', 'asc')->get();
+    public function index(Request $request) {
+        $users = User::orderBy('name', 'asc')->paginate(15);
+        $uri = $request->path();
 
         return view('Auth.users', [
-            'users' => $users
+            'users' => $users,
+            'uri' => $uri
         ]);
     }
     public function editUserView(User $user){

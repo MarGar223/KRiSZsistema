@@ -3,14 +3,14 @@
 @section('content')
 
 
+{{$uri}}
 
 
-
-    <div class="cotnainer-fluid">
+    <div class="cotnainer-fluid gird">
         <p class="fs-3 fw-bold text-center mt-3">
             Visi vartotojai
         </p>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center row">
             @if ($users->count())
                 <table class="table table-striped table-success table-hover p-4 mt-4 w-75">
                     <thead>
@@ -35,7 +35,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->level }}</td>
                                 @if (auth()->user())
-                                    @if (auth()->user()->level == 'Administratorius' || auth()->user()->level == 'Instructor' || auth()->user()->id == $reservation->user_id)
+                                    @if (auth()->user()->level == 'Administratorius')
                                         <td>
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -51,21 +51,53 @@
                                                         </form>
                                                     </li>
                                                     <li class="text-center">
-                                                        <form action="{{ route('deleteUser', $user) }}" action="GET">
+                                                        {{-- <form action="{{ route('deleteUser', $user) }}" action="GET"> --}}
                                                             @csrf
                                                             <button type="submit"
-                                                                class="btn-sm btn-danger align-middle border-0 w-75 mt-1" title="Trinti"><i data-feather="trash-2"></i> Trinti </button>
-                                                        </form>
+                                                                class="btn-sm btn-danger align-middle border-0 w-75 mt-1" title="Trinti" data-bs-toggle="modal" data-bs-target="#exampleModal{{$user->id}}"><i data-feather="trash-2"></i> Trinti </button>
+                                                        {{-- </form> --}}
                                                     </li>
                                                 </ul>
                                             </div>
                                         </td>
+                              <!-- Button trigger modal -->
+
+  <!-- Modal -->
+  <form action="{{ route('deleteUser', $user) }}" action="GET">
+  <div class="modal fade" id="exampleModal{{$user->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Vartotojo trinimas</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Ar tikrai norite ištrinti vartotoją <span class="fw-bold text-decoration-underline">{{ $user->name }} {{$user->surname}}</span>? Jeigu taip, spauskite mygtuką Trinti, o jei ne - Uždaryti.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Uždarti</button>
+          <button type="submit" class="btn btn-danger">Trinti</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+
                                     @endif
                                 @endif
                             </tr>
                         @endforeach
                     </tbody>
+
+
+
+
                 </table>
+                <div class="row">
+                    {{ $users->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
+                </div>
+
             @else
                 <p class="fs-3 fw-bold text-center mt-3">
                     Vartotojų nėra
