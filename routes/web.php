@@ -1,6 +1,6 @@
 <?php
 
-
+use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -63,6 +63,11 @@ Route::get('/vartotojai/{user:name}', [UsersController::class, 'editUserView'])-
 Route::post('/vartotojai/{user:name}', [UsersController::class, 'editUser']);
 Route::get('/vartotojai/{user}/trinti', [UsersController::class, 'deleteUser'])->name('deleteUser');
 
+// Route::get('/test', function(){
+//     return view('testMap');
+// });
+
+Route::get('/test', [CalendarController::class, 'index'])->name('testMap');
 
 
 
