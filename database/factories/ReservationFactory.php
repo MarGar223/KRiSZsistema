@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use PhpParser\Node\Expr\Cast\Int_;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Reservation>
@@ -18,12 +19,12 @@ class ReservationFactory extends Factory
     {
         return [
             'user_id' => 1,
-            'zone_id' => ,
-            'role' => 'Tester',
-            'email' => $this->faker->unique()->safeEmail(),
-            'password' => '123', // password
-            'level' => 'Personal',
-            'remember_token' => Str::random(10),
+            'zone_id' => rand(1,5),
+            'people_count' => rand(2,20),
+            'date_when' => $this->faker->date(),
+            'start_time' => $this->faker->time(),
+            'end_time' => $this->faker->time(),
+
         ];
     }
 }

@@ -15,20 +15,22 @@ class UsersController extends Controller
     }
     public function index(Request $request) {
         $users = User::orderBy('name', 'asc')->paginate(15);
+        $userLevels = UserLevel::get();
         $uri = $request->path();
 
         return view('Auth.users', [
             'users' => $users,
-            'uri' => $uri
-        ]);
-    }
-    public function editUserView(User $user){
-        $userLevels = UserLevel::get();
-        return view('Auth.editUser', [
-            'user' => $user,
+            'uri' => $uri,
             'userLevels' => $userLevels
         ]);
     }
+    // public function editUserView(User $user){
+    //     $userLevels = UserLevel::get();
+    //     return view('Auth.editUser', [
+    //         'user' => $user,
+    //         'userLevels' => $userLevels
+    //     ]);
+    // }
 
     public function editUser(Request $request, User $user){
 
