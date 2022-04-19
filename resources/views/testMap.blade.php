@@ -4,51 +4,70 @@
     <div class="container">
         <div class="row">
             <div class="col-3 bg-primary">
-                a
+                @if ($uri === '/test/show')
+                    @foreach ($reservation as $reservation)
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6">
+                                    Rezervuota zona:
+                                </div>
+                                <div class="col-6">
+                                    {{ $reservation->zone->name }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Rezervuota data:
+                                </div>
+                                <div class="col-6">
+                                    {{ $reservation->date_when }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Rezervuotas laikas:
+                                </div>
+                                <div class="col-6">
+                                    nuo {{ $reservation->start_time }} iki
+                                    {{ $reservation->end_time }}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    Rezervuota:
+                                </div>
+                                <div class="col-6">
+                                    {{ $reservation->people_count }}
+                                    @if ($reservation->people_count === 1)
+                                        asmeniui
+                                    @else
+                                        asmenims
+                                    @endif
+                                </div>
+                            </div>
+                            </p>
+                        </div>
+                    @endforeach
+                @endif
             </div>
             <div class="col-8 me-4 bg-primary">
-                {{ print_r($list) }}
-                <table class="table table-success p-4 mt-4 w-100">
-                    <thead>
-                        <td id="CalMon">Mon</td>
-                        <td>Tue</td>
-                        <td>Wed</td>
-                        <td>Thu</td>
-                        <td>Fri</td>
-                        <td>Sat</td>
-                        <td>Sun</td>
-                    </thead>
-                    <tbody>
+                <form action="{{ route('calshow') }}" method="GET">
+                    <button type="">show</button>
 
+                </form>
+                <button onclick="Back()">back</button>
 
-
-
-
-                        @for ($i = 1; $i <= 5; $i++)
-
-                            <tr>
-                                @for ($j = 1; $j <= 7; $j++)
-                                    <td>
-                                        @if ($pirmas <= count($list)-1)
-
-                                        {{$list[1]->day}}
-                                        {{-- {{$list[$pirmas++]}} --}}
-
-
-                                            {{-- @for ($pirmas; $pirmas < count($list); $pirmas++)
-                                                {{$list[$pirmas]}}
-                                            @endfor --}}
-                                        @endif
-                                    </td>
-                                @endfor
-                            </tr>
-                        @endfor
-
-
-
-                    </tbody>
-                </table>
             </div>
         </div>
         <div>
+
+            <script>
+                function Back() {
+                   if(window.location.pathname == '/test/show'){
+                       window.location.replace('/test')
+                   } else {
+                    window.location.replace('/test/show')
+                   }
+                }
+            </script>
         @endsection

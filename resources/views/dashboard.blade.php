@@ -261,7 +261,7 @@
                                 <div class="card my-4">
                                     <div class="card-header ">
                                         Užrašas sukurtas <span
-                                            class="text-sm">{{ $note->created_at->diffForHumans() }}</span>
+                                            class="text-sm">{{ $note->updated_at->diffForHumans() }}</span>
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $note->title }}</h5>
@@ -278,7 +278,7 @@
                                 </div>
 
                                 {{-- Modal trinimo --}}
-                            <form action="{{ route('deleteNote', $note) }}" method="GET">
+                            <form action="{{ route('deleteNoteFromDashboard', $note) }}" method="GET">
                                 @csrf
                                 <div class="modal fade" id="noteModal{{ $note->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -310,7 +310,7 @@
 
                             {{-- Modal redagavimo --}}
 
-                            <form action="{{ route('editNote', $note) }}" method="POST">
+                            <form action="{{ route('editNoteFromDashboard', $note) }}" method="POST">
                                 @csrf
                                 <div class="modal fade" id="noteModalRed{{ $note->id }}" tabindex="-1"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

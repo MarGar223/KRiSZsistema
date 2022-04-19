@@ -63,11 +63,15 @@ Route::get('/vartotojai/{user:name}', [UsersController::class, 'editUserView']);
 Route::post('/vartotojai/{user:name}', [UsersController::class, 'editUser'])->name('editUser');
 Route::get('/vartotojai/{user}/trinti', [UsersController::class, 'deleteUser'])->name('deleteUser');
 
+Route::get('/usrasai/{note}/trintiispagrindinio', [NoteFormController::class, 'deleteNoteFromDashboard'])->name('deleteNoteFromDashboard');
+Route::post('/usrasai/{note}/redaguotiispagrindinio', [NoteFormController::class, 'editNoteFromDashboard'])->name('editNoteFromDashboard');
+
 // Route::get('/test', function(){
 //     return view('testMap');
 // });
 
 Route::get('/test', [CalendarController::class, 'index'])->name('testMap');
+Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
 
 
 
