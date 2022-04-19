@@ -39,14 +39,12 @@
                                                 </a>
                                                 <ul class="dropdown-menu bg-light py-1" aria-labelledby="dropdownMenuLink">
                                                     <li class="text-center">
-                                                        {{-- <form action="{{ route('editUser', $user) }}" action="GET"> --}}
                                                             @csrf
                                                             <button type="submit"
                                                                 class="btn-sm btn-success align-middle border-0 w-75"
                                                                 title="Redaguoti" data-bs-toggle="modal"
                                                                 data-bs-target="#exampleModalRed{{ $user->id }}"><i data-feather="edit"></i> Redaguoti
                                                             </button>
-                                                        {{-- </form> --}}
                                                     </li>
                                                     <li class="text-center">
                                                         <button type="submit"
@@ -58,10 +56,10 @@
                                                 </ul>
                                             </div>
                                         </td>
-                                        <!-- Button trigger modal -->
+
 
                                         <!-- Modal Trinimo -->
-                                        <form action="{{ route('deleteUser', $user) }}" action="GET">
+                                        <form action="{{ route('deleteUser', $user) }}" method="GET">
                                             @csrf
                                             <div class="modal fade" id="exampleModal{{ $user->id }}" tabindex="-1"
                                                 aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -18,7 +18,7 @@ class ReservationFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => 1,
+            'user_id' => rand(1,3),
             'zone_id' => rand(1,5),
             'people_count' => rand(2,20),
             'date_when' => $this->faker->date(),

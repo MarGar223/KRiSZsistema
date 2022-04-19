@@ -40,6 +40,9 @@ class NoteFormController extends Controller
 
      public function editNote(Request $request, Note $note){
 
+        $uri = $request;
+        dd($uri);
+
         $this->validate($request, [
             'title' => 'required',
             'body' => 'required'
@@ -50,7 +53,12 @@ class NoteFormController extends Controller
              'body' => $request->body,
      ]);
 
-         return redirect()->route('notes');
+
+        if($uri === '/' || $uri === '/pagrindinis'){
+            return redirect()->route('dashboard');
+        }else{
+            return redirect()->route('notes');
+        }
 
      }
 

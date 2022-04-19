@@ -28,7 +28,7 @@
                     @foreach ($reservations as $reservation)
                         <tr class="text-center">
 
-                            <td>{{ $reservation->created_at->diffForHumans() }}</td>
+                            <td>{{ $reservation->updated_at->diffForHumans() }}</td>
                             <td>{{ $reservation->user->name }}</td>
                             <td>{{ $reservation->zone->name }}</td>
                             <td>{{ $reservation->date_when }}</td>
@@ -79,7 +79,7 @@
                                                                 data-feather="edit"></i> Redaguoti </button>
                                                     </li>
                                                     <li class="text-center">
-                                                        @csrf
+
                                                         <button type="submit"
                                                             class="btn-sm btn-danger align-middle border-0 w-75 mt-1"
                                                             title="Trinti" data-bs-toggle="modal"
@@ -96,6 +96,7 @@
                                 @endif
 
                                 {{-- Modal redagavimas --}}
+
                                 <form action="{{ route('editReservation', $reservation) }}" method="POST">
                                     @csrf
                                 <div class="modal fade" id="exampleModalRed{{ $reservation->id }}" tabindex="-1"
@@ -181,13 +182,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>\
+                                </div>
                                 </form>
                         </tr>
 
 
                         {{-- Modal trinimo --}}
-                        <form action="{{ route('deleteReservation', $reservation) }}" action="GET">
+                        <form action="{{ route('deleteReservation', $reservation) }}" method="GET">
                             @csrf
                             <div class="modal fade" id="exampleModal{{ $reservation->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -262,15 +264,8 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
                         </form>
-
-                        {{-- Modal redagavimo --}}
-
-
-
-
-
-
                     @endif
         @endforeach
         </tbody>

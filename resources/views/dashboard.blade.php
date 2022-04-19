@@ -12,7 +12,7 @@
                             <div class="card my-4">
                                 <p class="card-header">
                                     Rezervacija atlikta <span
-                                        class="text-sm">{{ $reservation->created_at->diffForHumans() }}</span>
+                                        class="text-sm">{{ $reservation->updated_at->diffForHumans() }}</span>
                                 </p>
                                 <div class="card-body">
                                     <p class="card-text">
@@ -57,15 +57,10 @@
 
                                         <div class="d-inline-flex">
                                             @if (auth()->user()->id == $reservation->user_id)
-                                                <form action="{{ route('showReservation', $reservation) }}" action="GET">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-success btn-sm mx-1">Redaguoti</button>
-                                                </form>
-                                                <form action="{{ route('deleteReservationFromDashboard', $reservation) }}"
-                                                    action="GET">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-danger btn-sm mx-1">Trinti</button>
-                                                </form>
+                                                <button type="submit" class="btn btn-success btn-sm mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#resModalRed{{ $reservation->id }}">Redaguoti</button>
+                                                <button type="submit" class="btn btn-danger btn-sm mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#resModal{{ $reservation->id }}">Trinti</button>
                                             @endif
                                         </div>
 
@@ -74,6 +69,184 @@
 
                                 </div>
                             </div>
+
+                            {{--Rezervacijos Modal redagavimo --}}
+                            <form action="{{ route('editReservationFromDashboard', $reservation) }}" method="POST">
+                                @csrf
+                                <div class="modal fade" id="resModalRed{{ $reservation->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
+                                                    trinimas</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="mb-3">
+                                                    <label for="zone" class="form-label">Zona</label>
+                                                    <select name="zone" id="zone{{ $reservation->id }}"
+                                                        value="{{ $reservation->name }}"
+                                                        class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
+                                                        <option value="{{ $reservation->zone_id }}" id="zone_id" selected>
+                                                            {{ $reservation->zone->name }}
+                                                        </option>
+                                                        @foreach ($zones as $zone)
+                                                            @if ($reservation->zone_id == $zone->id)
+                                                            @else
+                                                                <option value="{{ $zone->id }}"
+                                                                    id="zone_id{{ $zone->id }}">{{ $zone->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    </select>
+                                                    @error('zone')
+                                                        <div class="fs-6 text-danger">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="date" class="form-label">Data</label>
+                                                    <input type="date" name="date_when" id="date_when{{ $reservation->id }}"
+                                                        value="{{ $reservation->date_when }}"
+                                                        class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
+                                                    @error('date_when')
+                                                        <div class="fs-6 text-danger">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="start_time" class="form-label">Laikas nuo</label>
+                                                    <input type="time" name="start_time" id="start_time{{ $reservation->id }}"
+                                                        value="{{ $reservation->start_time }}"
+                                                        class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror">
+                                                    @error('start_time')
+                                                        <div class="fs-6 text-danger">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="end_time" class="form-label">laikas iki</label>
+                                                    <input type="time" name="end_time" id="end_time{{ $reservation->id }}"
+                                                        value="{{ $reservation->end_time }}"
+                                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                    @error('end_time')
+                                                        <div class="fs-6 text-danger">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="mb-3">
+
+                                                    <label for="people_count" class="form-label">Skaicius asmenu</label>
+                                                    <input type="number" name="people_count"
+                                                        id="people_count{{ $reservation->id }}"
+                                                        value="{{ $reservation->people_count }}"
+                                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                    @error('people_count')
+                                                        <div class="fs-6 text-danger">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-success">Redaguoti</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Uždaryti</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+
+                            {{-- Rezervacijos Modal trinimo --}}
+                            <form action="{{ route('deleteReservationFromDashboard', $reservation) }}" method="GET">
+                                @csrf
+                                <div class="modal fade" id="resModal{{ $reservation->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
+                                                    trinimas</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Ar tikrai norite ištrinti rezervaciją:
+
+                                                <p>
+                                                <div class="card my-4 shadow">
+                                                    <p class="card-header">
+                                                        Rezervacija atlikta <span
+                                                            class="text-sm">{{ $reservation->created_at->diffForHumans() }}</span>
+                                                    </p>
+                                                    <div class="card-body">
+                                                        <p class="card-text">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    Rezervuota zona:
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    {{ $reservation->zone->name }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    Rezervuota data:
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    {{ $reservation->date_when }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    Rezervuotas laikas:
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    nuo {{ $reservation->start_time }} iki
+                                                                    {{ $reservation->end_time }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    Rezervuota:
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    {{ $reservation->people_count }}
+                                                                    @if ($reservation->people_count === 1)
+                                                                        asmeniui
+                                                                    @else
+                                                                        asmenims
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-danger">Trinti</button>
+                                                    <button type="button" class="btn btn-secondary"
+                                                        data-bs-dismiss="modal">Uždaryti</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         @endforeach
                         <div>
                             {{ $reservations->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
@@ -93,9 +266,96 @@
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $note->title }}</h5>
                                         <p class="card-text">{{ $note->body }}</p>
-
+                                        <div class="d-inline-flex">
+                                            @if (auth()->user()->id == $note->user_id)
+                                                <button type="submit" class="btn btn-success btn-sm mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#noteModalRed{{ $note->id }}">Redaguoti</button>
+                                                <button type="submit" class="btn btn-danger btn-sm mx-1" data-bs-toggle="modal"
+                                                    data-bs-target="#noteModal{{ $note->id }}">Trinti</button>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
+
+                                {{-- Modal trinimo --}}
+                            <form action="{{ route('deleteNote', $note) }}" method="GET">
+                                @csrf
+                                <div class="modal fade" id="noteModal{{ $note->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Užrašo
+                                                    trinimas</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                Ar tikrai norite ištrinti užrašą pavadinimu: <span
+                                                    class="fw-bold text-decoration-underline">{{ $note->title }}</span>?
+                                                Jeigu
+                                                taip, spauskite mygtuką
+                                                Trinti, o jei ne - Uždaryti.
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-danger">Trinti</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Uždaryti</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            {{-- Modal redagavimo --}}
+
+                            <form action="{{ route('editNote', $note) }}" method="POST">
+                                @csrf
+                                <div class="modal fade" id="noteModalRed{{ $note->id }}" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Užrašo
+                                                    trinimas</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label for="title" class="form-label">Užrašo pavadinimas</label>
+                                                    <input name="title" id="title{{ $note->id }}"
+                                                        value="{{ $note->title }}"
+                                                        class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
+                                                    @error('title')
+                                                        <div class="px-2 text-red-500 text-sm">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div>
+                                                    <label for="body">Užrašas</label>
+                                                    <textarea type="text" name="body" id="body{{ $note->id }}"
+                                                        class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror">{{ $note->body }}</textarea>
+                                                    @error('body')
+                                                        <div class="px-2 text-red-500 text-sm">
+                                                            <span>Lauką privaloma užpildyti</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success">Redaguoti</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Uždaryti</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+
                             @endforeach
                             <div>
                                 {{ $notes->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
@@ -104,6 +364,10 @@
                     </div>
                 </div>
             </div>
+
+
+
+
         @endauth
 
         @guest
@@ -198,6 +462,4 @@
             </div>
         @endguest
     </div>
-
-
 @endsection

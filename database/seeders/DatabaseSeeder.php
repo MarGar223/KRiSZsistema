@@ -20,3 +20,4 @@ class DatabaseSeeder extends Seeder
          Reservation::factory(10)->count(10)->create();
     }
 }
+
