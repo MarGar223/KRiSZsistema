@@ -3,22 +3,26 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reservation;
+use App\Models\User;
 use App\Models\Zone;
+use Illuminate\Http\Request;
 
 
 class ReservationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        dd($request->query('search'));
 
-        $reservations = Reservation::orderBy('created_at','desc')->get();
+        $reservations = Reservation::orderBy('updated_at', 'desc')->get();
         $zones = Zone::get();
+        $users = User::get();
 
         return view('reservations.reservation', [
             'reservations' => $reservations,
-            'zones' => $zones
+            'zones' => $zones,
+            'users' => $users
         ]);
+
     }
-
-
 }

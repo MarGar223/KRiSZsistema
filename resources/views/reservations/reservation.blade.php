@@ -3,16 +3,70 @@
 @section('content')
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
-
+<form action="{{ route('reservation') }}" method="GET">
+<input type="text" name="search">
+</form>
     </div>
-    <div class="d-flex justify-content-center p-4">
+    {{-- <div class="d-flex justify-content-center px-4 bg-success">
+    <table class="table table-striped table-success table-hover px-4 mx-3">
+        <thead>
+            <tr class="text-center align-middle">
+                <th scope="col">Rezervacija atlikta</th>
+                <th scope="col">Rezervuotojas</th>
+                <th scope="col">Zona</th>
+                <th scope="col">Rezervuota data</th>
+                <th scope="col">Pradžios laikas</th>
+                <th scope="col">Pabaigos laikas</th>
+                <th scope="col">Asmenų skaičius</th>
+                @if (auth()->user())
+                    <th scope="col">Funkcijos</th>
+                @endif
+
+            </tr>
+        </thead>
+    </table>
+    </div> --}}
+
+    <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
+
         @if ($reservations->count())
-            <table class="table table-striped table-success table-hover px-4 mt-2 mx-3">
+            <table class="table table-striped table-success table-hover p-4 mt-3">
                 <thead>
                     <tr class="text-center align-middle">
                         <th scope="col">Rezervacija atlikta</th>
-                        <th scope="col">Rezervuotojas</th>
-                        <th scope="col">Zona</th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn fw-bold text-black">
+                                    Rezervuotojas
+                                  </button>
+                                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                  </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" onclick="filterSelection('visi')">Visi</a>
+                                    @foreach ($users as $user)
+                                    <a class="dropdown-item" onclick="filterSelection('{{ $user->name }}')">{{ $user->name }}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+
+                            <div class="btn-group">
+                                <button class="btn fw-bold text-black">
+                                    Zona
+                                  </button>
+                                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                  </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" onclick="filterSelection('visi')">Visos</a>
+                                    @foreach ($zones as $zone)
+                                    <a class="dropdown-item" onclick="filterSelection('{{ $zone->name }}')">{{ $zone->name }}</a>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
                         <th scope="col">Rezervuota data</th>
                         <th scope="col">Pradžios laikas</th>
                         <th scope="col">Pabaigos laikas</th>
@@ -26,7 +80,7 @@
 
                 <tbody>
                     @foreach ($reservations as $reservation)
-                        <tr class="text-center">
+                        <tr class="text-center filterDiv {{ $reservation->zone->name }} {{$reservation->user->name}}">
 
                             <td>{{ $reservation->updated_at->diffForHumans() }}</td>
                             <td>{{ $reservation->user->name }}</td>
@@ -92,48 +146,53 @@
                                     @else
                                         <td></td>
                                     @endif
-
                                 @endif
 
                                 {{-- Modal redagavimas --}}
 
                                 <form action="{{ route('editReservation', $reservation) }}" method="POST">
                                     @csrf
-                                <div class="modal fade" id="exampleModalRed{{ $reservation->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
-                                                    trinimas</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <div class="mb-3">
-                                                            <label for="zone" class="form-label">Zona</label>
-                                                            <select name="zone" id="zone{{ $reservation->id }}" value="{{ $reservation->name }}"
-                                                                class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
-                                                                <option value="{{ $reservation->zone_id }}" id="zone_id" selected>{{ $reservation->zone->name }}
-                                                                </option>
-                                                                @foreach ($zones as $zone)
-                                                                    @if ($reservation->zone_id == $zone->id)
-                                                                    @else
-                                                                        <option value="{{ $zone->id }}" id="zone_id{{ $zone->id }}">{{ $zone->name }}</option>
-                                                                    @endif
-                                                                @endforeach
-                                                            </select>
-                                                            @error('zone')
-                                                                <div class="fs-6 text-danger">
-                                                                    <span>Lauką privaloma užpildyti</span>
-                                                                </div>
-                                                            @enderror
-                                                        </div>
+                                    <div class="modal fade" id="exampleModalRed{{ $reservation->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
+                                                        trinimas</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label for="zone" class="form-label">Zona</label>
+                                                        <select name="zone" id="zone{{ $reservation->id }}"
+                                                            value="{{ $reservation->name }}"
+                                                            class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
+                                                            <option value="{{ $reservation->zone_id }}" id="zone_id"
+                                                                selected>{{ $reservation->zone->name }}
+                                                            </option>
+                                                            @foreach ($zones as $zone)
+                                                                @if ($reservation->zone_id == $zone->id)
+                                                                @else
+                                                                    <option value="{{ $zone->id }}"
+                                                                        id="zone_id{{ $zone->id }}">
+                                                                        {{ $zone->name }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        </select>
+                                                        @error('zone')
+                                                            <div class="fs-6 text-danger">
+                                                                <span>Lauką privaloma užpildyti</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
 
                                                     <div class="mb-3">
                                                         <label for="date" class="form-label">Data</label>
-                                                        <input type="date" name="date_when" id="date_when{{ $reservation->id }}" value="{{ $reservation->date_when }}"
-                                                        class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
+                                                        <input type="date" name="date_when"
+                                                            id="date_when{{ $reservation->id }}"
+                                                            value="{{ $reservation->date_when }}"
+                                                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
                                                         @error('date_when')
                                                             <div class="fs-6 text-danger">
                                                                 <span>Lauką privaloma užpildyti</span>
@@ -141,49 +200,56 @@
                                                         @enderror
                                                     </div>
 
-                                                <div class="mb-3">
-                                                    <label for="start_time" class="form-label">Laikas nuo</label>
-                                                    <input type="time" name="start_time" id="start_time{{ $reservation->id }}" value="{{ $reservation->start_time }}"
-                                                    class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror">
-                                                    @error('start_time')
-                                                        <div class="fs-6 text-danger">
-                                                            <span>Lauką privaloma užpildyti</span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
+                                                    <div class="mb-3">
+                                                        <label for="start_time" class="form-label">Laikas nuo</label>
+                                                        <input type="time" name="start_time"
+                                                            id="start_time{{ $reservation->id }}"
+                                                            value="{{ $reservation->start_time }}"
+                                                            class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror">
+                                                        @error('start_time')
+                                                            <div class="fs-6 text-danger">
+                                                                <span>Lauką privaloma užpildyti</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
 
-                                                <div class="mb-3">
-                                                    <label for="end_time" class="form-label">laikas iki</label>
-                                                    <input type="time" name="end_time" id="end_time{{ $reservation->id }}" value="{{ $reservation->end_time }}"
-                                                    class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
-                                                    @error('end_time')
-                                                        <div class="fs-6 text-danger">
-                                                            <span>Lauką privaloma užpildyti</span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
+                                                    <div class="mb-3">
+                                                        <label for="end_time" class="form-label">laikas iki</label>
+                                                        <input type="time" name="end_time"
+                                                            id="end_time{{ $reservation->id }}"
+                                                            value="{{ $reservation->end_time }}"
+                                                            class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                        @error('end_time')
+                                                            <div class="fs-6 text-danger">
+                                                                <span>Lauką privaloma užpildyti</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
 
-                                                <div class="mb-3">
+                                                    <div class="mb-3">
 
-                                                    <label for="people_count" class="form-label">Skaicius asmenu</label>
-                                                    <input type="number" name="people_count" id="people_count{{ $reservation->id }}" value="{{ $reservation->people_count }}"
-                                                    class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
-                                                    @error('people_count')
-                                                        <div class="fs-6 text-danger">
-                                                            <span>Lauką privaloma užpildyti</span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
+                                                        <label for="people_count" class="form-label">Skaicius
+                                                            asmenu</label>
+                                                        <input type="number" name="people_count"
+                                                            id="people_count{{ $reservation->id }}"
+                                                            value="{{ $reservation->people_count }}"
+                                                            class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                        @error('people_count')
+                                                            <div class="fs-6 text-danger">
+                                                                <span>Lauką privaloma užpildyti</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
 
-                                                <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Redaguoti</button>
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Uždaryti</button>
+                                                    <div class="modal-footer">
+                                                        <button type="submit" class="btn btn-success">Redaguoti</button>
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Uždaryti</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>\
-                                </div>
+                                        </div>\
+                                    </div>
                                 </form>
                         </tr>
 
@@ -275,4 +341,40 @@
         <p>
             @endif
     </div>
+    <script>
+        filterSelection("visi");
+        function filterSelection(c) {
+            var x, i;
+            x = document.getElementsByClassName("filterDiv");
+            if (c == "visi") c = "";
+            for (i = 0; i < x.length; i++) {
+                w3RemoveClass(x[i], "show");
+                if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
+            }
+        }
+
+
+        function w3AddClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                if (arr1.indexOf(arr2[i]) == -1) {
+                    element.className += " " + arr2[i];
+                }
+            }
+        }
+
+        function w3RemoveClass(element, name) {
+            var i, arr1, arr2;
+            arr1 = element.className.split(" ");
+            arr2 = name.split(" ");
+            for (i = 0; i < arr2.length; i++) {
+                while (arr1.indexOf(arr2[i]) > -1) {
+                    arr1.splice(arr1.indexOf(arr2[i]), 1);
+                }
+            }
+            element.className = arr1.join(" ");
+        }
+    </script>
 @endsection
