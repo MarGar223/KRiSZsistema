@@ -3,9 +3,11 @@
 @section('content')
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
-<form action="{{ route('reservation') }}" method="GET">
-<input type="text" name="search">
-</form>
+
+        <input type="text" name="search" id='search' onkeyup="myFunction()">
+
+        <p id="txtHint"></p>
+
     </div>
     {{-- <div class="d-flex justify-content-center px-4 bg-success">
     <table class="table table-striped table-success table-hover px-4 mx-3">
@@ -30,7 +32,7 @@
     <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
 
         @if ($reservations->count())
-            <table class="table table-striped table-success table-hover p-4 mt-3">
+            <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
                         <th scope="col">Rezervacija atlikta</th>
@@ -38,14 +40,16 @@
                             <div class="btn-group">
                                 <button class="btn fw-bold text-black">
                                     Rezervuotojas
-                                  </button>
-                                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
-                                  </button>
+                                </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" onclick="filterSelection('visi')">Visi</a>
                                     @foreach ($users as $user)
-                                    <a class="dropdown-item" onclick="filterSelection('{{ $user->name }}')">{{ $user->name }}</a>
+                                        <a class="dropdown-item"
+                                            onclick="filterSelection('{{ $user->name }}')">{{ $user->name }}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -55,14 +59,16 @@
                             <div class="btn-group">
                                 <button class="btn fw-bold text-black">
                                     Zona
-                                  </button>
-                                  <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
-                                  </button>
+                                </button>
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" onclick="filterSelection('visi')">Visos</a>
                                     @foreach ($zones as $zone)
-                                    <a class="dropdown-item" onclick="filterSelection('{{ $zone->name }}')">{{ $zone->name }}</a>
+                                        <a class="dropdown-item"
+                                            onclick="filterSelection('{{ $zone->name }}')">{{ $zone->name }}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -80,7 +86,8 @@
 
                 <tbody>
                     @foreach ($reservations as $reservation)
-                        <tr class="text-center filterDiv {{ $reservation->zone->name }} {{$reservation->user->name}}">
+                        <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
+                            id="{{ $reservation->user->id }}">
 
                             <td>{{ $reservation->updated_at->diffForHumans() }}</td>
                             <td>{{ $reservation->user->name }}</td>
@@ -255,8 +262,8 @@
 
 
                         {{-- Modal trinimo --}}
-                        <form action="{{ route('deleteReservation', $reservation) }}" method="GET">
-                            @csrf
+                        {{-- <form action="{{ route('deleteReservation', $reservation) }}" method="GET"> --}}
+                            {{-- @csrf --}}
                             <div class="modal fade" id="exampleModal{{ $reservation->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -323,7 +330,7 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger">Trinti</button>
+                                                <button type="submit" class="btn btn-danger" onclick="trinti({{ $reservation->id }})" data-bs-dismiss="modal">Trinti</button>
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Uždaryti</button>
                                             </div>
@@ -331,7 +338,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </form>
+                        {{-- </form> --}}
                     @endif
         @endforeach
         </tbody>
@@ -342,7 +349,9 @@
             @endif
     </div>
     <script>
+        // filter dropdown
         filterSelection("visi");
+
         function filterSelection(c) {
             var x, i;
             x = document.getElementsByClassName("filterDiv");
@@ -352,7 +361,6 @@
                 if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
             }
         }
-
 
         function w3AddClass(element, name) {
             var i, arr1, arr2;
@@ -375,6 +383,41 @@
                 }
             }
             element.className = arr1.join(" ");
+        }
+        // end filter dropdown
+
+        function myFunction() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("search");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("myTable");
+            tr = table.getElementsByTagName("tr");
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[1];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function trinti(id) {
+            var trinamas = document.getElementById("trinamas");
+            var irasas = document.getElementsByTagName("tr");
+            var xhttp;
+
+            xhttp = new XMLHttpRequest();
+            if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("txtHint").innerHTML = this.responseText;
+                }
+            xhttp.open("GET", "rezervacijos/" + id + "/trinti", true);
+            xhttp.send();
+            xhttp.open("GET", "rezervacijos", true);
+            xhttp.send();
         }
     </script>
 @endsection

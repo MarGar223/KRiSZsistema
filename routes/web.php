@@ -70,8 +70,11 @@ Route::post('/usrasai/{note}/redaguotiispagrindinio', [NoteFormController::class
 //     return view('testMap');
 // });
 
-Route::get('/test', [CalendarController::class, 'index'])->name('testMap');
-Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
+
+
+Route::get('/test', [ReservationController::class, 'test'])->name('testMap');
+Route::resource('reservations', ReservationController::class);
+// Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
 
 
 
