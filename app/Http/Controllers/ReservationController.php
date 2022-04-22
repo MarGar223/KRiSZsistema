@@ -25,7 +25,27 @@ class ReservationController extends Controller
 
     }
 
-    public function test(){
+    public function filter(User $user, Zone $zone){
+
+        $reservations = Reservation::orderBy('updated_at', 'desc')->where('user_id', $user->id)->get();
+        $zones = Zone::get();
+        $users = User::get();
+
+        return view('reservations.reservation', [
+            'reservations' => $reservations,
+            'zones' => $zones,
+            'users' => $users
+        ]);
+    }
+
+
+
+
+
+
+    //test
+
+    public function reservations(){
         $reservations = Reservation::orderBy('updated_at', 'desc')->get();
         $zones = Zone::get();
         return view('testMap')->with((compact(['reservations','zones'])));

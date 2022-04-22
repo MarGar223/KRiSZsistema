@@ -31,59 +31,71 @@
 
     <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
 
-        @if ($reservations->count())
-            <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
-                <thead>
-                    <tr class="text-center align-middle">
-                        <th scope="col">Rezervacija atlikta</th>
-                        <th scope="col">
-                            <div class="btn-group">
-                                <button class="btn fw-bold text-black">
-                                    Rezervuotojas
-                                </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" onclick="filterSelection('visi')">Visi</a>
-                                    @foreach ($users as $user)
-                                        <a class="dropdown-item"
-                                            onclick="filterSelection('{{ $user->name }}')">{{ $user->name }}</a>
-                                    @endforeach
-                                </div>
+
+        <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
+            <thead>
+                <tr class="text-center align-middle">
+                    <th scope="col">Rezervacija atlikta</th>
+                    <th scope="col">
+                        <div class="btn-group">
+                            <button class="btn fw-bold text-black">
+                                Rezervuotojas
+                            </button>
+                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" id="myDropdown">
+                                <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.." id="myInput"
+                                    onkeyup="filterFunction()">
+                                <form action="{{ route('reservation') }}" method="GET">
+                                    <button class="dropdown-item fixed" id="all">Visi</button>
+                                </form>
+                                @foreach ($users as $user)
+                                    <form action="{{ route('filterReservation', ['user'=>$user->name]) }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item">{{ $user->name }}</button>
+                                    </form>
+                                @endforeach
                             </div>
-                        </th>
-                        <th scope="col">
+                        </div>
+                    </th>
+                    <th scope="col">
 
-                            <div class="btn-group">
-                                <button class="btn fw-bold text-black">
-                                    Zona
-                                </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" onclick="filterSelection('visi')">Visos</a>
-                                    @foreach ($zones as $zone)
-                                        <a class="dropdown-item"
-                                            onclick="filterSelection('{{ $zone->name }}')">{{ $zone->name }}</a>
-                                    @endforeach
-                                </div>
+                        <div class="btn-group">
+                            <button class="btn fw-bold text-black">
+                                Zona
+                            </button>
+                            <button type="button" class="btn dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" id="myDropdown">
+                                <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.." id="myInput"
+                                    onkeyup="filterFunction()">
+                                <form action="{{ route('reservation') }}" method="GET">
+                                    <button class="dropdown-item fixed" id="all">Visi</button>
+                                </form>
+                                @foreach ($zones as $zone)
+                                    <form action="{{ route('filterReservation', ['zone' =>$zone->name]) }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item">{{ $zone->name }}</button>
+                                    </form>
+                                @endforeach
                             </div>
-                        </th>
-                        <th scope="col">Rezervuota data</th>
-                        <th scope="col">Pradžios laikas</th>
-                        <th scope="col">Pabaigos laikas</th>
-                        <th scope="col">Asmenų skaičius</th>
-                        @if (auth()->user())
-                            <th scope="col">Funkcijos</th>
-                        @endif
+                        </div>
+                    </th>
+                    <th scope="col">Rezervuota data</th>
+                    <th scope="col">Pradžios laikas</th>
+                    <th scope="col">Pabaigos laikas</th>
+                    <th scope="col">Asmenų skaičius</th>
+                    @if (auth()->user())
+                        <th scope="col">Funkcijos</th>
+                    @endif
 
-                    </tr>
-                </thead>
-
+                </tr>
+            </thead>
+            @if ($reservations->count())
                 <tbody>
                     @foreach ($reservations as $reservation)
                         <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
@@ -262,8 +274,8 @@
 
 
                         {{-- Modal trinimo --}}
-                        {{-- <form action="{{ route('deleteReservation', $reservation) }}" method="GET"> --}}
-                            {{-- @csrf --}}
+                        <form action="{{ route('deleteReservation', $reservation) }}" method="GET">
+                            @csrf
                             <div class="modal fade" id="exampleModal{{ $reservation->id }}" tabindex="-1"
                                 aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered">
@@ -330,7 +342,8 @@
                                             </div>
 
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-danger" onclick="trinti({{ $reservation->id }})" data-bs-dismiss="modal">Trinti</button>
+                                                <button type="submit" class="btn btn-danger"
+                                                    data-bs-dismiss="modal">Trinti</button>
                                                 <button type="button" class="btn btn-secondary"
                                                     data-bs-dismiss="modal">Uždaryti</button>
                                             </div>
@@ -338,10 +351,10 @@
                                     </div>
                                 </div>
                             </div>
-                        {{-- </form> --}}
+                        </form>
                     @endif
-        @endforeach
-        </tbody>
+            @endforeach
+            </tbody>
         </table>
     @else
         <p>Rezervacijų nėra
@@ -353,9 +366,10 @@
         filterSelection("visi");
 
         function filterSelection(c) {
-            var x, i;
+            var x, i, input;
+            input = document.getElementById("myInput");
             x = document.getElementsByClassName("filterDiv");
-            if (c == "visi") c = "";
+            if (c == "visi") c = "", input.textContent = "aaa";
             for (i = 0; i < x.length; i++) {
                 w3RemoveClass(x[i], "show");
                 if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
@@ -388,7 +402,7 @@
 
         function myFunction() {
             var input, filter, table, tr, td, i, txtValue;
-            input = document.getElementById("search");
+            input = document.getElementById("myInput");
             filter = input.value.toUpperCase();
             table = document.getElementById("myTable");
             tr = table.getElementsByTagName("tr");
@@ -405,19 +419,21 @@
             }
         }
 
-        function trinti(id) {
-            var trinamas = document.getElementById("trinamas");
-            var irasas = document.getElementsByTagName("tr");
-            var xhttp;
+        function filterFunction() {
+            var input, filter, ul, li, a, i, btn;
+            input = document.getElementById("myInput");
+            filter = input.value.toUpperCase();
+            div = document.getElementById("myDropdown");
+            btn = div.getElementsByTagName("button");
 
-            xhttp = new XMLHttpRequest();
-            if (this.readyState == 4 && this.status == 200) {
-                    document.getElementById("txtHint").innerHTML = this.responseText;
+            for (i = 0; i < btn.length; i++) {
+                txtValue = btn[i].textContent || btn[i].innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    btn[i].style.display = "";
+                } else {
+                    btn[i].style.display = "none";
                 }
-            xhttp.open("GET", "rezervacijos/" + id + "/trinti", true);
-            xhttp.send();
-            xhttp.open("GET", "rezervacijos", true);
-            xhttp.send();
+            }
         }
     </script>
 @endsection

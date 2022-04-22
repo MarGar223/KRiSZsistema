@@ -37,6 +37,7 @@ Route::post('/prisijungti', [LoginController::class, 'loginUser']);
 Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logout');
 
 Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
+Route::get('/rezervacijos/{user}/{zone}', [ReservationController::class, 'filter'])->name('filterReservation');
 
 Route::get('/rezervacijos/kurti', [ReservationFormController::class, 'index'])->name('createReservation');
 Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation']);
@@ -72,8 +73,11 @@ Route::post('/usrasai/{note}/redaguotiispagrindinio', [NoteFormController::class
 
 
 
-Route::get('/test', [ReservationController::class, 'test'])->name('testMap');
+Route::get('/test', [ReservationController::class, 'reservations'])->name('testMap');
+
 Route::resource('reservations', ReservationController::class);
+Route::post('/test', [ReservationController::class, 'testStore']);
+
 // Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
 
 
