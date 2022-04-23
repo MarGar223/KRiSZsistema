@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CalendarController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -10,6 +9,8 @@ use App\Http\Controllers\NoteFormController;
 use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationFormController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\ReservationFilterController;
+
 
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,7 @@ Route::post('/prisijungti', [LoginController::class, 'loginUser']);
 Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logout');
 
 Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
-Route::get('/rezervacijos/{user}/{zone}', [ReservationController::class, 'filter'])->name('filterReservation');
+Route::get('/rezervacijos/{user?}/{zone?}', [ReservationFilterController::class, 'index'])->name('filterReservation');
 
 Route::get('/rezervacijos/kurti', [ReservationFormController::class, 'index'])->name('createReservation');
 Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation']);
@@ -79,9 +80,6 @@ Route::resource('reservations', ReservationController::class);
 Route::post('/test', [ReservationController::class, 'testStore']);
 
 // Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
-
-
-
 
 
 

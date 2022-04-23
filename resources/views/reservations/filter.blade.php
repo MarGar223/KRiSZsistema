@@ -3,8 +3,131 @@
 @section('content')
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
+        <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Accordion Item #1
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+                    data-bs-parent="#accordionExample">
+                    <div class="accordion-body d-flex inline-block">
+
+
+
+                        <form action="{{ route('filterReservation') }}" method="GET" class="mx-1">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <div class="mb-3 me-2">
+                                            <label for="reservationDate" class="form-label">Rezervacija atlikta</label>
+                                            <select name="reservationDate" id="reservationDate"
+                                                class="form-select shadow-sm">
+                                                <option value="" selected disabled>Visos Rezervacijų atlikimo datos</option>
+                                                @foreach ($reservations as $reservation)
+                                                    <option value="{{ $reservation->updated_at }}">
+                                                        {{ $reservation->updated_at }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 me-2">
+                                            <label for="resUser" class="form-label">Rezervuotojas</label>
+                                            <select name="resUser" id="resUser" class="form-select shadow-sm">
+                                                <option value="" selected disabled>Rezervuotojai</option>
+                                                @foreach ($users as $user)
+                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3 me-2">
+                                            <label for="zone" class="form-label">Zona</label>
+                                            <select name="zone" id="zone" class="form-select shadow-sm">
+                                                <option value="" selected disabled>Pasirinkti zoną</option>
+                                                @foreach ($zones as $zone)
+                                                    <option value="{{ $zone->id }}">{{ $zone->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 me-2">
+                                            <label for="date" class="form-label">Rezervuota data</label>
+                                            <select name="date" id="date" class="form-select shadow-sm">
+                                                <option value="" selected disabled>Rezervuotos datos</option>
+                                                @foreach ($reservations as $reservation)
+                                                    <option value="{{ $reservation->updated_at }}">
+                                                        {{ $reservation->date_when }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <div class="mb-3 me-2">
+                                            <label for="start_time" class="form-label">Pradžios laikas</label>
+                                            <select name="start_time" id="start_time" class="form-select shadow-sm">
+                                                <option selected disabled>Pradžios laikai</option>
+                                                @foreach ($reservations as $reservation)
+                                                    <option value="{{ $reservation->updated_at }}">
+                                                        {{ $reservation->start_time }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                        <div class="mb-3 me-2">
+                                            <label for="end_time" class="form-label">Pabaigos laikas</label>
+                                            <select name="end_time" id="end_time" class="form-select shadow-sm">
+                                                <option value="" selected disabled>Pabaigos laikai</option>
+                                                @foreach ($reservations as $reservation)
+                                                    <option value="{{ $reservation->updated_at }}">
+                                                        {{ $reservation->end_time }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="mb-3 me-2">
+                                            <label for="people_count" class="form-label">Asmenų skaičius</label>
+                                            <select name="people_count" id="people_count" class="form-select shadow-sm">
+                                                <option value="" selected disabled>Visos Rezervacijų atlikimo datos</option>
+                                                @foreach ($reservations as $reservation)
+                                                    <option value="{{ $reservation->updated_at }}">
+                                                        {{ $reservation->people_count }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="mb-3 me-2 text-center">
+                                            <label for="search" class="form-label">Ieškoti</label>
+                                            <button type="submit" class="btn btn-sm align-middle"><i
+                                                    data-feather="search"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                        </form>
+                        <div class="mb-3 me-2 text-center">
+                            <form action="{{ route('reservation') }}" method="GET">
+                                <label for="search" class="form-label">Valyti filtrą</label>
+                                <button type="submit" class="btn btn-sm align-middle"><i
+                                        data-feather="x-circle"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
+
 
             <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
                 <thead>
@@ -44,9 +167,9 @@
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
-                                <div class="dropdown-menu" id="myDropdown2">
+                                <div class="dropdown-menu" id="myDropdown">
                                     <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.."
-                                        id="myInput2" onkeyup="filterFunction2()">
+                                        id="myInput" onkeyup="filterFunction()">
                                     <form action="{{ route('reservation') }}" method="GET">
                                         <button class="dropdown-item fixed" id="all">Visi</button>
                                     </form>
@@ -69,13 +192,12 @@
 
                     </tr>
                 </thead>
-                @if ($reservations)
+                @if ($reservations->count())
                     <tbody>
                         @foreach ($reservations as $reservation)
-                            <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
-                                id="{{ $reservation->user->id }}">
+                            <tr class="text-center filterDiv">
 
-                                <td>{{ $reservation->updated_at->diffForHumans() }}</td>
+                                <td>{{ $reservation->updated_at }}</td>
                                 <td>{{ $reservation->user->name }}</td>
                                 <td>{{ $reservation->zone->name }}</td>
                                 <td>{{ $reservation->date_when }}</td>
@@ -237,7 +359,8 @@
                                                         </div>
 
                                                         <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-success">Redaguoti</button>
+                                                            <button type="submit"
+                                                                class="btn btn-success">Redaguoti</button>
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-bs-dismiss="modal">Uždaryti</button>
                                                         </div>
@@ -400,22 +523,6 @@
                 input = document.getElementById("myInput");
                 filter = input.value.toUpperCase();
                 div = document.getElementById("myDropdown");
-                btn = div.getElementsByTagName("button");
-
-                for (i = 0; i < btn.length; i++) {
-                    txtValue = btn[i].textContent || btn[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        btn[i].style.display = "";
-                    } else {
-                        btn[i].style.display = "none";
-                    }
-                }
-            }
-            function filterFunction2() {
-                var input, filter, ul, li, a, i, btn;
-                input = document.getElementById("myInput2");
-                filter = input.value.toUpperCase();
-                div = document.getElementById("myDropdown2");
                 btn = div.getElementsByTagName("button");
 
                 for (i = 0; i < btn.length; i++) {
