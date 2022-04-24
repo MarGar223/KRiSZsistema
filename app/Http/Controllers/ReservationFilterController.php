@@ -13,7 +13,7 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ReservationFilterController extends Controller
 {
-    public function index(Request $request, User $user, Zone $zone)
+    public function index(Request $request)
     {
         $reservations = Reservation::orderBy('updated_at', 'desc');
         $zones = Zone::get();

@@ -65,6 +65,9 @@
 *::after {
   box-sizing: border-box;
 }
+.checkHidden{
+    display: none;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   :root {

@@ -21,16 +21,17 @@ class UserFilterController extends Controller
 
         switch ($request->input() != null) {
             case ($request->input('userNames')):
-                $users = $users->where('name', $request->input('userNames'))->paginate(15);
+                $fullName = explode(';',$request->input('userNames'));
+                $users = $users->where('name', $fullName[0])->where('surname', $fullName[1])->get();
                 break;
             case ($request->input('userRole')):
-                $users = $users->where('role', $request->input('userRole'))->paginate(15);
+                $users = $users->where('role', $request->input('userRole'))->get();
                 break;
             case ($request->input('userEmail')):
-                $users = $users->where('email', $request->input('userEmail'))->paginate(15);
+                $users = $users->where('email', $request->input('userEmail'))->get();
                 break;
             case ($request->input('userLevel')):
-                $users = $users->where('level', $request->input('userLevel'))->paginate(15);
+                $users = $users->where('level', $request->input('userLevel'))->get();
                 break;
             }
 

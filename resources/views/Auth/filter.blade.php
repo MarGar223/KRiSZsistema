@@ -7,10 +7,11 @@
         </p>
         <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
             <form action="{{ route('allUsers') }}" method="GET" class="d-flex flex-column w-25">
-                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top" title="Valyti filtrą">
+                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Valyti filtrą">
                     <i data-feather="trash-2"></i>
-                  </button>
-                </form>
+                </button>
+            </form>
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
@@ -33,7 +34,7 @@
                                         <form action="{{ route('filterUsers') }}" method="GET">
                                             @csrf
                                             <button class="btn btn-sm dropdown-item text-wrap text-break" name="userNames"
-                                                value="{{ $user->name }}">{{ $user->name }}
+                                                value="{{ $user->name }};{{ $user->surname }}">{{ $user->name }}
                                                 {{ $user->surname }}</button>
                                         </form>
                                     @endforeach
@@ -59,7 +60,7 @@
                                         <form action="{{ route('filterUsers') }}" method="GET">
                                             @csrf
                                             <button class="btn btn-sm dropdown-item text-wrap text-break" name="userRole"
-                                                value="{{ $user->id }}">{{ $user->role }}</button>
+                                                value="{{ $user->role }}">{{ $user->role }}</button>
                                         </form>
                                     @endforeach
                                 </div>
@@ -104,11 +105,11 @@
                                     <form action="{{ route('allUsers') }}" method="GET">
                                         <button class="btn btn-sm dropdown-item" id="all">Visi lygiai</button>
                                     </form>
-                                    @foreach ($userLevels as $userLevel)
+                                    @foreach ($users->unique('level') as $user)
                                         <form action="{{ route('filterUsers') }}" method="GET">
                                             @csrf
                                             <button class="btn btn-sm dropdown-item" name="userLevel"
-                                                value="{{ $userLevel->id }}">{{ $userLevel->name }}</button>
+                                                value="{{ $user->level }}">{{ $user->level }}</button>
                                         </form>
                                     @endforeach
                                 </div>
@@ -214,9 +215,10 @@
                                                                                 id="name{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo vardą"
                                                                                 value="{{ $user->name }}"
-                                                                                class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
+                                                                                pattern="^[a-zA-Z ]*$"
+                                                                                class="form-control shadow-sm @error('name' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('name')
+                                                                            @error('name' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -232,9 +234,10 @@
                                                                                 id="surname{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo pavardę"
                                                                                 value="{{ $user->surname }}"
-                                                                                class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
+                                                                                pattern="^[a-zA-Z ]*$"
+                                                                                class="form-control shadow-sm @error('surname' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('surname')
+                                                                            @error('surname' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -250,9 +253,9 @@
                                                                                 id="role{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo pareigas"
                                                                                 value="{{ $user->role }}"
-                                                                                class="form-control shadow-sm @error('role') border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('role' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('role')
+                                                                            @error('role' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -265,35 +268,60 @@
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="email" name="email"
                                                                                 id="email{{ $user->id }}"
-                                                                                placeholder="Įveskite vartotojo el. pašto adresą"
+                                                                                placeholder="Įveskite el. pašto adresą"
                                                                                 value="{{ $user->email }}"
-                                                                                class="form-control shadow-sm @error('email') border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('email' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('email')
+                                                                            @error('email' . $user->id)
                                                                                 <div class="fs-6 text-danger">
-                                                                                    <span>Lauką privaloma užpildyti</span>
+                                                                                    <span>Laukas paliktas tuščias arba šis el.
+                                                                                        pašto adresas jau užregistruotas</span>
                                                                                 </div>
                                                                             @enderror
                                                                         </div>
                                                                     </div>
-                                                                    <div class="col">
+
+                                                                    <div class="col mt-1">
+
                                                                         <div>
+                                                                            <label class="form-label"
+                                                                                for="flexSwitchCheckDefault">Slaptažodžio
+                                                                                keitimas</label>
+                                                                            <div class="form-check form-switch">
+                                                                                <input class="form-check-input"
+                                                                                    type="checkbox" role="switch"
+                                                                                    id="flexSwitchCheckDefault{{ $user->id }}"
+                                                                                    onclick="checkSwitch(this.id, {{ $user->id }})">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="checkHidden mt-2"
+                                                                            id="checkBox{{ $user->id }}">
                                                                             <label for="password"
                                                                                 class="form-label">Slaptažodis<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="password" name="password"
                                                                                 id="password{{ $user->id }}"
-                                                                                placeholder="Įveskite vartotojo slaptažodį"
-                                                                                class="form-control shadow-sm @error('password') border border-danger text-danger @enderror">
+                                                                                placeholder="Įveskite slaptažodį"
+                                                                                class="form-control shadow-sm @error('password' . $user->id) border border-danger text-danger @enderror"
+                                                                                data-bs-toggle="popover"
+                                                                                data-bs-placement="right"
+                                                                                title="Slaptažodžio reikalavimai"
+                                                                                data-bs-content="Slaptažodį turi sudaryti min. 8 simboliai, iš kurių privalo būti:
+                                                                                            - Bent viena dydžioji raidė,
+                                                                                            - Bent viena mažoji raidė,
+                                                                                            - Bent vienas skaičius,
+                                                                                            - Bent vienas simbolis">
 
-                                                                            @error('password')
+                                                                            @error('password' . $user->id)
                                                                                 <div class="fs-6 text-danger">
-                                                                                    <span>Lauką privaloma užpildyti</span>
+                                                                                    <span>Laukas paliktas tuščias arba neatitiko
+                                                                                        reikalavimų</span>
                                                                                 </div>
                                                                             @enderror
                                                                         </div>
 
-                                                                        <div>
+                                                                        <div class="checkHidden"
+                                                                            id="checkBoxConf{{ $user->id }}">
                                                                             <label for="password_confirmation"
                                                                                 class="form-label">Pakartoti
                                                                                 slaptažodį<span
@@ -301,10 +329,10 @@
                                                                             <input type="password"
                                                                                 name="password_confirmation"
                                                                                 id="password_confirmation{{ $user->id }}"
-                                                                                placeholder="Pakartokite vartotojo slaptažodį"
-                                                                                class="form-control shadow-sm @error('password_confirmation') border border-danger text-danger @enderror">
+                                                                                placeholder="Pakartokite slaptažodį"
+                                                                                class="form-control shadow-sm @error('password_confirmation' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('password_confirmation')
+                                                                            @error('password_confirmation' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -335,7 +363,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="modal-footer">
+                                                            <div class="modal-footer mt-4">
                                                                 <button type="submit"
                                                                     class="btn btn-success">Redaguoti</button>
                                                                 <button type="button" class="btn btn-secondary"
@@ -356,7 +384,7 @@
 
             </table>
             <div class="row">
-                {{ $users->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
+                {{-- {{ $users->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }} --}}
             </div>
         @else
             <p class="fs-3 fw-bold text-center mt-3">
@@ -415,9 +443,27 @@
                     }
                 }
             }
+            // tooltip start
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
-                })
+            })
+            //tooltip end
+
+            // popover start
+            var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+            var popoverList = popoverTriggerList.map(function(popoverTriggerEl) {
+                return new bootstrap.Popover(popoverTriggerEl)
+            });
+            // popover end
+
+            // checkbox show start
+            function checkSwitch(x, id) {
+                var div1 = document.getElementById('checkBox' + id);
+                var div2 = document.getElementById('checkBoxConf' + id);
+
+                div1.classList.toggle('checkHidden');
+                div2.classList.toggle('checkHidden');
+            }
         </script>
     @endsection

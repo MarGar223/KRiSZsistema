@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class UsersController extends Controller
 {
@@ -14,7 +15,7 @@ class UsersController extends Controller
        $this->middleware('auth');
     }
     public function index(Request $request) {
-        $users = User::orderBy('name', 'asc')->paginate(15);
+        $users = User::orderBy('name', 'asc')->get();
         $userLevels = UserLevel::get();
         $uri = $request->path();
 
@@ -24,24 +25,28 @@ class UsersController extends Controller
             'userLevels' => $userLevels
         ]);
     }
-    // public function editUserView(User $user){
-    //     $userLevels = UserLevel::get();
-    //     return view('Auth.editUser', [
-    //         'user' => $user,
-    //         'userLevels' => $userLevels
-    //     ]);
-    // }
 
     public function editUser(Request $request, User $user){
 
-        $this->validate($request,[
-            'name' => 'required|max:255',
-            'surname' => 'required|max:255',
-            'role' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|confirmed',
-            'level' => 'required'
-        ]);
+        if($request->input('password') == null){
+            $this->validate($request,[
+                'name' => 'required|max:255',
+                'surname' => 'required|max:255',
+                'role' => 'required|max:255',
+                'email' => 'required|email|max:255',
+                'level' => 'required'
+            ]);
+        } else {
+            $this->validate($request,[
+                'name' => 'required|max:255',
+                'surname' => 'required|max:255',
+                'role' => 'required|max:255',
+                'email' => 'required|email|max:255',
+                'password' => 'required',
+                'level' => 'required'
+            ]);
+        }
+
 
         $request->user()->where('id', $user->id)->update([
             'name' => $request->name,

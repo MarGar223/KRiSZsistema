@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
+use Symfony\Component\Mailer\Test\Constraint\EmailCount;
 
 class RegisterController extends Controller
 {
@@ -20,13 +22,18 @@ class RegisterController extends Controller
 
     public function addUser(Request $request)
     {
+
         $this->validate($request,[
-            'name' => 'required|max:255',
-            'surname' => 'required|max:255',
-            'role' => 'required|max:255',
-            'email' => 'required|email|max:255',
-            'password' => 'required|confirmed',
-            'level' => 'required'
+            'name' => 'required|string|max:255',
+            'surname' => 'required|string|max:255',
+            'role' => 'required|string|max:255',
+            'email' => ['required','email','unique:users,email'],
+            'password' => [ Password::min(8)
+            ->mixedCase()
+            ->numbers()
+            ->symbols(),
+            'required'],
+            'level' => 'required|string|max:255'
         ]);
 
         User::create([

@@ -13,7 +13,7 @@
                         <div class="col">
                             <div>
                                 <label for="name" class="form-label">Vardas<span class="text-danger">*</span></label>
-                                <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą"
+                                <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą" pattern="^[a-zA-Z ]*$"
                                     value="{{ old('name') }}"
                                     class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
 
@@ -28,7 +28,7 @@
                             <div>
                                 <label for="surname" class="form-label">Pavardė<span
                                         class="text-danger">*</span></label>
-                                <input type="text" name="surname" id="surname" placeholder="Įveskite vartotojo pavardę"
+                                <input type="text" name="surname" id="surname" placeholder="Įveskite vartotojo pavardę" pattern="^[a-zA-Z ]*$"
                                     value="{{ old('surname') }}"
                                     class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
 
@@ -63,7 +63,7 @@
 
                                 @error('email')
                                     <div class="fs-6 text-danger">
-                                        <span>Lauką privaloma užpildyti</span>
+                                        <span>Laukas paliktas tuščias arba šis el. pašto adresas jau užregistruotas</span>
                                     </div>
                                 @enderror
                             </div>
@@ -74,11 +74,17 @@
                                         class="text-danger">*</span></label>
                                 <input type="password" name="password" id="password"
                                     placeholder="Įveskite vartotojo slaptažodį"
-                                    class="form-control shadow-sm @error('password') border border-danger text-danger @enderror">
+                                    class="form-control shadow-sm @error('password') border border-danger text-danger @enderror" data-bs-toggle="popover" data-bs-placement="right"
+                                    title = "Slaptažodžio reikalavimai"
+                                    data-bs-content="Slaptažodį turi sudaryti min. 8 simboliai, iš kurių privalo būti:
+                                    - Bent viena dydžioji raidė,
+                                    - Bent viena mažoji raidė,
+                                    - Bent vienas skaičius,
+                                    - Bent vienas simbolis">
 
                                 @error('password')
                                     <div class="fs-6 text-danger">
-                                        <span>Lauką privaloma užpildyti</span>
+                                        <span>Laukas paliktas tuščias arba neatitiko reikalavimų</span>
                                     </div>
                                 @enderror
                             </div>
@@ -126,4 +132,11 @@
 
 
     </div>
+
+    <script>
+        var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+        var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+        })
+    </script>
 @endsection
