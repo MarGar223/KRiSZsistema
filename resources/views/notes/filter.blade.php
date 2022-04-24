@@ -6,6 +6,12 @@
 
         <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
 
+            <form action="{{ route('notes') }}" method="GET" class="d-flex flex-column w-25">
+                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Valyti filtrą">
+                    <i data-feather="trash-2"></i>
+                </button>
+            </form>
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light">
                 <thead>
                     <tr class="text-center">
@@ -89,7 +95,7 @@
                     <tbody>
                         @foreach ($notes as $note)
                             <tr class="text-center align-middle">
-                                <td>{{ $note->updated_at->diffForHumans() }} <br><span class="text-muted">{{ $note->updated_at }}</span></td>
+                                <td>{{ $note->updated_at->diffForHumans() }}</td>
                                 <td>{{ $note->title }}</td>
                                 <td class="text-break w-50">{{ $note->body }}</td>
                                 @if (auth()->user())
@@ -243,5 +249,9 @@
                 }
             }
         }
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+                })
     </script>
 @endsection

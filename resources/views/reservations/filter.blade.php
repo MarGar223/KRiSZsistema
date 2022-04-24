@@ -3,155 +3,60 @@
 @section('content')
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
-        <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="headingOne">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        Accordion Item #1
-                    </button>
-                </h2>
-                <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
-                    data-bs-parent="#accordionExample">
-                    <div class="accordion-body d-flex inline-block">
 
 
-
-                        <form action="{{ route('filterReservation') }}" method="GET" class="mx-1">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <div class="mb-3 me-2">
-                                            <label for="reservationDate" class="form-label">Rezervacija atlikta</label>
-                                            <select name="reservationDate" id="reservationDate"
-                                                class="form-select shadow-sm">
-                                                <option value="" selected disabled>Visos Rezervacijų atlikimo datos</option>
-                                                @foreach ($reservations as $reservation)
-                                                    <option value="{{ $reservation->updated_at }}">
-                                                        {{ $reservation->updated_at }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3 me-2">
-                                            <label for="resUser" class="form-label">Rezervuotojas</label>
-                                            <select name="resUser" id="resUser" class="form-select shadow-sm">
-                                                <option value="" selected disabled>Rezervuotojai</option>
-                                                @foreach ($users as $user)
-                                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3 me-2">
-                                            <label for="zone" class="form-label">Zona</label>
-                                            <select name="zone" id="zone" class="form-select shadow-sm">
-                                                <option value="" selected disabled>Pasirinkti zoną</option>
-                                                @foreach ($zones as $zone)
-                                                    <option value="{{ $zone->id }}">{{ $zone->name }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3 me-2">
-                                            <label for="date" class="form-label">Rezervuota data</label>
-                                            <select name="date" id="date" class="form-select shadow-sm">
-                                                <option value="" selected disabled>Rezervuotos datos</option>
-                                                @foreach ($reservations as $reservation)
-                                                    <option value="{{ $reservation->updated_at }}">
-                                                        {{ $reservation->date_when }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col">
-                                        <div class="mb-3 me-2">
-                                            <label for="start_time" class="form-label">Pradžios laikas</label>
-                                            <select name="start_time" id="start_time" class="form-select shadow-sm">
-                                                <option selected disabled>Pradžios laikai</option>
-                                                @foreach ($reservations as $reservation)
-                                                    <option value="{{ $reservation->updated_at }}">
-                                                        {{ $reservation->start_time }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-
-                                        <div class="mb-3 me-2">
-                                            <label for="end_time" class="form-label">Pabaigos laikas</label>
-                                            <select name="end_time" id="end_time" class="form-select shadow-sm">
-                                                <option value="" selected disabled>Pabaigos laikai</option>
-                                                @foreach ($reservations as $reservation)
-                                                    <option value="{{ $reservation->updated_at }}">
-                                                        {{ $reservation->end_time }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="mb-3 me-2">
-                                            <label for="people_count" class="form-label">Asmenų skaičius</label>
-                                            <select name="people_count" id="people_count" class="form-select shadow-sm">
-                                                <option value="" selected disabled>Visos Rezervacijų atlikimo datos</option>
-                                                @foreach ($reservations as $reservation)
-                                                    <option value="{{ $reservation->updated_at }}">
-                                                        {{ $reservation->people_count }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="mb-3 me-2 text-center">
-                                            <label for="search" class="form-label">Ieškoti</label>
-                                            <button type="submit" class="btn btn-sm align-middle"><i
-                                                    data-feather="search"></i></button>
-                                        </div>
-                                    </div>
-                                </div>
-                        </form>
-                        <div class="mb-3 me-2 text-center">
-                            <form action="{{ route('reservation') }}" method="GET">
-                                <label for="search" class="form-label">Valyti filtrą</label>
-                                <button type="submit" class="btn btn-sm align-middle"><i
-                                        data-feather="x-circle"></i></button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
-
-
-            <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
+        <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
+            <form action="{{ route('reservation') }}" method="GET" class="d-flex flex-column w-25">
+                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top" title="Valyti filtrą">
+                    <i data-feather="trash-2"></i>
+                  </button>
+                </form>
+            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
-                        <th scope="col">Rezervacija atlikta</th>
                         <th scope="col">
-                            <div class="btn-group">
-                                <button class="btn fw-bold text-black">
-                                    Rezervuotojas
+                            <div class="btn-group m-0 p-0">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervacija atlikta
                                 </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
-                                <div class="dropdown-menu" id="myDropdown">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.."
-                                        id="myInput" onkeyup="filterFunction()">
+                                <div class="dropdown-menu" id="resUserDropdown">
                                     <form action="{{ route('reservation') }}" method="GET">
-                                        <button class="dropdown-item fixed" id="all">Visi</button>
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
                                     </form>
-                                    @foreach ($users as $user)
-                                        <form action="{{ route('filterReservation', ['user' => $user]) }}" method="GET">
+                                    @foreach ($reservations->sortByDesc('updated_at')->unique('updated_at') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
                                             @csrf
-                                            <button class="btn btn-sm dropdown-item">{{ $user->name }}</button>
+                                            <button class="btn btn-sm dropdown-item" name="resWhen"
+                                                value="{{ $reservation->updated_at }}">{{ $reservation->updated_at }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervuotojas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                        id="myInputResUser" onkeyup="filterFunctionResUsers()">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi</button>
+                                    </form>
+                                    @foreach ($reservations->unique('user_id') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="userId"
+                                                value="{{ $reservation->user_id }}">{{ $reservation->user->name }}</button>
                                         </form>
                                     @endforeach
                                 </div>
@@ -160,34 +65,123 @@
                         <th scope="col">
 
                             <div class="btn-group">
-                                <button class="btn fw-bold text-black">
+                                <button class="btn btn-sm fw-bold text-black">
                                     Zona
                                 </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
-                                <div class="dropdown-menu" id="myDropdown">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.."
-                                        id="myInput" onkeyup="filterFunction()">
+                                <div class="dropdown-menu" id="resZoneDropdown">
+                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                        id="myInputResZone" onkeyup="filterFunctionResZone()">
                                     <form action="{{ route('reservation') }}" method="GET">
-                                        <button class="dropdown-item fixed" id="all">Visi</button>
+                                        <button class="dropdown-item btn btn-sm" id="all">Visos</button>
                                     </form>
-                                    @foreach ($zones as $zone)
-                                        <form action="{{ route('filterReservation', ['zone' => $zone]) }}" method="GET">
+                                    @foreach ($reservations->unique('zone_id') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
                                             @csrf
-                                            <button class="btn btn-sm dropdown-item">{{ $zone->name }}</button>
+                                            <button class="btn btn-sm dropdown-item" name="zoneId"
+                                                value="{{ $reservation->zone_id }}">{{ $reservation->zone->name }}</button>
                                         </form>
                                     @endforeach
                                 </div>
                             </div>
                         </th>
-                        <th scope="col">Rezervuota data</th>
-                        <th scope="col">Pradžios laikas</th>
-                        <th scope="col">Pabaigos laikas</th>
-                        <th scope="col">Asmenų skaičius</th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervuota data
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visos datos</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('date_when')->unique('date_when') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="dateWhen"
+                                                value="{{ $reservation->date_when }}">{{ $reservation->date_when }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Pradžios laikas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('start_time')->unique('start_time') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="startWhen"
+                                                value="{{ $reservation->start_time }}">{{ $reservation->start_time }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Pabaigos laikas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('end_time')->unique('end_time') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="endWhen"
+                                                value="{{ $reservation->end_time }}">{{ $reservation->end_time }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Personalo skaičius
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('people_count')->unique('people_count') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="resPeople"
+                                                value="{{ $reservation->people_count }}">{{ $reservation->people_count }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
                         @if (auth()->user())
-                            <th scope="col">Funkcijos</th>
+                            <th scope="col" style="font-size: 0.7875rem;">Funkcijos</th>
                         @endif
 
                     </tr>
@@ -195,9 +189,12 @@
                 @if ($reservations->count())
                     <tbody>
                         @foreach ($reservations as $reservation)
-                            <tr class="text-center filterDiv">
+                            {{-- <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
+                                id="{{ $reservation->user->id }}"> --}}
+                            <tr class="text-center align-middle">
 
-                                <td>{{ $reservation->updated_at }}</td>
+                                <td>{{ $reservation->updated_at->diffForHumans() }} <br> <span
+                                        class="fs-6 text-muted">{{ $reservation->updated_at }} </span> </td>
                                 <td>{{ $reservation->user->name }}</td>
                                 <td>{{ $reservation->zone->name }}</td>
                                 <td>{{ $reservation->date_when }}</td>
@@ -461,68 +458,28 @@
                 @endif
         </div>
         <script>
-            // filter dropdown
-            filterSelection("visi");
-
-            function filterSelection(c) {
-                var x, i, input;
-                input = document.getElementById("myInput");
-                x = document.getElementsByClassName("filterDiv");
-                if (c == "visi") c = "", input.textContent = "aaa";
-                for (i = 0; i < x.length; i++) {
-                    w3RemoveClass(x[i], "show");
-                    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-                }
-            }
-
-            function w3AddClass(element, name) {
-                var i, arr1, arr2;
-                arr1 = element.className.split(" ");
-                arr2 = name.split(" ");
-                for (i = 0; i < arr2.length; i++) {
-                    if (arr1.indexOf(arr2[i]) == -1) {
-                        element.className += " " + arr2[i];
-                    }
-                }
-            }
-
-            function w3RemoveClass(element, name) {
-                var i, arr1, arr2;
-                arr1 = element.className.split(" ");
-                arr2 = name.split(" ");
-                for (i = 0; i < arr2.length; i++) {
-                    while (arr1.indexOf(arr2[i]) > -1) {
-                        arr1.splice(arr1.indexOf(arr2[i]), 1);
-                    }
-                }
-                element.className = arr1.join(" ");
-            }
-            // end filter dropdown
-
-            function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[1];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-
-            function filterFunction() {
+            function filterFunctionResUsers() {
                 var input, filter, ul, li, a, i, btn;
-                input = document.getElementById("myInput");
+                input = document.getElementById("myInputResUser");
                 filter = input.value.toUpperCase();
-                div = document.getElementById("myDropdown");
+                div = document.getElementById("resUserDropdown");
+                btn = div.getElementsByTagName("button");
+
+                for (i = 1; i < btn.length; i++) {
+                    txtValue = btn[i].textContent || btn[i].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        btn[i].style.display = "";
+                    } else {
+                        btn[i].style.display = "none";
+                    }
+                }
+            }
+
+            function filterFunctionResZone() {
+                var input, filter, ul, li, a, i, btn;
+                input = document.getElementById("myInputResZone");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("resZoneDropdown");
                 btn = div.getElementsByTagName("button");
 
                 for (i = 0; i < btn.length; i++) {
@@ -534,5 +491,10 @@
                     }
                 }
             }
+
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+                })
         </script>
     @endsection

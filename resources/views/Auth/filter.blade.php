@@ -6,7 +6,11 @@
             Visi vartotojai
         </p>
         <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
-
+            <form action="{{ route('allUsers') }}" method="GET" class="d-flex flex-column w-25">
+                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top" title="Valyti filtrą">
+                    <i data-feather="trash-2"></i>
+                  </button>
+                </form>
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
@@ -55,7 +59,7 @@
                                         <form action="{{ route('filterUsers') }}" method="GET">
                                             @csrf
                                             <button class="btn btn-sm dropdown-item text-wrap text-break" name="userRole"
-                                                value="{{ $user->role }}">{{ $user->role }}</button>
+                                                value="{{ $user->id }}">{{ $user->role }}</button>
                                         </form>
                                     @endforeach
                                 </div>
@@ -411,5 +415,9 @@
                     }
                 }
             }
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+                })
         </script>
     @endsection

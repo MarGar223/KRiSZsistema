@@ -20,9 +20,4 @@ class NoteController extends Controller
             'notes' => $notes
         ]);
     }
-
-
-
-
-
 }

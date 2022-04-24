@@ -4,31 +4,53 @@
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
 
-        <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
-
-            <table class="table table-striped table-success table-hover p-4 mt-3" id="myTable">
+        <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
+            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
-                        <th scope="col">Rezervacija atlikta</th>
                         <th scope="col">
-                            <div class="btn-group">
-                                <button class="btn fw-bold text-black">
-                                    Rezervuotojas
+                            <div class="btn-group m-0 p-0">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervacija atlikta
                                 </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
-                                <div class="dropdown-menu" id="myDropdown">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.."
-                                        id="myInput" onkeyup="filterFunction()">
+                                <div class="dropdown-menu" id="resUserDropdown">
                                     <form action="{{ route('reservation') }}" method="GET">
-                                        <button class="dropdown-item fixed" id="all">Visi</button>
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
                                     </form>
-                                    @foreach ($users as $user)
-                                        <form action="{{ route('filterReservation', ['user' => $user]) }}" method="GET">
+                                    @foreach ($reservations->sortByDesc('updated_at')->unique('updated_at') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
                                             @csrf
-                                            <button class="btn btn-sm dropdown-item">{{ $user->name }}</button>
+                                            <button class="btn btn-sm dropdown-item" name="resWhen"
+                                                value="{{ $reservation->updated_at }}">{{ $reservation->updated_at }}</button>
+                                        </form>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervuotojas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                        id="myInputResUser" onkeyup="filterFunctionResUsers()">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi</button>
+                                    </form>
+                                    @foreach ($reservations->unique('user_id') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
+                                            @csrf
+                                            <button class="btn btn-sm dropdown-item" name="userId"
+                                                value="{{ $reservation->user_id }}">{{ $reservation->user->name }}</button>
                                         </form>
                                     @endforeach
                                 </div>
@@ -37,45 +59,132 @@
                         <th scope="col">
 
                             <div class="btn-group">
-                                <button class="btn fw-bold text-black">
+                                <button class="btn btn-sm fw-bold text-black">
                                     Zona
                                 </button>
-                                <button type="button" class="btn dropdown-toggle dropdown-toggle-split"
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
                                     <span class="visually-hidden">Toggle Dropdown</span>
                                 </button>
-                                <div class="dropdown-menu" id="myDropdown2">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Search.."
-                                        id="myInput2" onkeyup="filterFunction2()">
+                                <div class="dropdown-menu" id="resZoneDropdown">
+                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                        id="myInputResZone" onkeyup="filterFunctionResZone()">
                                     <form action="{{ route('reservation') }}" method="GET">
-                                        <button class="dropdown-item fixed" id="all">Visi</button>
+                                        <button class="dropdown-item btn btn-sm" id="all">Visos</button>
                                     </form>
-                                    @foreach ($zones as $zone)
-                                        <form action="{{ route('filterReservation', ['zone' => $zone]) }}" method="GET">
+                                    @foreach ($reservations->unique('zone_id') as $reservation)
+                                        <form action="{{ route('filterReservation') }}" method="GET">
                                             @csrf
-                                            <button class="btn btn-sm dropdown-item">{{ $zone->name }}</button>
+                                            <button class="btn btn-sm dropdown-item" name="zoneId"
+                                                value="{{ $reservation->zone_id }}">{{ $reservation->zone->name }}</button>
                                         </form>
                                     @endforeach
                                 </div>
                             </div>
                         </th>
-                        <th scope="col">Rezervuota data</th>
-                        <th scope="col">Pradžios laikas</th>
-                        <th scope="col">Pabaigos laikas</th>
-                        <th scope="col">Asmenų skaičius</th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Rezervuota data
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visos datos</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('date_when')->unique('date_when') as $reservation)
+                                    <form action="{{ route('filterReservation') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="dateWhen" value="{{$reservation->date_when}}">{{ $reservation->date_when }}</button>
+                                    </form>
+                                @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Pradžios laikas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('start_time')->unique('start_time') as $reservation)
+                                    <form action="{{ route('filterReservation') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="startWhen" value="{{$reservation->start_time}}">{{ $reservation->start_time }}</button>
+                                    </form>
+                                @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Pabaigos laikas
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('end_time')->unique('end_time') as $reservation)
+                                    <form action="{{ route('filterReservation') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="endWhen" value="{{$reservation->end_time}}">{{ $reservation->end_time }}</button>
+                                    </form>
+                                @endforeach
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="btn-group">
+                                <button class="btn btn-sm fw-bold text-black">
+                                    Personalo skaičius
+                                </button>
+                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="visually-hidden">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu" id="resUserDropdown">
+                                    <form action="{{ route('reservation') }}" method="GET">
+                                        <button class="btn btn-sm dropdown-item" id="all">Visi</button>
+                                    </form>
+                                    @foreach ($reservations->sortByDesc('people_count')->unique('people_count') as $reservation)
+                                    <form action="{{ route('filterReservation') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="resPeople" value="{{$reservation->people_count}}">{{ $reservation->people_count }}</button>
+                                    </form>
+                                @endforeach
+                                </div>
+                            </div>
+                        </th>
                         @if (auth()->user())
-                            <th scope="col">Funkcijos</th>
+                            <th scope="col" style="font-size: 0.7875rem;">Funkcijos</th>
                         @endif
 
                     </tr>
                 </thead>
-                @if ($reservations)
+                @if ($reservations->count())
                     <tbody>
                         @foreach ($reservations as $reservation)
-                            <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
-                                id="{{ $reservation->user->id }}">
+                            {{-- <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
+                                id="{{ $reservation->user->id }}"> --}}
+                            <tr class="text-center align-middle">
 
-                                <td>{{ $reservation->updated_at->diffForHumans() }}</td>
+                                <td>{{ $reservation->updated_at->diffForHumans() }} <br> <span
+                                        class="fs-6 text-muted">{{ $reservation->updated_at }} </span> </td>
                                 <td>{{ $reservation->user->name }}</td>
                                 <td>{{ $reservation->zone->name }}</td>
                                 <td>{{ $reservation->date_when }}</td>
@@ -338,68 +447,28 @@
                 @endif
         </div>
         <script>
-            // filter dropdown
-            filterSelection("visi");
-
-            function filterSelection(c) {
-                var x, i, input;
-                input = document.getElementById("myInput");
-                x = document.getElementsByClassName("filterDiv");
-                if (c == "visi") c = "", input.textContent = "aaa";
-                for (i = 0; i < x.length; i++) {
-                    w3RemoveClass(x[i], "show");
-                    if (x[i].className.indexOf(c) > -1) w3AddClass(x[i], "show");
-                }
-            }
-
-            function w3AddClass(element, name) {
-                var i, arr1, arr2;
-                arr1 = element.className.split(" ");
-                arr2 = name.split(" ");
-                for (i = 0; i < arr2.length; i++) {
-                    if (arr1.indexOf(arr2[i]) == -1) {
-                        element.className += " " + arr2[i];
-                    }
-                }
-            }
-
-            function w3RemoveClass(element, name) {
-                var i, arr1, arr2;
-                arr1 = element.className.split(" ");
-                arr2 = name.split(" ");
-                for (i = 0; i < arr2.length; i++) {
-                    while (arr1.indexOf(arr2[i]) > -1) {
-                        arr1.splice(arr1.indexOf(arr2[i]), 1);
-                    }
-                }
-                element.className = arr1.join(" ");
-            }
-            // end filter dropdown
-
-            function myFunction() {
-                var input, filter, table, tr, td, i, txtValue;
-                input = document.getElementById("myInput");
-                filter = input.value.toUpperCase();
-                table = document.getElementById("myTable");
-                tr = table.getElementsByTagName("tr");
-                for (i = 0; i < tr.length; i++) {
-                    td = tr[i].getElementsByTagName("td")[1];
-                    if (td) {
-                        txtValue = td.textContent || td.innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                        } else {
-                            tr[i].style.display = "none";
-                        }
-                    }
-                }
-            }
-
-            function filterFunction() {
+            function filterFunctionResUsers() {
                 var input, filter, ul, li, a, i, btn;
-                input = document.getElementById("myInput");
+                input = document.getElementById("myInputResUser");
                 filter = input.value.toUpperCase();
-                div = document.getElementById("myDropdown");
+                div = document.getElementById("resUserDropdown");
+                btn = div.getElementsByTagName("button");
+
+                for (i = 1; i < btn.length; i++) {
+                    txtValue = btn[i].textContent || btn[i].innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        btn[i].style.display = "";
+                    } else {
+                        btn[i].style.display = "none";
+                    }
+                }
+            }
+
+            function filterFunctionResZone() {
+                var input, filter, ul, li, a, i, btn;
+                input = document.getElementById("myInputResZone");
+                filter = input.value.toUpperCase();
+                div = document.getElementById("resZoneDropdown");
                 btn = div.getElementsByTagName("button");
 
                 for (i = 0; i < btn.length; i++) {
@@ -411,21 +480,6 @@
                     }
                 }
             }
-            function filterFunction2() {
-                var input, filter, ul, li, a, i, btn;
-                input = document.getElementById("myInput2");
-                filter = input.value.toUpperCase();
-                div = document.getElementById("myDropdown2");
-                btn = div.getElementsByTagName("button");
 
-                for (i = 0; i < btn.length; i++) {
-                    txtValue = btn[i].textContent || btn[i].innerText;
-                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                        btn[i].style.display = "";
-                    } else {
-                        btn[i].style.display = "none";
-                    }
-                }
-            }
         </script>
     @endsection

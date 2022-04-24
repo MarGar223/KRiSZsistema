@@ -10,6 +10,8 @@ use App\Http\Controllers\ReservationController;
 use App\Http\Controllers\ReservationFormController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ReservationFilterController;
+use App\Http\Controllers\NoteFilterController;
+use App\Http\Controllers\UserFilterController;
 
 
 use Illuminate\Support\Facades\Route;
@@ -38,7 +40,7 @@ Route::post('/prisijungti', [LoginController::class, 'loginUser']);
 Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logout');
 
 Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
-Route::get('/rezervacijos/{user?}/{zone?}', [ReservationFilterController::class, 'index'])->name('filterReservation');
+Route::get('/rezervacijos/filtras', [ReservationFilterController::class, 'index'])->name('filterReservation');
 
 Route::get('/rezervacijos/kurti', [ReservationFormController::class, 'index'])->name('createReservation');
 Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation']);
@@ -51,6 +53,7 @@ Route::get('/rezervacijos/{reservation}/trintiispagrindinio', [ReservationFormCo
 Route::post('/rezervacijos/{reservation}/redaguotiispagrindinio', [ReservationFormController::class, 'editReservationFromDashboard'])->name('editReservationFromDashboard');
 
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
+Route::get('/uzrasai/filtras', [NoteFilterController::class, 'index'])->name('filterNotes');
 
 Route::get('/uzrasai/kurti', [NoteFormController::class, 'index'])->name('createNote');
 Route::post('/uzrasai/kurti', [NoteFormController::class, 'createNote']);
@@ -60,6 +63,7 @@ Route::get('/usrasai/{note}/trinti', [NoteFormController::class, 'deleteNote'])-
 Route::post('/usrasai/{note}/redaguoti', [NoteFormController::class, 'editNote'])->name('editNote');
 
 Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
+Route::get('/vartotojai/filtras', [UserFilterController::class, 'index'])->name('filterUsers');
 
 Route::get('/vartotojai/{user:name}', [UsersController::class, 'editUserView']);
 Route::post('/vartotojai/{user:name}', [UsersController::class, 'editUser'])->name('editUser');

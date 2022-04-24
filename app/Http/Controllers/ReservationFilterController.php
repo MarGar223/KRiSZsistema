@@ -13,27 +13,46 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ReservationFilterController extends Controller
 {
-    public function index(User $user, Zone $zone){
-
-
-
-        $reservations = Reservation::orderBy('updated_at', 'desc')->get();
+    public function index(Request $request, User $user, Zone $zone)
+    {
+        $reservations = Reservation::orderBy('updated_at', 'desc');
         $zones = Zone::get();
         $users = User::get();
-        // var_dump($reservations);
-        // if($user != null){
-        //     $reservations = Reservation::where('user_id', $user->id)->get();
-        // }
-        // if($zone != null){
-
-        // }
-
-        return view('reservations.reservation', [
-                    'reservations' => $reservations,
-                    'zones' => $zones,
-                    'users' => $users
-                ]);
 
 
+
+
+        switch ($request->input() != null) {
+            case ($request->input('userId')):
+
+                $reservations = $reservations->where('user_id', $request->input('userId'))->get();
+                break;
+            case ($request->input('zoneId')):
+                $reservations = $reservations->where('zone_id', $request->input('zoneId'))->get();
+                break;
+            case ($request->input('resWhen')):
+                $reservations = $reservations->where('updated_at', $request->input('resWhen'))->get();
+                break;
+            case ($request->input('dateWhen')):
+                $reservations = $reservations->where('date_when', $request->input('dateWhen'))->get();
+                break;
+            case ($request->input('startWhen')):
+                $reservations = $reservations->where('start_time', $request->input('startWhen'))->get();
+                break;
+            case ($request->input('endWhen')):
+                $reservations = $reservations->where('end_time', $request->input('endWhen'))->get();
+                break;
+            case ($request->input('resPeople')):
+                $reservations = $reservations->where('people_count', $request->input('resPeople'))->get();
+                break;
+            }
+
+
+
+        return view('reservations.filter', [
+            'reservations' => $reservations,
+            'zones' => $zones,
+            'users' => $users
+        ]);
     }
 }
