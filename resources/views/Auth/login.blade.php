@@ -9,7 +9,7 @@
                 </div>
 
                 @if (session('status'))
-                    <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2">
+                    <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2" id="status">
                         {{ session('status') }}
                     </div>
                 @endif
@@ -53,4 +53,7 @@
 
 
     </div>
+    <script>
+        $('#status').delay(2000).fadeOut('slow');
+    </script>
 @endsection

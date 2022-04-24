@@ -28,9 +28,10 @@ class ReservationFormController extends Controller
             'end_time'  => 'required'
         ]);
 
-        if($request->input('start_time') > $request->input('end_time')){
-            return back()->with('status', 'Pradžios laikas negali būti vėlesnis už pabaigos laiką');
+        if($request->input('start_time') >= $request->input('end_time')){
+            return back()->with('status', 'Pradžios laikas negali būti vėlesnis arba toks pat kaip pabaigos laiką');
         }
+
 
         $request->user()->reservations()->create([
             'zone_id' => $request->zone,

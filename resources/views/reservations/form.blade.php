@@ -2,21 +2,22 @@
 
 @section('content')
     <div class="container-fluid">
-        <p class="fs-2 text-center mt-3">
+        <p class="fs-2 fw-bold text-center mt-3">
             Naujos rezervacijos kūrimas
         </p>
 
         <div class="container-fluid w-50">
 
-            @if (session('status'))
-                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2">
-                    {{ session('status') }}
-                </div>
-            @endif
+
 
             <form action="{{ route('createReservation') }}" method="POST" class="bg-light p-4 rounded-3 shadow">
                 @csrf
                 <div>
+                    @if (session('status'))
+                        <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
+                            {{ session('status') }}
+                        </div>
+                    @endif
                     <div class="mb-3">
                         <label for="zone" class="form-label">Zona</label>
                         <select name="zone" id="zone"
@@ -35,8 +36,8 @@
 
                     <div class="mb-3">
                         <label for="date" class="form-label">Data</label>
-                        <input type="date" name="date_when" id="date_when" value="{{ old('date_when') }}"
-                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
+                        <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
+                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker">
                         @error('date_when')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -47,7 +48,8 @@
                     <div class="mb-3">
                         <label for="start_time" class="form-label">Laikas nuo</label>
                         <input name="start_time" id="start_time" value="{{ old('start_time') }}"
-                            class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker">
+                            class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
+                            placeholder="Pasirinkite laiką">
                         @error('start_time')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -58,7 +60,8 @@
                     <div class="mb-3">
                         <label for="end_time" class="form-label">laikas iki</label>
                         <input name="end_time" id="end_time" value="{{ old('end_time') }}"
-                            class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker">
+                            class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
+                            placeholder="Pasirinkite laiką">
                         @error('end_time')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -100,5 +103,19 @@
                 scrollbar: true
             });
         });
+
+        var dateToday = new Date();
+        $(document).ready(function() {
+            $( "input.datepicker" ).datepicker({
+                monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa", "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"],
+                dayNamesShort: [ "Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št" ],
+                dayNamesMin: [ "Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št" ],
+                dateFormat: 'yy-mm-dd',
+                minDate: dateToday
+            });
+         });
+
+
+        $('#status').delay(2000).fadeOut('slow');
     </script>
 @endsection
