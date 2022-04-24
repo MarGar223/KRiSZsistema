@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label for="date" class="form-label">Data</label>
                         <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
-                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker">
+                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker" placeholder="Pasirinkite datą">
                         @error('date_when')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -116,6 +116,6 @@
          });
 
 
-        $('#status').delay(2000).fadeOut('slow');
+        $('#status').delay(5000).fadeOut('slow');
     </script>
 @endsection

@@ -7,10 +7,16 @@
 
         <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
             <form action="{{ route('reservation') }}" method="GET" class="d-flex flex-column w-25">
-                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top" title="Valyti filtrą">
+                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
+                    title="Valyti filtrą">
                     <i data-feather="trash-2"></i>
-                  </button>
-                </form>
+                </button>
+            </form>
+            @if (session('status'))
+                        <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
+                            {{ session('status') }}
+                        </div>
+                    @endif
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
@@ -195,7 +201,8 @@
 
                                 <td>{{ $reservation->updated_at->diffForHumans() }} <br> <span
                                         class="fs-6 text-muted">{{ $reservation->updated_at }} </span> </td>
-                                <td>{{ $reservation->user->name }}</td>
+                                <td>{{ $reservation->user->name }} {{ $reservation->user->surname }} <br> <span
+                                        class="text-muted">{{ $reservation->user->role }}</span> </td>
                                 <td>{{ $reservation->zone->name }}</td>
                                 <td>{{ $reservation->date_when }}</td>
                                 <td>{{ $reservation->start_time }}</td>
@@ -266,7 +273,7 @@
                                     <form action="{{ route('editReservation', $reservation) }}" method="POST">
                                         @csrf
                                         <div class="modal fade" id="exampleModalRed{{ $reservation->id }}"
-                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
                                             <div class="modal-dialog modal-dialog-centered">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -302,10 +309,11 @@
 
                                                         <div class="mb-3">
                                                             <label for="date" class="form-label">Data</label>
-                                                            <input type="date" name="date_when"
+                                                            <input type="text" name="date_when"
                                                                 id="date_when{{ $reservation->id }}"
                                                                 value="{{ $reservation->date_when }}"
-                                                                class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
+                                                                class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
+                                                                placeholder="Pasirinkite datą">
                                                             @error('date_when')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
@@ -316,10 +324,11 @@
                                                         <div class="mb-3">
                                                             <label for="start_time" class="form-label">Laikas
                                                                 nuo</label>
-                                                            <input type="time" name="start_time"
+                                                            <input name="start_time"
                                                                 id="start_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->start_time }}"
-                                                                class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror">
+                                                                class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
+                                                                placeholder="Pasirinkite laiką">
                                                             @error('start_time')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
@@ -329,10 +338,11 @@
 
                                                         <div class="mb-3">
                                                             <label for="end_time" class="form-label">laikas iki</label>
-                                                            <input type="time" name="end_time"
+                                                            <input name="end_time"
                                                                 id="end_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->end_time }}"
-                                                                class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                                class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
+                                                                placeholder="Pasirinkite laiką">
                                                             @error('end_time')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
@@ -363,7 +373,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>\
+                                            </div>
                                         </div>
                                     </form>
                             </tr>
@@ -493,8 +503,36 @@
             }
 
             var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
-                })
+            })
+
+            $(document).ready(function() {
+                $('input.timepicker').timepicker({
+                    timeFormat: 'HH:mm',
+                    interval: 5,
+                    minTime: '8',
+                    maxTime: '17',
+                    startTime: '8:00',
+                    dynamic: false,
+                    dropdown: true,
+                    scrollbar: true,
+
+            });
+        });
+
+            var dateToday = new Date();
+            $(document).ready(function() {
+                $("input.datepicker").datepicker({
+                    monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
+                        "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
+                    ],
+                    dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                    dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                    dateFormat: 'yy-mm-dd',
+                    minDate: dateToday
+                });
+            });
+            $('#status').delay(5000).fadeOut('slow');
         </script>
     @endsection

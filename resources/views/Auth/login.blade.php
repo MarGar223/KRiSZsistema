@@ -54,6 +54,6 @@
 
     </div>
     <script>
-        $('#status').delay(2000).fadeOut('slow');
+        $('#status').delay(5000).fadeOut('slow');
     </script>
 @endsection
