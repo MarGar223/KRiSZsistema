@@ -36,6 +36,13 @@ class UsersController extends Controller
                 'email' => 'required|email|max:255',
                 'level' => 'required'
             ]);
+            $user->update([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'role' => $request->role,
+                'email' => $request->email,
+                'level' => $request->level
+                ]);
         } else {
             $this->validate($request,[
                 'name' => 'required|max:255',
@@ -45,18 +52,16 @@ class UsersController extends Controller
                 'password' => 'required',
                 'level' => 'required'
             ]);
+
+            $user->update([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'role' => $request->role,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'level' => $request->level
+                ]);
         }
-
-
-        $request->user()->where('id', $user->id)->update([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'role' => $request->role,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => $request->level
-        ]);
-
         return redirect()->route('allUsers');
     }
 

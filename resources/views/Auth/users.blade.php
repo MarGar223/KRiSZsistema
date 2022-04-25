@@ -119,7 +119,7 @@
                 </thead>
                 @if ($users->count())
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($users->sortByDesc('name') as $user)
                             <tr class="text-start">
                                 <td>{{ $user->name }} {{ $user->surname }}</td>
                                 <td>{{ $user->role }}</td>

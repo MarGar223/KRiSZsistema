@@ -74,6 +74,9 @@
     scroll-behavior: smooth;
   }
 }
+.checkHidden{
+    display: none !important;
+}
 
 body {
   margin: 0;
