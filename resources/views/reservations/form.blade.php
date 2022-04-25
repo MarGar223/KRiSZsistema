@@ -16,6 +16,7 @@
                     @if (session('status'))
                         <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
                             {{ session('status') }}
+
                         </div>
                     @endif
                     <div class="mb-3">
