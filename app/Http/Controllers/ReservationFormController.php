@@ -82,13 +82,10 @@ class ReservationFormController extends Controller
 
     public function editReservation(Request $request, Reservation $reservation)
     {
+        $otherReservations = Reservation::where('zone_id', $reservation->zone_id)->where('date_when', $reservation->date_when)->get();
+        dd($otherReservations);
 
-        dd($reservation);
-        if($request->input()){
-            if()
-        }
-        // if ($request->getPathInfo() === "/rezervacijos/" . $reservation->id . "/redaguoti") {
-        // }
+
         if ($request->user()->id == $reservation->user_id) {
 
             if ($request->input('start_time') >= $request->input('end_time')) {
@@ -111,6 +108,8 @@ class ReservationFormController extends Controller
                     return back()->with('status', 'Tokiam žmonių kiekiui zona netinkama. Galimas maximalus kiekis ' . $zone->max_people_count . ' asmenų.');
                 }
             }
+
+            $request->user()->reservations()->where('id', $reservation->id)->delete();
 
             $request->user()->reservations()->where('id', $reservation->id)->update([
                 'zone_id' => $request->zone,
@@ -147,7 +146,7 @@ class ReservationFormController extends Controller
                     return back()->with('status', 'Tokiam žmonių kiekiui zona netinkama. Galimas maximalus kiekis ' . $zone->max_people_count . ' asmenų.');
                 }
             }
-
+            $reservation->where('id', $reservation->id)->delete();
             $reservation->where('id', $reservation->id)->update([
                 'zone_id' => $request->zone,
                 'people_count' => $request->people_count,
