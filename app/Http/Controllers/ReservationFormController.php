@@ -104,9 +104,29 @@ class ReservationFormController extends Controller
                 ) {
 
                     foreach($otherReservation as $item){
+                        if($reservation->id == $item->id){
+                           if((($request->start_time >= $item->start_time) && ($request->start_time < $item->end_time)) &&
+                            (($request->end_time > $item->start_time) && ($request->end_time <= $item->end_time))){
+                               continue;
+                            // } else {
+                            //     if(($request->start_time > $item->start_time) && ($request->start_time < $item->end_time)){
+
+                            //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota start time');
+                            //     }
+
+                            //     if(($request->end_time > $item->start_time) && ($request->end_time < $item->end_time)){
+                            //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota end time');
+                            //     }
+                            //     if(($request->start_time < $item->start_time) && ($request->end_time > $item->end_time)){
+                            //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota over time');
+
+                            //     }
+                            }
+                        }
+
                         if($reservation->id != $item->id){
                                 if(($request->start_time > $item->start_time) && ($request->start_time < $item->end_time)){
-                                    // dd($request->start_time, $item->end_time);
+
                                     return back()->with('status', 'Tokiu laiku ši zona jau rezervuota start time');
                                 }
 
