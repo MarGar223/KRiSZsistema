@@ -94,7 +94,7 @@
     <script>
         $(document).ready(function() {
             $('input.timepicker').timepicker({
-                timeFormat: 'HH:mm',
+                timeFormat: 'HH:mm:ss',
                 interval: 5,
                 minTime: '8',
                 maxTime: '17',

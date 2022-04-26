@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Reservation;
 use App\Models\Zone;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Validation\Rules\Exists;
+use App\Http\Controllers\Controller;
+
 
 class ReservationFormController extends Controller
 {
@@ -92,7 +92,7 @@ class ReservationFormController extends Controller
 
             $zone = Zone::where('id', $request->input('zone'))->first();
 
-
+        // dd($reservation, "first".$reservationFirst);
         if ($request->user()->id == $reservation->user_id) {
             if ($request->input()) {
                 if (
@@ -102,22 +102,50 @@ class ReservationFormController extends Controller
                     ($request->input('end_time') != $reservation->end_time) ||
                     ($request->input('people_count') != $reservation->people_count)
                 ) {
-                    if ($reservationFirst && ($reservationFirst->id != $reservation->id)) {
-                        if ($request->input('start_time') == $reservationFirst->start_time) {
-                            return back()->with('status', 'Tokiu laiku ši zona jau rezervuota');
+
+                    foreach($otherReservation as $item){
+                        if($reservation->id != $item->id){
+                                if(($request->start_time > $item->start_time) && ($request->start_time < $item->end_time)){
+                                    // dd($request->start_time, $item->end_time);
+                                    return back()->with('status', 'Tokiu laiku ši zona jau rezervuota start time');
+                                }
+
+                                if(($request->end_time > $item->start_time) && ($request->end_time < $item->end_time)){
+                                    return back()->with('status', 'Tokiu laiku ši zona jau rezervuota end time');
+                                }
+                                if(($request->start_time < $item->start_time) && ($request->end_time > $item->end_time)){
+                                    return back()->with('status', 'Tokiu laiku ši zona jau rezervuota over time');
+
+                                }
+
+
+
+
+
+
+                            // if (($request->input('start_time') > $item->start_time) && ($request->input('start_time') < $item->end_time)) {
+                            //     return back()->with('status', 'Tokiu laiku ši zona jau rezervuota1');
+                            // }
+                            }
                         }
 
-                        if (($request->input('start_time') < $reservationFirst->end_time) && ($request->input('start_time') > $reservationFirst->start_time)) {
+                    // if ($reservationFirst && ($reservationFirst->id != $reservation->id)) {
+                    //     if ($request->input('start_time') == $reservationFirst->start_time) {
+                    //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota');
+                    //     }
 
-                            return back()->with('status', 'Tokiu laiku ši zona jau rezervuota1');
-                        }
+                    //     if (($request->input('start_time') < $reservationFirst->end_time) && ($request->input('start_time') > $reservationFirst->start_time)) {
 
-                        if (($request->input('end_time') < $reservationFirst->end_time) && ($request->input('end_time') > $reservationFirst->start_time)) {
+                    //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota1');
+                    //     }
 
-                            return back()->with('status', 'Tokiu laiku ši zona jau rezervuota1');
-                        }
+                    //     if (($request->input('end_time') < $reservationFirst->end_time) && ($request->input('end_time') > $reservationFirst->start_time)) {
 
-                    }
+                    //         return back()->with('status', 'Tokiu laiku ši zona jau rezervuota2');
+                    //     }
+
+
+                    // }
                     if (($request->input('people_count') <= 0) && ($request->input('people_count') <= $zone->max_people_count)) {
                         return back()->with('status', 'Tokiam žmonių kiekiui zona netinkama. Galimas maximalus kiekis ' . $zone->max_people_count . ' asmenų.');
                     }

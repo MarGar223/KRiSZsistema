@@ -1,0 +1,10 @@
+.checkHidden{
+    display: none !important;
+}
+.ui-timepicker-container{
+    z-index: 1056 !important;
+}
+html, body{
+    margin: 0 !important;
+    height: 100% !important;
+}

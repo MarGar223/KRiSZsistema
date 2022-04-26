@@ -59,9 +59,6 @@
   --bs-body-color: #212529;
   --bs-body-bg: #f8fafc;
 }
-.ui-timepicker-container{
-    z-index: 1056 !important;
-}
 
 *,
 *::before,
@@ -73,9 +70,6 @@
   :root {
     scroll-behavior: smooth;
   }
-}
-.checkHidden{
-    display: none !important;
 }
 
 body {
@@ -89,11 +83,6 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-html, body{
-    margin: 0 !important;
-    height: 100% !important;
 }
 
 hr {
