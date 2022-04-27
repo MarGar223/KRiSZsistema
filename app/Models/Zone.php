@@ -16,7 +16,7 @@ class Zone extends Model
 
     public function reservation()
     {
-        return $this->hasMany(Reservation::class);
+        return $this->belongsTo(Reservation::class);
     }
 
 }

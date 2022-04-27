@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
 
     public function userLevel(){
-        return $this->belongsTo(UserLevel::class);
+        return $this->hasOne(UserLevel::class, 'id','user_level_id');
     }
 
     public function run(){

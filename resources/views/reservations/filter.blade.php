@@ -13,10 +13,10 @@
                 </button>
             </form>
             @if (session('status'))
-                        <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
+                    {{ session('status') }}
+                </div>
+            @endif
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
                 <thead>
                     <tr class="text-center align-middle">
@@ -338,8 +338,7 @@
 
                                                         <div class="mb-3">
                                                             <label for="end_time" class="form-label">laikas iki</label>
-                                                            <input name="end_time"
-                                                                id="end_time{{ $reservation->id }}"
+                                                            <input name="end_time" id="end_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->end_time }}"
                                                                 class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
                                                                 placeholder="Pasirinkite laiką">
@@ -507,21 +506,21 @@
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
 
+            var dateToday = new Date();
+            console.log(dateToday.getHours() + ":" + dateToday.getMinutes(), );
             $(document).ready(function() {
                 $('input.timepicker').timepicker({
                     timeFormat: 'HH:mm:ss',
-                    interval: 5,
+                    interval: 15,
                     minTime: '8',
                     maxTime: '17',
-                    startTime: '8:00',
+                    startTime: '8',
                     dynamic: false,
                     dropdown: true,
                     scrollbar: true,
 
+                });
             });
-        });
-
-            var dateToday = new Date();
             $(document).ready(function() {
                 $("input.datepicker").datepicker({
                     monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",

@@ -38,7 +38,8 @@
                     <div class="mb-3">
                         <label for="date" class="form-label">Data</label>
                         <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
-                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker" placeholder="Pasirinkite datą">
+                            class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
+                            placeholder="Pasirinkite datą">
                         @error('date_when')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -92,29 +93,34 @@
 
     </div>
     <script>
+        var dateToday = new Date();
+        console.log(dateToday.getHours() + ":" + dateToday.getMinutes(), );
         $(document).ready(function() {
             $('input.timepicker').timepicker({
                 timeFormat: 'HH:mm:ss',
-                interval: 5,
+                interval: 15,
                 minTime: '8',
                 maxTime: '17',
-                startTime: '8:00',
+                startTime: '8',
                 dynamic: false,
                 dropdown: true,
-                scrollbar: true
+                scrollbar: true,
+
             });
         });
 
-        var dateToday = new Date();
+
         $(document).ready(function() {
-            $( "input.datepicker" ).datepicker({
-                monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa", "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"],
-                dayNamesShort: [ "Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št" ],
-                dayNamesMin: [ "Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št" ],
+            $("input.datepicker").datepicker({
+                monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
+                    "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
+                ],
+                dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
                 dateFormat: 'yy-mm-dd',
                 minDate: dateToday
             });
-         });
+        });
 
 
         $('#status').delay(5000).fadeOut('slow');

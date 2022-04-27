@@ -26,6 +26,6 @@ class Reservation extends Model
     }
 
     public function zone(){
-        return $this->belongsTo(Zone::class);
+        return $this->hasOne(Zone::class,'id', 'zone_id');
     }
 }

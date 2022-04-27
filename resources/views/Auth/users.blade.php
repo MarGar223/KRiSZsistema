@@ -343,9 +343,11 @@
                                                                                 <option value='{{ $user->user_level_id }}'>
                                                                                     {{ $user->userLevel->name }}</option>
                                                                                 @foreach ($userLevels as $userLevel)
-                                                                                    <option
-                                                                                        value='{{ $userLevel->id }}'>
-                                                                                        {{ $userLevel->name }}</option>
+                                                                                @if ($user->user_level_id != $userLevel->id)
+                                                                                <option
+                                                                                    value='{{ $userLevel->id }}'>
+                                                                                    {{ $userLevel->name }}</option>
+                                                                                @endif
                                                                                 @endforeach>
                                                                             </select>
 

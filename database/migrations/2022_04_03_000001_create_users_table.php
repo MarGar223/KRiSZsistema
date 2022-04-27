@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('role');
             $table->string('email')->unique();
             $table->string('password');
-            $table->integer('user_level_id');
+            $table->foreignId('user_level_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
-        // $password = Password::Hash('Marius!2');
+
         DB::insert('insert into users (name, surname, role, email, password, user_level_id) values (?, ?, ?, ?, ?, ?)', ['Admin', 'Admin', 'Admin', 'admin@admin.lt', Hash::make('Marius!2'), 1]);
 
     }

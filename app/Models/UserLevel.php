@@ -10,8 +10,12 @@ class UserLevel extends Model
 {
     use HasFactory;
 
-    public function users(){
-        $this->hasMany(User::class);
+    protected $fillable = [
+        'name'
+    ];
+
+    public function user(){
+        $this->belongsTo(User::class,'user_level_id');
     }
 }
 
