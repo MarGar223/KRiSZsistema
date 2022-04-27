@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Symfony\Component\Mailer\Test\Constraint\EmailCount;
 
+use function PHPUnit\Framework\throwException;
+
 class RegisterController extends Controller
 {
     public function index()
@@ -22,30 +24,29 @@ class RegisterController extends Controller
 
     public function addUser(Request $request)
     {
+            $this->validate($request,[
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'role' => 'required|string|max:255',
+                'email' => ['required','email','unique:users,email'],
+                'password' => [ Password::min(8)
+                ->mixedCase()
+                ->numbers()
+                ->symbols(),
+                'required',
+                'confirmed'],
+                'level' => 'required'
+            ]);
+                User::create([
+                'name' => $request->name,
+                'surname' => $request->surname,
+                'role' => $request->role,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'user_level_id' => $request->level
+            ]);
 
-        $this->validate($request,[
-            'name' => 'required|string|max:255',
-            'surname' => 'required|string|max:255',
-            'role' => 'required|string|max:255',
-            'email' => ['required','email','unique:users,email'],
-            'password' => [ Password::min(8)
-            ->mixedCase()
-            ->numbers()
-            ->symbols(),
-            'required'],
-            'level' => 'required|string|max:255'
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'surname' => $request->surname,
-            'role' => $request->role,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'level' => $request->level
-        ]);
-
-        return redirect()->route('allUsers');
+            return redirect()->route('allUsers');
 
     }
 }

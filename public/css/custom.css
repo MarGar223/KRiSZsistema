@@ -1,10 +1,12 @@
-.checkHidden{
-    display: none !important;
+body, html {
+    margin: 0;
+    height: 100%;
 }
-.ui-timepicker-container{
-    z-index: 1056 !important;
+
+.checkHidden {
+    display: none;
 }
-html, body{
-    margin: 0 !important;
-    height: 100% !important;
+
+.ui-timepicker-container {
+    z-index: 1060 !important;
 }

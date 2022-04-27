@@ -102,9 +102,9 @@
                                         class="text-danger">*</span></label><br>
                                 <select name="level"
                                     class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
-                                        <option value='{{ $user->level }}'>{{ $user->level }}</option>
+                                        <option value='{{ $user->level_id }}'>{{ $user->level_id->name }}</option>
                                     @foreach ($userLevels as $userLevel)
-                                        <option value='{{ $userLevel->name }}'>{{ $userLevel->name }}</option>
+                                        <option value='{{ $userLevel->id }}'>{{ $userLevel->name }}</option>
                                     @endforeach>
                                 </select>
 

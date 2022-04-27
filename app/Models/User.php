@@ -26,7 +26,7 @@ class User extends Authenticatable
         'role',
         'email',
         'password',
-        'level'
+        'user_level_id'
 
     ];
 
@@ -58,7 +58,7 @@ class User extends Authenticatable
     }
 
     public function userLevel(){
-        return $this->hasOne(UserLevel::class);
+        return $this->belongsTo(UserLevel::class);
     }
 
     public function run(){

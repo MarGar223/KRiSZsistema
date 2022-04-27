@@ -14,6 +14,7 @@ class UsersController extends Controller
     {
        $this->middleware('auth');
     }
+
     public function index(Request $request) {
         $users = User::orderBy('name', 'asc')->get();
         $userLevels = UserLevel::get();
@@ -41,7 +42,7 @@ class UsersController extends Controller
                 'surname' => $request->surname,
                 'role' => $request->role,
                 'email' => $request->email,
-                'level' => $request->level
+                'user_level_id' => $request->level
                 ]);
         } else {
             $this->validate($request,[
@@ -67,7 +68,7 @@ class UsersController extends Controller
 
     public function deleteUser(Request $request, User $user){
 
-        if($user->level != 'Administratorius'){
+        if($user->level_id != 1){
             $request->user()->where('id', $user->id)->delete();
         }
 

@@ -105,18 +105,18 @@
                                     <form action="{{ route('allUsers') }}" method="GET">
                                         <button class="btn btn-sm dropdown-item" id="all">Visi lygiai</button>
                                     </form>
-                                    @foreach ($users->unique('level') as $user)
+                                    @foreach ($users->unique('level_id') as $user)
                                         <form action="{{ route('filterUsers') }}" method="GET">
                                             @csrf
                                             <button class="btn btn-sm dropdown-item" name="userLevel"
-                                                value="{{ $user->level }}">{{ $user->level }}</button>
+                                                value="{{ $user->userLevel->id }}">{{ $user->userLevel->name }}</button>
                                         </form>
                                     @endforeach
                                 </div>
                             </div>
                         </th>
                         @if (auth()->user())
-                            @if (auth()->user()->level == 'Administratorius')
+                            @if (auth()->user()->user_level_id == 1)
                                 <th scope="col">Funkcijos</th>
                             @endif
                         @endif
@@ -129,9 +129,9 @@
                                 <td>{{ $user->name }} {{ $user->surname }}</td>
                                 <td>{{ $user->role }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->level }}</td>
+                                <td>{{ $user->userLevel->name }}</td>
                                 @if (auth()->user())
-                                    @if (auth()->user()->level == 'Administratorius')
+                                    @if (auth()->user()->user_level_id == 1)
                                         <td class="text-center">
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -345,11 +345,11 @@
                                                                                     class="text-danger">*</span></label><br>
                                                                             <select name="level"
                                                                                 class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
-                                                                                <option value='{{ $user->level }}'>
-                                                                                    {{ $user->level }}</option>
+                                                                                <option value='{{ $user->level_id }}'>
+                                                                                    {{ $user->userLevel->name }}</option>
                                                                                 @foreach ($userLevels as $userLevel)
                                                                                     <option
-                                                                                        value='{{ $userLevel->name }}'>
+                                                                                        value='{{ $userLevel->id }}'>
                                                                                         {{ $userLevel->name }}</option>
                                                                                 @endforeach>
                                                                             </select>

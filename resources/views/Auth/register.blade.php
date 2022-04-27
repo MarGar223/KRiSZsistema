@@ -6,6 +6,15 @@
 
         <div class="container-fluid w-50 bg-light p-4 rounded-3 shadow">
 
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="grid">
@@ -110,7 +119,7 @@
                                     class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
                                     <option value=”” disabled selected>Priskirkite vartotojo lygį</option>
                                     @foreach ($userLevels as $userLevel)
-                                        <option value='{{ $userLevel->name }}'>{{ $userLevel->name }}</option>
+                                        <option value='{{ $userLevel->id }}'>{{ $userLevel->name }}</option>
                                     @endforeach
                                 </select>
 

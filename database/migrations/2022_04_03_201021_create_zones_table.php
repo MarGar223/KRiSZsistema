@@ -22,10 +22,12 @@ return new class extends Migration
 
         });
 
-        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Kasis', 25]);
-        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Fule', 30]);
-        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Gronkes', 15]);
-        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Sale', 10]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Krepšinio salė', 40]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Futbolo aikštelė', 40]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Granatų metymo laukas', 20]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Sporto salė', 20]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Tinklinio aikstelė', 20]);
+        DB::insert('insert into zones (name, max_people_count) values (?, ?)', ['Stadionas', 40]);
 
     }
 

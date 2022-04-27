@@ -11,7 +11,7 @@ class UserLevel extends Model
     use HasFactory;
 
     public function users(){
-        $this->belongsToMany(User::class);
+        $this->hasMany(User::class);
     }
 }
 

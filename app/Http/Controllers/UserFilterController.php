@@ -31,7 +31,7 @@ class UserFilterController extends Controller
                 $users = $users->where('email', $request->input('userEmail'))->get();
                 break;
             case ($request->input('userLevel')):
-                $users = $users->where('level', $request->input('userLevel'))->get();
+                $users = $users->where('user_level_id', $request->input('userLevel'))->get();
                 break;
             }
 

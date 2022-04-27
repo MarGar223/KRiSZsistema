@@ -210,7 +210,7 @@
                                 <td>{{ $reservation->people_count }}</td>
 
                                 @if (auth()->user())
-                                    @if (auth()->user()->level == 'Administratorius' || auth()->user()->level == 'Instruktorius')
+                                    @if (auth()->user()->level_id == 1 || auth()->user()->level_id == 2)
                                         <td>
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
