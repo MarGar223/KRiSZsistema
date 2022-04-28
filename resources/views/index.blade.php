@@ -46,7 +46,7 @@
                     <form action="{{ route('logout') }}" method="POST">
                         <li class="nav-item">
                             @csrf
-                            <button type="submit" class="btn-primary">Atsijungti</button>
+                            <button type="submit" class="btn btn-transparent fs-6">Atsijungti</button>
                         </li>
                     </form>
                 @endauth
@@ -96,7 +96,7 @@
                 </ul>
                 <hr>
             </div>
-            <div class="col-10 bg-warning" style="min-height: 100%">
+            <div class="col-10 bg-warning">
                 @yield('content')
             </div>
         </div>

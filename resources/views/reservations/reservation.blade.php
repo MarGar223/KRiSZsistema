@@ -160,7 +160,7 @@
                         <th scope="col">
                             <div class="btn-group">
                                 <button class="btn btn-sm fw-bold text-black">
-                                    Personalo skaičius
+                                    Žmonių skaičius
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -202,7 +202,7 @@
                                 <td>{{ $reservation->people_count }}</td>
 
                                 @if (auth()->user())
-                                    @if (auth()->user()->level_id == 1 || auth()->user()->level_id == 2)
+                                    @if (auth()->user()->user_level_id == 1 || auth()->user()->user_level_id == 2)
                                         <td>
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -329,7 +329,7 @@
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label for="end_time" class="form-label">laikas iki</label>
+                                                            <label for="end_time" class="form-label">Laikas iki</label>
                                                             <input name="end_time" id="end_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->end_time }}"
                                                                 class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
@@ -343,8 +343,7 @@
 
                                                         <div class="mb-3">
 
-                                                            <label for="people_count" class="form-label">Skaicius
-                                                                asmenu</label>
+                                                            <label for="people_count" class="form-label">Žmonių skaičius</label>
                                                             <input type="number" name="people_count"
                                                                 id="people_count{{ $reservation->id }}"
                                                                 value="{{ $reservation->people_count }}"
@@ -494,7 +493,7 @@
             }
 
             var dateToday = new Date();
-            console.log(dateToday.getHours() + ":" + dateToday.getMinutes(), );
+
             $(document).ready(function() {
                 $('input.timepicker').timepicker({
                     timeFormat: 'HH:mm:ss',
@@ -507,10 +506,6 @@
                     scrollbar: true,
 
                 });
-            });
-
-
-            $(document).ready(function() {
                 $("input.datepicker").datepicker({
                     monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
                         "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
@@ -520,6 +515,15 @@
                     dateFormat: 'yy-mm-dd',
                     minDate: dateToday
                 });
+
+                $('input.timepicker').keypress(function(e) {
+                    e.preventDefault();
+                });
+
+                $('input.datepicker').keypress(function(e) {
+                    e.preventDefault();
+                });
+
             });
             $('#status').delay(5000).fadeOut('slow');
         </script>

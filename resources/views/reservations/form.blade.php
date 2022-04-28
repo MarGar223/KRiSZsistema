@@ -39,7 +39,7 @@
                         <label for="date" class="form-label">Data</label>
                         <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
                             class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
-                            placeholder="Pasirinkite datą">
+                            placeholder="Pasirinkite datą" >
                         @error('date_when')
                             <div class="fs-6 text-danger">
                                 <span>Lauką privaloma užpildyti</span>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="end_time" class="form-label">laikas iki</label>
+                        <label for="end_time" class="form-label">Laikas iki</label>
                         <input name="end_time" id="end_time" value="{{ old('end_time') }}"
                             class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
                             placeholder="Pasirinkite laiką">
@@ -73,7 +73,7 @@
 
                     <div class="mb-3">
 
-                        <label for="people_count" class="form-label">Skaicius asmenu</label>
+                        <label for="people_count" class="form-label">Žmonių skaičius</label>
                         <input type="number" name="people_count" id="people_count" value="{{ old('people_count') }}"
                             class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
                         @error('people_count')
@@ -94,7 +94,7 @@
     </div>
     <script>
         var dateToday = new Date();
-        console.log(dateToday.getHours() + ":" + dateToday.getMinutes(), );
+
         $(document).ready(function() {
             $('input.timepicker').timepicker({
                 timeFormat: 'HH:mm:ss',
@@ -107,10 +107,6 @@
                 scrollbar: true,
 
             });
-        });
-
-
-        $(document).ready(function() {
             $("input.datepicker").datepicker({
                 monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
                     "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
@@ -120,7 +116,17 @@
                 dateFormat: 'yy-mm-dd',
                 minDate: dateToday
             });
+
+            $('input.timepicker').keypress(function(e) {
+                    e.preventDefault();
+                });
+
+            $('input.datepicker').keypress(function(e) {
+                e.preventDefault();
+            });
+
         });
+
 
 
         $('#status').delay(5000).fadeOut('slow');

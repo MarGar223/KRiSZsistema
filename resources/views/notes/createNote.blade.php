@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container-fluid">
-        <p class="fs-2 text-center mt-3">
+        <p class="fs-2 fw-bold text-center mt-3">
             Naujo užrašo kūrimas
         </p>
 
@@ -19,7 +19,7 @@
                     @enderror
                 </div>
                 <div>
-                    <label for="body">Užrašas</label>
+                    <label for="body">Turinys</label>
                     <textarea type="text" name="body" id="body" value="{{ old('body') }}" class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror"></textarea>
                     @error('body')
                         <div class="px-2 text-red-500 text-sm">

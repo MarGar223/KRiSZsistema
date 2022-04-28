@@ -1,20 +1,15 @@
 @extends('index')
 
 @section('content')
+@auth
+@if (auth()->user()->user_level_id === 1)
+
+
     <div class="container-fluid">
         <p class="fs-3 fw-bold mt-3 text-center">Naujo vartotojo kūrimas</p>
 
         <div class="container-fluid w-50 bg-light p-4 rounded-3 shadow">
 
-@if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
             <form action="{{ route('register') }}" method="POST">
                 @csrf
                 <div class="grid">
@@ -141,7 +136,8 @@
 
 
     </div>
-
+    @endif
+    @endauth
     <script>
         var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
         var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {

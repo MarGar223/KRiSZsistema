@@ -13,6 +13,10 @@ use function PHPUnit\Framework\throwException;
 
 class RegisterController extends Controller
 {
+    public function __construct(Request $request)
+    {
+            $this->middleware('auth');
+    }
     public function index()
     {
         $userLevels = UserLevel::get();

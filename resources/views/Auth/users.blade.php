@@ -340,7 +340,7 @@
                                                                                     class="text-danger">*</span></label><br>
                                                                             <select name="level"
                                                                                 class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
-                                                                                <option value='{{ $user->user_level_id }}'>
+                                                                                <option value='{{ $user->userLevel->id }}'>
                                                                                     {{ $user->userLevel->name }}</option>
                                                                                 @foreach ($userLevels as $userLevel)
                                                                                 @if ($user->user_level_id != $userLevel->id)

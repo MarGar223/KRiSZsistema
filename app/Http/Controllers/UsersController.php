@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Symfony\Contracts\Service\Attribute\Required;
+use Illuminate\Validation\Rules\Password;
 
 class UsersController extends Controller
 {
@@ -30,13 +30,15 @@ class UsersController extends Controller
     public function editUser(Request $request, User $user){
 
         if($request->input('password') == null){
+
             $this->validate($request,[
-                'name' => 'required|max:255',
-                'surname' => 'required|max:255',
-                'role' => 'required|max:255',
-                'email' => 'required|email|max:255',
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'role' => 'required|string|max:255',
+                'email' => ['required','email'],
                 'level' => 'required'
             ]);
+
             $user->update([
                 'name' => $request->name,
                 'surname' => $request->surname,
@@ -45,12 +47,18 @@ class UsersController extends Controller
                 'user_level_id' => $request->level
                 ]);
         } else {
+
             $this->validate($request,[
-                'name' => 'required|max:255',
-                'surname' => 'required|max:255',
-                'role' => 'required|max:255',
-                'email' => 'required|email|max:255',
-                'password' => 'required',
+                'name' => 'required|string|max:255',
+                'surname' => 'required|string|max:255',
+                'role' => 'required|string|max:255',
+                'email' => ['required','email','unique:users,email'],
+                'password' => [ Password::min(8)
+                ->mixedCase()
+                ->numbers()
+                ->symbols(),
+                'required',
+                'confirmed'],
                 'level' => 'required'
             ]);
 
@@ -60,7 +68,7 @@ class UsersController extends Controller
                 'role' => $request->role,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
-                'level' => $request->level
+                'user_level_id' => $request->level
                 ]);
         }
         return redirect()->route('allUsers');
@@ -68,8 +76,8 @@ class UsersController extends Controller
 
     public function deleteUser(Request $request, User $user){
 
-        if($user->level_id != 1){
-            $request->user()->where('id', $user->id)->delete();
+        if($user->user_level_id != 1){
+            $user->delete();
         }
 
         return redirect()->route('allUsers');

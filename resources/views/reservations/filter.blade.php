@@ -166,7 +166,7 @@
                         <th scope="col">
                             <div class="btn-group">
                                 <button class="btn btn-sm fw-bold text-black">
-                                    Personalo skaičius
+                                    Žmonių skaičius
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
                                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -351,8 +351,7 @@
 
                                                         <div class="mb-3">
 
-                                                            <label for="people_count" class="form-label">Skaicius
-                                                                asmenu</label>
+                                                            <label for="people_count" class="form-label">Žmonių skaičius</label>
                                                             <input type="number" name="people_count"
                                                                 id="people_count{{ $reservation->id }}"
                                                                 value="{{ $reservation->people_count }}"
@@ -507,31 +506,38 @@
             })
 
             var dateToday = new Date();
-            console.log(dateToday.getHours() + ":" + dateToday.getMinutes(), );
-            $(document).ready(function() {
-                $('input.timepicker').timepicker({
-                    timeFormat: 'HH:mm:ss',
-                    interval: 15,
-                    minTime: '8',
-                    maxTime: '17',
-                    startTime: '8',
-                    dynamic: false,
-                    dropdown: true,
-                    scrollbar: true,
 
-                });
+        $(document).ready(function() {
+            $('input.timepicker').timepicker({
+                timeFormat: 'HH:mm:ss',
+                interval: 15,
+                minTime: '8',
+                maxTime: '17',
+                startTime: '8',
+                dynamic: false,
+                dropdown: true,
+                scrollbar: true,
+
             });
-            $(document).ready(function() {
-                $("input.datepicker").datepicker({
-                    monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
-                        "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
-                    ],
-                    dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
-                    dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
-                    dateFormat: 'yy-mm-dd',
-                    minDate: dateToday
-                });
+            $("input.datepicker").datepicker({
+                monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
+                    "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
+                ],
+                dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                dateFormat: 'yy-mm-dd',
+                minDate: dateToday
             });
+
+            $('input.timepicker').keypress(function(e) {
+                    e.preventDefault();
+                });
+
+            $('input.datepicker').keypress(function(e) {
+                e.preventDefault();
+            });
+
+        });
             $('#status').delay(5000).fadeOut('slow');
         </script>
     @endsection
