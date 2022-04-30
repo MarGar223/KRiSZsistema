@@ -1,6 +1,8 @@
 @extends('index')
 
 @section('content')
+
+
     <div class="container-fluid">
         <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
 

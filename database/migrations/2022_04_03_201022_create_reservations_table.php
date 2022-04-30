@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('date_when');
             $table->time('start_time');
             $table->time('end_time');
+            $table->integer('old_reservation')->default(0);
             $table->timestamps();
 
 

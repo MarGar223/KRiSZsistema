@@ -14,8 +14,8 @@ class DashboardController extends Controller
         $zones = Zone::get();
         $user = auth()->user();
         if($user){
-            $reservations = Reservation::orderBy('created_at','desc')->where('user_id',$user->id)->paginate(3, ['*'], 'rezervacijos');
-            $notes = Note::orderBy('created_at','desc')->where('user_id',$user->id)->paginate(3, ['*'], 'uzrasai');
+            $reservations = Reservation::orderBy('updated_at','desc')->where('user_id',$user->id)->paginate(3, ['*'], 'rezervacijos');
+            $notes = Note::orderBy('updated_at','desc')->where('user_id',$user->id)->paginate(3, ['*'], 'uzrasai');
             $uri = $request->path();
 
 
@@ -27,7 +27,7 @@ class DashboardController extends Controller
                 'zones' => $zones
             ]);
         } else {
-            $reservation = Reservation::orderBy('created_at','desc')->first();
+            $reservation = Reservation::orderBy('updated_at','desc')->first();
             return view('dashboard', [
                 'reservation' => $reservation
             ]);

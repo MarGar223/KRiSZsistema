@@ -87,9 +87,6 @@ class ReservationFormController extends Controller
         $otherReservation = Reservation::where('zone_id', $request->input('zone'))
             ->where('date_when', $request->input('date_when'))->get();
 
-        $reservationFirst = Reservation::where('zone_id', $request->input('zone'))
-            ->where('date_when', $request->input('date_when'))->first();
-
         $zone = Zone::where('id', $request->input('zone'))->first();
 
 
@@ -118,6 +115,7 @@ class ReservationFormController extends Controller
                         }
 
                         if ($reservation->id != $item->id) {
+
                             if (($request->start_time > $item->start_time) && ($request->start_time < $item->end_time)) {
 
                                 return back()->with('status', 'Tokiu laiku ši zona jau rezervuota start time');
@@ -130,17 +128,20 @@ class ReservationFormController extends Controller
                                 return back()->with('status', 'Tokiu laiku ši zona jau rezervuota over time');
                             }
                         }
-                        if (($request->input('people_count') <= 0) && ($request->input('people_count') <= $zone->max_people_count)) {
+                        if (($request->people_count <= 0) && ($request->people_count <= $zone->max_people_count)) {
                             return back()->with('status', 'Tokiam žmonių kiekiui zona netinkama. Galimas maximalus kiekis ' . $zone->max_people_count . ' asmenų.');
                         }
-                        $reservation->update([
-                            'zone_id' => $request->zone,
-                            'people_count' => $request->people_count,
-                            'date_when' => $request->date_when,
-                            'start_time' => $request->start_time,
-                            'end_time' => $request->end_time
-                        ]);
+
+
+
                     }
+                    $reservation->update([
+                        'zone_id' => $request->zone,
+                        'people_count' => $request->people_count,
+                        'date_when' => $request->date_when,
+                        'start_time' => $request->start_time,
+                        'end_time' => $request->end_time
+                    ]);
                 }
             }
         }
@@ -167,7 +168,7 @@ class ReservationFormController extends Controller
 
         if ($request->user()->id == $reservation->user_id) {
             $reservation->delete();
-        } else if ($request->user()->level == 'Administratorius' || $request->user()->level == 'Instruktorius') {
+        } else if ($request->user()->user_level_id == 1 || $request->user()->user_level_id == 2) {
             $reservation->delete();
         }
 
