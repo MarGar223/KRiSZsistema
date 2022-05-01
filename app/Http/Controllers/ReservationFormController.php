@@ -133,6 +133,48 @@ class ReservationFormController extends Controller
 
     public function editReservationFromDashboard(Request $request, Reservation $reservation)
     {
+        $otherReservation = Reservation::where('zone_id', $request->input('zone'))
+        ->where('date_when', $request->input('date_when'))->get();
+
+    $zone = Zone::where('id', $request->input('zone'))->first();
+
+        if ($request->input()) {
+            if (
+                (($request->input('zone') != $reservation->zone_id) ||
+                ($request->input('date_when') != $reservation->date_when) ||
+                ($request->input('start_time') != $reservation->start_time) ||
+                ($request->input('end_time') != $reservation->end_time) ||
+                ($request->input('people_count') != $reservation->people_count)) &&
+                ($request->input('start_time') <= $request->input('end_time')))
+
+             {
+                 foreach ($otherReservation as $item) {
+                     if ($reservation->id == $item->id) {
+                         if ((($request->start_time >= $item->start_time) && ($request->start_time < $item->end_time)) &&
+                            (($request->end_time > $item->start_time) && ($request->end_time <= $item->end_time))
+                        ) {
+                             continue;
+                         }
+                     }
+
+                     if ($reservation->id != $item->id) {
+                         if (($request->start_time > $item->start_time) && ($request->start_time < $item->end_time)) {
+                             return back()->with('status', 'Tokiu laiku ši zona jau rezervuota start time');
+                         }
+
+                         if (($request->end_time > $item->start_time) && ($request->end_time < $item->end_time)) {
+                             return back()->with('status', 'Tokiu laiku ši zona jau rezervuota end time');
+                         }
+                         if (($request->start_time < $item->start_time) && ($request->end_time > $item->end_time)) {
+                             return back()->with('status', 'Tokiu laiku ši zona jau rezervuota over time');
+                         }
+                     }
+                     if (($request->people_count <= 0) && ($request->people_count <= $zone->max_people_count)) {
+                         return back()->with('status', 'Tokiam žmonių kiekiui zona netinkama. Galimas maximalus kiekis ' . $zone->max_people_count . ' asmenų.');
+                     }
+                 }
+             }
+                }
         $request->user()->reservations()->where('id', $reservation->id)->update([
             'zone_id' => $request->zone,
             'people_count' => $request->people_count,
