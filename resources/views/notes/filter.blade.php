@@ -5,13 +5,56 @@
         <p class="fs-3 fw-bold text-center mt-3">Visi užrašai</p>
 
         <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
-
-            <form action="{{ route('notes') }}" method="GET" class="d-flex flex-column w-25">
-                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Valyti filtrą">
-                    <i data-feather="trash-2"></i>
-                </button>
+            <div class="d-flex inline-flex justify-content-start">
+            <form action="{{ route('notes') }}" method="GET">
+                <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover"
+                    data-bs-placement="bottom" title="Valyti filtrą">
+                        <i data-feather="trash-2"></i>
+                    </button>
             </form>
+            <div class="ms-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                    aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
+                        data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="plus"></i></button></div>
+            </div>
+                        <div class="d-flex justify-content-center conatiner-fluid">
+                <div class="collapse rounded-3 mt-3" id="collapseExample">
+
+                    <div class="card card-body rounded-3">
+                        <form action="{{ route('createNote') }}" method="POST" class="">
+                            @csrf
+
+
+                                <div>
+                                    <label for="title" class="form-label">Užrašo pavadinimas</label>
+                                    <input name="title" id="title" value="{{ old('title') }}"
+                                        class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
+                                    @error('title')
+                                        <div class="px-2 text-red-500 text-sm">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="body">Turinys</label>
+                                    <textarea type="text" name="body" id="body" value="{{ old('body') }}"
+                                        class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror" rows="8" cols="50"></textarea>
+                                    @error('body')
+                                        <div class="px-2 text-red-500 text-sm">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-3">
+                                    <button type="submit" class="btn btn-primary w-50">Sukurti</button>
+                                </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light">
                 <thead>
                     <tr class="text-center">
@@ -249,9 +292,9 @@
                 }
             }
         }
-        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-trigger="hover"]'))
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
-                })
+            })
     </script>
 @endsection

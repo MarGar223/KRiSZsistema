@@ -9,4 +9,12 @@ body, html {
 
 .ui-timepicker-container {
     z-index: 1060 !important;
+
+}
+.ui-widget-content {
+    background: whitesmoke !important;
+}
+
+.note-area-size{
+    width: 300px;
 }

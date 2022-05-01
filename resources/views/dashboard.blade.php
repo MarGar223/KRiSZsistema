@@ -7,7 +7,7 @@
                 <div class="col-6">
                     <p class="text-center pt-4 fs-3">Mano rezervacijos</p>
                     @auth
-
+                    @if ($reservations->count())
                         @foreach ($reservations as $reservation)
                             <div class="card my-4">
                                 <p class="card-header">
@@ -73,15 +73,15 @@
                             {{--Rezervacijos Modal redagavimo --}}
                             <form action="{{ route('editReservationFromDashboard', $reservation) }}" method="POST">
                                 @csrf
-                                <div class="modal fade" id="resModalRed{{ $reservation->id }}" tabindex="-1"
-                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="resModalRed{{ $reservation->id }}"
+                                    tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="false">
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
                                                     trinimas</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
+                                                <button type="button" class="btn-close"
+                                                    data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="mb-3">
@@ -89,14 +89,15 @@
                                                     <select name="zone" id="zone{{ $reservation->id }}"
                                                         value="{{ $reservation->name }}"
                                                         class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
-                                                        <option value="{{ $reservation->zone_id }}" id="zone_id" selected>
-                                                            {{ $reservation->zone->name }}
+                                                        <option value="{{ $reservation->zone_id }}" id="zone_id"
+                                                            selected>{{ $reservation->zone->name }}
                                                         </option>
                                                         @foreach ($zones as $zone)
                                                             @if ($reservation->zone_id == $zone->id)
                                                             @else
                                                                 <option value="{{ $zone->id }}"
-                                                                    id="zone_id{{ $zone->id }}">{{ $zone->name }}</option>
+                                                                    id="zone_id{{ $zone->id }}">
+                                                                    {{ $zone->name }}</option>
                                                             @endif
                                                         @endforeach
                                                     </select>
@@ -109,9 +110,11 @@
 
                                                 <div class="mb-3">
                                                     <label for="date" class="form-label">Data</label>
-                                                    <input type="date" name="date_when" id="date_when{{ $reservation->id }}"
+                                                    <input type="text" name="date_when"
+                                                        id="date_when{{ $reservation->id }}"
                                                         value="{{ $reservation->date_when }}"
-                                                        class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror">
+                                                        class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
+                                                        placeholder="Pasirinkite datą">
                                                     @error('date_when')
                                                         <div class="fs-6 text-danger">
                                                             <span>Lauką privaloma užpildyti</span>
@@ -120,10 +123,13 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="start_time" class="form-label">Laikas nuo</label>
-                                                    <input type="time" name="start_time" id="start_time{{ $reservation->id }}"
+                                                    <label for="start_time" class="form-label">Laikas
+                                                        nuo</label>
+                                                    <input name="start_time"
+                                                        id="start_time{{ $reservation->id }}"
                                                         value="{{ $reservation->start_time }}"
-                                                        class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror">
+                                                        class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
+                                                        placeholder="Pasirinkite laiką">
                                                     @error('start_time')
                                                         <div class="fs-6 text-danger">
                                                             <span>Lauką privaloma užpildyti</span>
@@ -132,10 +138,11 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="end_time" class="form-label">laikas iki</label>
-                                                    <input type="time" name="end_time" id="end_time{{ $reservation->id }}"
+                                                    <label for="end_time" class="form-label">Laikas iki</label>
+                                                    <input name="end_time" id="end_time{{ $reservation->id }}"
                                                         value="{{ $reservation->end_time }}"
-                                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
+                                                        placeholder="Pasirinkite laiką">
                                                     @error('end_time')
                                                         <div class="fs-6 text-danger">
                                                             <span>Lauką privaloma užpildyti</span>
@@ -145,7 +152,8 @@
 
                                                 <div class="mb-3">
 
-                                                    <label for="people_count" class="form-label">Skaicius asmenu</label>
+                                                    <label for="people_count" class="form-label">Žmonių
+                                                        skaičius</label>
                                                     <input type="number" name="people_count"
                                                         id="people_count{{ $reservation->id }}"
                                                         value="{{ $reservation->people_count }}"
@@ -158,7 +166,8 @@
                                                 </div>
 
                                                 <div class="modal-footer">
-                                                    <button type="submit" class="btn btn-success">Redaguoti</button>
+                                                    <button type="submit"
+                                                        class="btn btn-success">Redaguoti</button>
                                                     <button type="button" class="btn btn-secondary"
                                                         data-bs-dismiss="modal">Uždaryti</button>
                                                 </div>
@@ -249,14 +258,20 @@
                             </form>
                         @endforeach
                         <div>
-                            {{ $reservations->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
+                            <a class="link-info" href="{{ route('reservation') }}"> Daugiau rezervacijų...</a>
                         </div>
+                        @else
+                        <div>
+                            <a class="link-info" href="{{ route('reservation') }}"> Susikurkite rezervacijų...</a>
+                        </div>
+                        @endif
                     @endauth
                 </div>
                 <div class="col-6 bg-success">
                     <div>
                         <p class="text-center pt-4 fs-3">Mano užrašai</p>
                         @auth
+                        @if($notes->count())
                             @foreach ($notes as $note)
                                 <div class="card my-4">
                                     <div class="card-header ">
@@ -357,9 +372,16 @@
                             </form>
 
                             @endforeach
+
                             <div>
-                                {{ $notes->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }}
+                                <a class="link-info" href="{{ route('notes') }}"> Daugiau užrašų...</a>
                             </div>
+                            @else
+                            <div>
+                                <a class="link-info" href="{{ route('notes') }}"> Susikurkite užrašų...</a>
+                            </div>
+                            @endif
+
                         @endauth
                     </div>
                 </div>
@@ -462,4 +484,42 @@
             </div>
         @endguest
     </div>
+    <script>
+         var dateToday = new Date();
+
+$(document).ready(function() {
+    $('input.timepicker').timepicker({
+        timeFormat: 'HH:mm:ss',
+        interval: 15,
+        minTime: '8',
+        maxTime: '17',
+        startTime: '8',
+        dynamic: false,
+        dropdown: true,
+        scrollbar: true,
+
+    });
+    $("input.datepicker").datepicker({
+        monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
+            "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
+        ],
+        dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+        dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+        dateFormat: 'yy-mm-dd',
+        minDate: dateToday
+    });
+
+    $('input.timepicker').keypress(function(e) {
+        e.preventDefault();
+    });
+
+    $('input.datepicker').keypress(function(e) {
+        e.preventDefault();
+    });
+
+
+
+
+});
+    </script>
 @endsection

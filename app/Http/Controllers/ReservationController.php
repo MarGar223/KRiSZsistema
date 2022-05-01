@@ -17,7 +17,7 @@ class ReservationController extends Controller
     {
 
         $date = date('Y-m-d');
-        $reservations = Reservation::orderBy('updated_at', 'desc')->where('old_reservation', 0)->get();
+
         $zones = Zone::get();
         $users = User::get();
 
@@ -29,6 +29,9 @@ class ReservationController extends Controller
         foreach ($pastReservation as $past) {
             DB::table('reservations')->where('id', $past->id)->update(['old_reservation' => 1]);
         }
+
+        $reservations = Reservation::orderBy('updated_at', 'desc')->where('old_reservation', 0)->get();
+
 
             return view('reservations.reservation', [
             'reservations' => $reservations,

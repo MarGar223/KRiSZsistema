@@ -6,6 +6,51 @@
 
         <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
 
+                <div class="col-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                    aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
+                        data-bs-placement="bottom" title="Sukurti naują užrašą"><i data-feather="plus"></i></button></div>
+
+                        <div class="d-flex justify-content-center conatiner-fluid">
+                <div class="collapse rounded-3 mt-3" id="collapseExample">
+
+                    <div class="card card-body rounded-3">
+                        <form action="{{ route('createNote') }}" method="POST" class="">
+                            @csrf
+
+
+                                <div>
+                                    <label for="title" class="form-label">Užrašo pavadinimas</label>
+                                    <input name="title" id="title" value="{{ old('title') }}"
+                                        class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
+                                    @error('title')
+                                        <div class="px-2 text-red-500 text-sm">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div>
+                                    <label for="body">Turinys</label>
+                                    <textarea type="text" name="body" id="body" value="{{ old('body') }}"
+                                        class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror" rows="8" cols="50"></textarea>
+                                    @error('body')
+                                        <div class="px-2 text-red-500 text-sm">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="d-flex justify-content-center mt-3">
+                                    <button type="submit" class="btn btn-primary w-50">Sukurti</button>
+                                </div>
+
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+
+
             <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light">
                 <thead>
                     <tr class="text-center">
@@ -89,7 +134,8 @@
                     <tbody>
                         @foreach ($notes as $note)
                             <tr class="text-center align-middle">
-                                <td>{{ $note->updated_at->diffForHumans() }} <br><span class="text-muted">{{ $note->updated_at }}</span></td>
+                                <td>{{ $note->updated_at->diffForHumans() }} <br><span
+                                        class="text-muted">{{ $note->updated_at }}</span></td>
                                 <td>{{ $note->title }}</td>
                                 <td class="text-break w-50">{{ $note->body }}</td>
                                 @if (auth()->user())
@@ -210,6 +256,11 @@
             @endif
     </div>
     <script>
+        var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-trigger="hover"]'))
+            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            })
+
         function filterFunctionTitle() {
             var input, filter, ul, li, a, i, btn;
             input = document.getElementById("myInputTitle");

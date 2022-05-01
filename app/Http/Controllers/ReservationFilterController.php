@@ -13,18 +13,26 @@ use Spatie\QueryBuilder\QueryBuilderRequest;
 
 class ReservationFilterController extends Controller
 {
+
+
     public function index(Request $request)
     {
-        $reservations = Reservation::orderBy('updated_at', 'desc');
+        $date = date('Y-m-d');
         $zones = Zone::get();
         $users = User::get();
 
+        $pastReservation = Reservation::where('date_when', '<', $date)->get();
 
 
 
+        foreach ($pastReservation as $past) {
+            DB::table('reservations')->where('id', $past->id)->update(['old_reservation' => 1]);
+        }
+
+
+        $reservations = Reservation::orderBy('updated_at', 'desc')->where('old_reservation', 0);
         switch ($request->input() != null) {
             case ($request->input('userId')):
-
                 $reservations = $reservations->where('user_id', $request->input('userId'))->get();
                 break;
             case ($request->input('zoneId')):
@@ -45,6 +53,9 @@ class ReservationFilterController extends Controller
             case ($request->input('resPeople')):
                 $reservations = $reservations->where('people_count', $request->input('resPeople'))->get();
                 break;
+                case ($request->input('myId')):
+                    $reservations = $reservations->where('user_id', $request->input('myId'))->get();
+                    break;
             }
 
 

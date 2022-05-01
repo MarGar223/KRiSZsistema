@@ -15,14 +15,6 @@ class ReservationFormController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
-    {
-        $zones = Zone::get();
-        return view('reservations.form', [
-            'zones' => $zones
-        ]);
-    }
-
     public function createReservation(Request $request)
     {
 
@@ -69,17 +61,6 @@ class ReservationFormController extends Controller
         ]);
 
         return redirect()->route('reservation');
-    }
-
-    public function showReservation(Reservation $reservation)
-    {
-
-        $zones = Zone::get();
-
-        return view('reservations.edit', [
-            'reservation' => $reservation,
-            'zones' => $zones
-        ]);
     }
 
     public function editReservation(Request $request, Reservation $reservation)

@@ -74,16 +74,11 @@
                     </li>
 
                     @auth
-                        <li class="nav-item">
-                            <a href="{{ route('createReservation') }}" class="nav-link text-white">Atlikti rezervaciją</a>
-                        </li>
 
                         <li class="nav-item">
                             <a href="{{ route('notes') }}" class="nav-link text-white">Užrašai</a>
                         </li>
-                        <li class="nav-item">
-                            <a href="{{ route('createNote') }}" class="nav-link text-white">Kurti užrašą</a>
-                        </li>
+
                         @if (auth()->user()->user_level_id === 1)
                             <li class="nav-item">
                                 <a href="{{ route('allUsers') }}" class="nav-link text-white">Visi vartotojai</a>

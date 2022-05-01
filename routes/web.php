@@ -42,10 +42,8 @@ Route::post('/atsijungti', [LogoutController::class, 'logoutUser'])->name('logou
 Route::get('/rezervacijos', [ReservationController::class, 'index'])->name('reservation');
 Route::get('/rezervacijos/filtras', [ReservationFilterController::class, 'index'])->name('filterReservation');
 
-Route::get('/rezervacijos/kurti', [ReservationFormController::class, 'index'])->name('createReservation');
-Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation']);
+Route::post('/rezervacijos/kurti', [ReservationFormController::class, 'createReservation'])->name('createReservation');
 
-Route::get('/rezervacijos/{reservation}', [ReservationFormController::class, 'showReservation'])->name('showReservation');
 Route::post('/rezervacijos/{reservation}/redaguoti', [ReservationFormController::class, 'editReservation'])->name('editReservation');
 Route::get('/rezervacijos/{reservation}/trinti', [ReservationFormController::class, 'deleteReservation'])->name('deleteReservation');
 
@@ -55,10 +53,8 @@ Route::post('/rezervacijos/{reservation}/redaguotiispagrindinio', [ReservationFo
 Route::get('/uzrasai', [NoteController::class, 'index'])->name('notes');
 Route::get('/uzrasai/filtras', [NoteFilterController::class, 'index'])->name('filterNotes');
 
-Route::get('/uzrasai/kurti', [NoteFormController::class, 'index'])->name('createNote');
-Route::post('/uzrasai/kurti', [NoteFormController::class, 'createNote']);
+Route::post('/uzrasai/kurti', [NoteFormController::class, 'createNote'])->name('createNote');
 
-Route::get('/usrasai/{note}', [NoteFormController::class, 'showNote'])->name('showNote');
 Route::get('/usrasai/{note}/trinti', [NoteFormController::class, 'deleteNote'])->name('deleteNote');
 Route::post('/usrasai/{note}/redaguoti', [NoteFormController::class, 'editNote'])->name('editNote');
 

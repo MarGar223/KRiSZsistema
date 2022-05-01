@@ -6,12 +6,107 @@
 
 
         <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
-            <form action="{{ route('reservation') }}" method="GET" class="d-flex flex-column w-25">
-                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Valyti filtrą">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </form>
+            <div class="d-flex inline-flex justify-content-start">
+                <form action="{{ route('reservation') }}" method="GET">
+                    <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover" data-bs-placement="bottom"
+                        title="Valyti filtrą">
+                        <i data-feather="trash-2"></i>
+                    </button>
+                </form>
+
+                @auth
+
+                    <div class="ms-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                        aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
+                            data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="plus"></i></button></div>
+                </div>
+
+
+                <div class="collapse rounded-3 mt-3" id="collapseExample">
+
+                    <div class="card card-body rounded-3">
+                        <form action="{{ route('createReservation') }}" method="POST">
+                            @csrf
+                            <div class="row">
+                                <div class="col-1"> </div>
+                                <div class="mb-3 col-2">
+
+                                    <label for="zone" class="form-label">Zona</label>
+                                    <select name="zone" id="zone"
+                                        class="form-select shadow-sm @error('zone') border border-danger @enderror">
+                                        <option value="{{ old('zone') }}" id="zone_id" selected>Pasirinkti zoną</option>
+                                        @foreach ($zones as $zone)
+                                            <option value="{{ $zone->id }}" id="zone_id">{{ $zone->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('zone')
+                                        <div class="fs-6 text-danger">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-2">
+                                    <label for="date" class="form-label">Data</label>
+                                    <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
+                                        class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
+                                        placeholder="Pasirinkite datą">
+                                    @error('date_when')
+                                        <div class="fs-6 text-danger">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-2">
+                                    <label for="start_time" class="form-label">Laikas nuo</label>
+                                    <input name="start_time" id="start_time" value="{{ old('start_time') }}"
+                                        class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
+                                        placeholder="Pasirinkite laiką">
+                                    @error('start_time')
+                                        <div class="fs-6 text-danger">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-2">
+                                    <label for="end_time" class="form-label">Laikas iki</label>
+                                    <input name="end_time" id="end_time" value="{{ old('end_time') }}"
+                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
+                                        placeholder="Pasirinkite laiką">
+                                    @error('end_time')
+                                        <div class="fs-6 text-danger">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-3 col-2">
+
+                                    <label for="people_count" class="form-label">Žmonių skaičius</label>
+                                    <input type="number" name="people_count" id="people_count"
+                                        value="{{ old('people_count') }}"
+                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                    @error('people_count')
+                                        <div class="fs-6 text-danger">
+                                            <span>Lauką privaloma užpildyti</span>
+                                        </div>
+                                    @enderror
+                                </div>
+
+
+                                <div class="d-flex justify-content-center mt-3">
+                                    <button type="submit" class="btn btn-primary ">Rezervuoti</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                @endauth
+            </div>
+
             @if (session('status'))
                 <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
                     {{ session('status') }}
@@ -279,8 +374,8 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
                                                             trinimas</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                            aria-label="Close"></button>
+                                                        <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-3">
@@ -351,7 +446,8 @@
 
                                                         <div class="mb-3">
 
-                                                            <label for="people_count" class="form-label">Žmonių skaičius</label>
+                                                            <label for="people_count" class="form-label">Žmonių
+                                                                skaičius</label>
                                                             <input type="number" name="people_count"
                                                                 id="people_count{{ $reservation->id }}"
                                                                 value="{{ $reservation->people_count }}"
@@ -500,44 +596,44 @@
                 }
             }
 
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-trigger="hover"]'))
             var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
                 return new bootstrap.Tooltip(tooltipTriggerEl)
             })
 
             var dateToday = new Date();
 
-        $(document).ready(function() {
-            $('input.timepicker').timepicker({
-                timeFormat: 'HH:mm:ss',
-                interval: 15,
-                minTime: '8',
-                maxTime: '17',
-                startTime: '8',
-                dynamic: false,
-                dropdown: true,
-                scrollbar: true,
+            $(document).ready(function() {
+                $('input.timepicker').timepicker({
+                    timeFormat: 'HH:mm:ss',
+                    interval: 15,
+                    minTime: '8',
+                    maxTime: '17',
+                    startTime: '8',
+                    dynamic: false,
+                    dropdown: true,
+                    scrollbar: true,
 
-            });
-            $("input.datepicker").datepicker({
-                monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
-                    "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
-                ],
-                dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
-                dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
-                dateFormat: 'yy-mm-dd',
-                minDate: dateToday
-            });
+                });
+                $("input.datepicker").datepicker({
+                    monthNames: ["Sausis", "Vasaris", "Kovas", "Balandis", "Gegužė", "Birželis", "Liepa",
+                        "Rugpjūtis", "Rugsėjis", "Spalis", "Lapkritis", "Gruodis"
+                    ],
+                    dayNamesShort: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                    dayNamesMin: ["Sk", "Pr", "An", "Tr", "Kt", "Pn", "Št"],
+                    dateFormat: 'yy-mm-dd',
+                    minDate: dateToday
+                });
 
-            $('input.timepicker').keypress(function(e) {
+                $('input.timepicker').keypress(function(e) {
                     e.preventDefault();
                 });
 
-            $('input.datepicker').keypress(function(e) {
-                e.preventDefault();
-            });
+                $('input.datepicker').keypress(function(e) {
+                    e.preventDefault();
+                });
 
-        });
+            });
             $('#status').delay(5000).fadeOut('slow');
         </script>
     @endsection
