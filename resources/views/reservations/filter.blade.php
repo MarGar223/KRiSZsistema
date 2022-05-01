@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container-fluid">
-        <p class="fs-3 fw-bold text-center mt-3">Visos rezervacijos</p>
+        <p class="fs-3 fw-bold text-center text-white mt-3">Visos rezervacijos</p>
 
 
-        <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
+        <div class="d-flex flex-column justify-content-center p-4 mt-3">
             <div class="d-flex inline-flex justify-content-start">
                 <form action="{{ route('reservation') }}" method="GET">
                     <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover" data-bs-placement="bottom"
@@ -18,7 +18,7 @@
 
                     <div class="ms-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
                         aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
-                            data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="plus"></i></button></div>
+                            data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="book"></i></button></div>
                 </div>
 
 
@@ -112,12 +112,12 @@
                     {{ session('status') }}
                 </div>
             @endif
-            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
+            <table class="table table-sm table-light table-hover p-4 mt-3 border-light fw-bold" id="myTable">
                 <thead>
-                    <tr class="text-center align-middle">
+                    <tr class="text-center align-middle table-orange">
                         <th scope="col">
                             <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Rezervacija atlikta
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -140,7 +140,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn  fw-bold text-white">
                                     Rezervuotojas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -166,7 +166,7 @@
                         <th scope="col">
 
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Zona
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -191,7 +191,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn  fw-bold text-white">
                                     Rezervuota data
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -214,7 +214,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn  fw-bold text-white">
                                     Pradžios laikas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -237,7 +237,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Pabaigos laikas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -260,7 +260,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Žmonių skaičius
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -282,7 +282,7 @@
                             </div>
                         </th>
                         @if (auth()->user())
-                            <th scope="col" style="font-size: 0.7875rem;">Funkcijos</th>
+                            <th scope="col fw-6">Funkcijos</th>
                         @endif
 
                     </tr>
@@ -295,9 +295,9 @@
                             <tr class="text-center align-middle">
 
                                 <td>{{ $reservation->updated_at->diffForHumans() }} <br> <span
-                                        class="fs-6 text-muted">{{ $reservation->updated_at }} </span> </td>
+                                        class="fw-normal text-muted">{{ $reservation->updated_at }} </span> </td>
                                 <td>{{ $reservation->user->name }} {{ $reservation->user->surname }} <br> <span
-                                        class="text-muted">{{ $reservation->user->role }}</span> </td>
+                                        class="fw-normal text-muted">{{ $reservation->user->role }}</span> </td>
                                 <td>{{ $reservation->zone->name }}</td>
                                 <td>{{ $reservation->date_when }}</td>
                                 <td>{{ $reservation->start_time }}</td>
@@ -305,7 +305,7 @@
                                 <td>{{ $reservation->people_count }}</td>
 
                                 @if (auth()->user())
-                                    @if (auth()->user()->level_id == 1 || auth()->user()->level_id == 2)
+                                    @if (auth()->user()->user_level_id == 1 || auth()->user()->user_level_id == 2)
                                         <td>
                                             <div class="btn-group dropend">
                                                 <a href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown"
@@ -554,11 +554,14 @@
                             </form>
                         @endif
                 @endforeach
+                @else
+                <tr>
+                    <td>
+                        Rezervacijų nėra
+                    </td>
+                </tr>
                 </tbody>
             </table>
-        @else
-            <p>Rezervacijų nėra
-            <p>
                 @endif
         </div>
         <script>

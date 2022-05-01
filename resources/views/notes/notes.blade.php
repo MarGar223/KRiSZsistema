@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <p class="fs-3 fw-bold text-center mt-3">Visi užrašai</p>
+        <p class="fs-3 fw-bold text-center text-white mt-3">Visi užrašai</p>
 
-        <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
+        <div class="d-flex-column justify-content-center p-4 mt-3">
 
                 <div class="col-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
@@ -51,12 +51,12 @@
             </div>
 
 
-            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light">
+            <table class="table table-sm table-light table-hover p-4 mt-3 fw-bold">
                 <thead>
-                    <tr class="text-center">
+                    <tr class="text-center table-orange align-middle">
                         <th scope="col">
                             <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Užrašas sukurtas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -79,7 +79,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Pavadinimas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -104,7 +104,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Turinys
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -127,15 +127,15 @@
                                 </div>
                             </div>
                         </th>
-                        <th scope="col">Funkcijos</th>
+                        <th scope="col align-middle">Funkcijos</th>
                     </tr>
                 </thead>
                 @if ($notes->count())
                     <tbody>
                         @foreach ($notes as $note)
-                            <tr class="text-center align-middle">
+                            <tr class="text-center align-middle fw-bold">
                                 <td>{{ $note->updated_at->diffForHumans() }} <br><span
-                                        class="text-muted">{{ $note->updated_at }}</span></td>
+                                        class="fw-normal text-muted">{{ $note->updated_at }}</span></td>
                                 <td>{{ $note->title }}</td>
                                 <td class="text-break w-50">{{ $note->body }}</td>
                                 @if (auth()->user())
@@ -248,11 +248,15 @@
 
         </tr>
         @endforeach
+        @else
+        <tr>
+            <td>
+                Užrašų nėra
+            </td>
+        </tr>
         </tbody>
         </table>
-    @else
-        <p>Rezervacijų nėra
-        <p>
+
             @endif
     </div>
     <script>

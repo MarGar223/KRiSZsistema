@@ -18,3 +18,78 @@ body, html {
 .note-area-size{
     width: 300px;
 }
+
+.nav-link:hover{
+    background-color: whitesmoke !important;
+    color: black !important;
+}
+
+.bg-custom-dark{
+    background-color: #1D2228;
+}
+
+.navbar-brand {
+    color:white !important;
+}
+
+.mil-background::before{
+    content: "";
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    background-image: url("../images/firing-range.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    background-position:center;
+    filter: brightness(20%);
+    z-index: -1;
+}
+.table{
+    border-color: lightgray !important;
+}
+
+.table-orange {
+    --bs-table-bg: #FB8122 !important;
+    --bs-table-striped-bg: #FB8122 !important;
+    --bs-table-striped-color: #FB8122 !important;
+    --bs-table-hover-bg: #FB8122 !important;
+    --bs-table-hover-color: #FB8122 !important;
+    color: white !important;
+    border-color: #bacbe6;
+  }
+
+.table-light {
+--bs-table-bg: #E1E2E2 !important;
+--bs-table-striped-bg: #E1E2E2 !important;
+--bs-table-striped-color: #000;
+--bs-table-active-bg: white !important;
+--bs-table-active-color: #000;
+--bs-table-hover-bg: whitesmoke !important;
+--bs-table-hover-color: #000;
+color: #000;
+}
+
+.card-header{
+    background-color: #FB8122 !important;
+    font-weight: bold !important;
+    color: white !important;
+}
+
+.card-body{
+    background-color:#E1E2E2;
+}
+
+.table-light{
+    background-color: #E1E2E2 !important;
+}
+
+.modal-header{
+    background-color: #FB8122 !important;
+    color: white !important;
+}
+.modal-header .btn-close{
+    color: white !important;
+}
+

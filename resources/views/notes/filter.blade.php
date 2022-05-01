@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <p class="fs-3 fw-bold text-center mt-3">Visi užrašai</p>
+        <p class="fs-3 fw-bold text-center text-white mt-3">Visi užrašai</p>
 
-        <div class="d-flex-column justify-content-center p-4 mt-3 bg-success">
+        <div class="d-flex-column justify-content-center p-4 mt-3">
             <div class="d-flex inline-flex justify-content-start">
             <form action="{{ route('notes') }}" method="GET">
                 <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover"
@@ -16,14 +16,13 @@
                     aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
                         data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="plus"></i></button></div>
             </div>
-                        <div class="d-flex justify-content-center conatiner-fluid">
+
+            <div class="d-flex justify-content-center conatiner-fluid">
                 <div class="collapse rounded-3 mt-3" id="collapseExample">
 
                     <div class="card card-body rounded-3">
                         <form action="{{ route('createNote') }}" method="POST" class="">
                             @csrf
-
-
                                 <div>
                                     <label for="title" class="form-label">Užrašo pavadinimas</label>
                                     <input name="title" id="title" value="{{ old('title') }}"
@@ -48,92 +47,88 @@
                                 <div class="d-flex justify-content-center mt-3">
                                     <button type="submit" class="btn btn-primary w-50">Sukurti</button>
                                 </div>
-
-
                         </form>
                     </div>
-
                 </div>
             </div>
-            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light">
-                <thead>
-                    <tr class="text-center">
-                        <th scope="col">
-                            <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
-                                    Užrašas sukurtas
-                                </button>
-                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" id="noteCreatedDropdown">
-                                    <form action="{{ route('notes') }}" method="GET">
-                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+            <table class="table table-sm table-light table-hover p-4 mt-3 fw-bold">
+                <tr class="text-center table-orange align-middle">
+                    <th scope="col">
+                        <div class="btn-group m-0 p-0">
+                            <button class="btn fw-bold text-white">
+                                Užrašas sukurtas
+                            </button>
+                            <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" id="noteCreatedDropdown">
+                                <form action="{{ route('notes') }}" method="GET">
+                                    <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                </form>
+                                @foreach ($notes->sortByDesc('updated_at')->unique('updated_at') as $note)
+                                    <form action="{{ route('filterNotes') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="createdWhen"
+                                            value="{{ $note->updated_at }}">{{ $note->updated_at }}</button>
                                     </form>
-                                    @foreach ($notes->sortByDesc('updated_at')->unique('updated_at') as $note)
-                                        <form action="{{ route('filterNotes') }}" method="GET">
-                                            @csrf
-                                            <button class="btn btn-sm dropdown-item" name="createdWhen"
-                                                value="{{ $note->updated_at }}">{{ $note->updated_at }}</button>
-                                        </form>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             </div>
-                        </th>
-                        <th scope="col">
-                            <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
-                                    Pavadinimas
-                                </button>
-                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" id="noteTitleDropdown">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
-                                        id="myInputTitle" onkeyup="filterFunctionTitle()">
-                                    <form action="{{ route('notes') }}" method="GET">
-                                        <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="btn-group m-0 p-0">
+                            <button class="btn fw-bold text-white">
+                                Pavadinimas
+                            </button>
+                            <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" id="noteTitleDropdown">
+                                <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                    id="myInputTitle" onkeyup="filterFunctionTitle()">
+                                <form action="{{ route('notes') }}" method="GET">
+                                    <button class="btn btn-sm dropdown-item" id="all">Visi laikai</button>
+                                </form>
+                                @foreach ($notes->sortByDesc('title')->unique('title') as $note)
+                                    <form action="{{ route('filterNotes') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item" name="noteTitle"
+                                            value="{{ $note->title }}">{{ $note->title }}</button>
                                     </form>
-                                    @foreach ($notes->sortByDesc('title')->unique('title') as $note)
-                                        <form action="{{ route('filterNotes') }}" method="GET">
-                                            @csrf
-                                            <button class="btn btn-sm dropdown-item" name="noteTitle"
-                                                value="{{ $note->title }}">{{ $note->title }}</button>
-                                        </form>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             </div>
-                        </th>
-                        <th scope="col">
-                            <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
-                                    Turinys
-                                </button>
-                                <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <span class="visually-hidden">Toggle Dropdown</span>
-                                </button>
-                                <div class="dropdown-menu" id="noteBodyDropdown">
-                                    <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
-                                        id="myInputBody" onkeyup="filterFunctionBody()">
-                                    <form action="{{ route('notes') }}" method="GET">
-                                        <button class="btn btn-sm dropdown-item" id="all">Visi turiniai</button>
+                        </div>
+                    </th>
+                    <th scope="col">
+                        <div class="btn-group m-0 p-0">
+                            <button class="btn fw-bold text-white">
+                                Turinys
+                            </button>
+                            <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="visually-hidden">Toggle Dropdown</span>
+                            </button>
+                            <div class="dropdown-menu" id="noteBodyDropdown">
+                                <input type="text" class="form-control ms-2 me-4 w-auto" placeholder="Paieška..."
+                                    id="myInputBody" onkeyup="filterFunctionBody()">
+                                <form action="{{ route('notes') }}" method="GET">
+                                    <button class="btn btn-sm dropdown-item" id="all">Visi turiniai</button>
+                                </form>
+                                @foreach ($notes->sortByDesc('body')->unique('body') as $note)
+                                    <form action="{{ route('filterNotes') }}" method="GET">
+                                        @csrf
+                                        <button class="btn btn-sm dropdown-item text-wrap text-break" name="noteBody"
+                                            value="{{ $note->body }}">{{ $note->body }}</button>
                                     </form>
-                                    @foreach ($notes->sortByDesc('body')->unique('body') as $note)
-                                        <form action="{{ route('filterNotes') }}" method="GET">
-                                            @csrf
-                                            <button class="btn btn-sm dropdown-item text-wrap text-break" name="noteBody"
-                                                value="{{ $note->body }}">{{ $note->body }}</button>
-                                        </form>
-                                    @endforeach
-                                </div>
+                                @endforeach
                             </div>
-                        </th>
-                        <th scope="col">Funkcijos</th>
-                    </tr>
-                </thead>
+                        </div>
+                    </th>
+                    <th scope="col align-middle">Funkcijos</th>
+                </tr>
+            </thead>
                 @if ($notes->count())
                     <tbody>
                         @foreach ($notes as $note)
@@ -251,11 +246,15 @@
 
         </tr>
         @endforeach
+        @else
+        <tr>
+            <td>
+                Užrašų nėra
+            </td>
+        </tr>
         </tbody>
         </table>
-    @else
-        <p>Rezervacijų nėra
-        <p>
+
             @endif
     </div>
     <script>

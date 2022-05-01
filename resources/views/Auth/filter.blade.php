@@ -2,22 +2,166 @@
 
 @section('content')
     <div class="cotnainer-fluid gird">
-        <p class="fs-3 fw-bold text-center mt-3">
+        <p class="fs-3 fw-bold text-center text-white mt-3">
             Visi vartotojai
         </p>
-        <div class="d-flex flex-column justify-content-center p-4 mt-3 bg-success">
-            <form action="{{ route('allUsers') }}" method="GET" class="d-flex flex-column w-25">
-                <button type="submit" class="btn btn-sm btn-warning w-25" data-bs-toggle="tooltip" data-bs-placement="top"
-                    title="Valyti filtrą">
-                    <i data-feather="trash-2"></i>
-                </button>
-            </form>
-            <table class="table table-striped table-info table-hover p-4 mt-3 table-bordered border-light" id="myTable">
+        <div class="d-flex flex-column justify-content-center p-4 mt-3">
+            <div class="d-flex inline-flex justify-content-start">
+                <form action="{{ route('allUsers') }}" method="GET">
+                    <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover" data-bs-placement="bottom"
+                        title="Valyti filtrą">
+                        <i data-feather="trash-2"></i>
+                    </button>
+                </form>
+                    <div class="ms-2" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
+                        aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
+                            data-bs-placement="bottom" title="Sukurti rezervaciją"><i data-feather="user-plus"></i></button></div>
+                </div>
+                <div class="d-flex justify-content-center conatiner-fluid">
+                    <div class="collapse rounded-3 mt-3" id="collapseExample">
+
+                        <div class="card card-body rounded-3">
+                            <form action="{{ route('register') }}" method="POST">
+                                @csrf
+                                <div class="grid">
+                                    <div class="row">
+                                        <div class="col">
+                                            <div>
+                                                <label for="name" class="form-label">Vardas<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą"
+                                                    pattern="^[a-zA-Z ]*$" value="{{ old('name') }}"
+                                                    class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
+
+                                                @error('name')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Lauką privaloma užpildyti</span>
+                                                    </div>
+                                                @enderror
+
+                                            </div>
+
+                                            <div>
+                                                <label for="surname" class="form-label">Pavardė<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" name="surname" id="surname"
+                                                    placeholder="Įveskite vartotojo pavardę" pattern="^[a-zA-Z ]*$"
+                                                    value="{{ old('surname') }}"
+                                                    class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
+
+                                                @error('surname')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Lauką privaloma užpildyti</span>
+                                                    </div>
+                                                @enderror
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col">
+                                            <div>
+                                                <label for="role" class="form-label">Pareigos<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="text" name="role" id="role"
+                                                    placeholder="Įveskite vartotojo pareigas" value="{{ old('role') }}"
+                                                    class="form-control shadow-sm @error('role') border border-danger text-danger @enderror">
+
+                                                @error('role')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Lauką privaloma užpildyti</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div>
+                                                <label for="email" class="form-label">El. paštas<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="email" name="email" id="email"
+                                                    placeholder="Įveskite vartotojo el. pašto adresą"
+                                                    value="{{ old('email') }}"
+                                                    class="form-control shadow-sm @error('email') border border-danger text-danger @enderror">
+
+                                                @error('email')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Laukas paliktas tuščias arba šis el. pašto adresas jau
+                                                            užregistruotas</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div>
+                                                <label for="password" class="form-label">Slaptažodis<span
+                                                        class="text-danger">*</span></label>
+                                                <input type="password" name="password" id="password"
+                                                    placeholder="Įveskite vartotojo slaptažodį"
+                                                    class="form-control shadow-sm @error('password') border border-danger text-danger @enderror"
+                                                    data-bs-toggle="popover" data-bs-placement="right"
+                                                    title="Slaptažodžio reikalavimai" data-bs-content="Slaptažodį turi sudaryti min. 8 simboliai, iš kurių privalo būti:
+                                                                - Bent viena dydžioji raidė,
+                                                                - Bent viena mažoji raidė,
+                                                                - Bent vienas skaičius,
+                                                                - Bent vienas simbolis">
+
+                                                @error('password')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Laukas paliktas tuščias arba neatitiko reikalavimų</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div>
+                                                <label for="password_confirmation" class="form-label">Pakartoti
+                                                    slaptažodį<span class="text-danger">*</span></label>
+                                                <input type="password" name="password_confirmation" id="password_confirmation"
+                                                    placeholder="Pakartokite vartotojo slaptažodį"
+                                                    class="form-control shadow-sm @error('password_confirmation') border border-danger text-danger @enderror">
+
+                                                @error('password_confirmation')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Lauką privaloma užpildyti</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+
+                                            <div>
+                                                <label for="level" class="form-label">Vartotojo lygis<span
+                                                        class="text-danger">*</span></label><br>
+                                                <select name="level"
+                                                    class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
+                                                    <option value=”” disabled selected>Priskirkite vartotojo lygį</option>
+                                                    @foreach ($userLevels as $userLevel)
+                                                        <option value='{{ $userLevel->id }}'>{{ $userLevel->name }}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                @error('level')
+                                                    <div class="fs-6 text-danger">
+                                                        <span>Privaloma pasirinkti lygį</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="d-flex justify-content-center mt-3">
+                                        <button type="submit" class="btn btn-primary w-50">Registruoti</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            <table class="table table-sm table-light table-hover p-4 mt-3 fw-bold" id="myTable">
                 <thead>
-                    <tr class="text-center align-middle">
+                    <tr class="text-center align-middle table-orange">
                         <th>
                             <div class="btn-group m-0 p-0">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Vardas, Pavardė
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -43,7 +187,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Pareigos
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -69,7 +213,7 @@
                         <th scope="col">
 
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     El. pašto adresas
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -94,7 +238,7 @@
                         </th>
                         <th scope="col">
                             <div class="btn-group">
-                                <button class="btn btn-sm fw-bold text-black">
+                                <button class="btn fw-bold text-white">
                                     Vartotojo lygis
                                 </button>
                                 <button type="button" class="btn btn-sm dropdown-toggle dropdown-toggle-split"
@@ -117,7 +261,7 @@
                         </th>
                         @if (auth()->user())
                             @if (auth()->user()->user_level_id == 1)
-                                <th scope="col">Funkcijos</th>
+                                <th scope="col fw-6">Funkcijos</th>
                             @endif
                         @endif
                     </tr>
@@ -377,20 +521,19 @@
                                 @endif
                             </tr>
                         @endforeach
+                        @else
+                        <tr>
+                            <td>
+                                Vartotojų nėra
+                            </td>
+                        </tr>
+                           @endif
                     </tbody>
 
 
 
 
             </table>
-            <div class="row">
-                {{-- {{ $users->links('vendor.pagination.bootstrap-5', ['uri' => $uri]) }} --}}
-            </div>
-        @else
-            <p class="fs-3 fw-bold text-center mt-3">
-                Vartotojų nėra
-            </p>
-            @endif
         </div>
         <script>
             function filterFunctionUsers() {

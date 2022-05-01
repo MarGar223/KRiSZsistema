@@ -33,27 +33,26 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-primary bg-gradient">
+    <nav class="navbar navbar-expand-lg navbar-light bg-gradient bg-custom-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="/" class="wrap">Kovinio rengimo ir sporto zonų rezervacijos
-                sistema</a>
+            <a class="navbar-brand" href="/" class="wrap">KRiSZ rezervacijos sistema</a>
             <ul class="navbar-nav justify-content-end me-3">
                 @auth
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">{{ auth()->user()->name }}
-                            {{ auth()->user()->surname }} {{ auth()->user()->role }}</a>
+                        <button type="submit" class="btn btn-transparent fs-6  text-white">{{ auth()->user()->name }}
+                            {{ auth()->user()->surname }} {{ auth()->user()->role }}</button>
                     </li>
                     <form action="{{ route('logout') }}" method="POST">
                         <li class="nav-item">
                             @csrf
-                            <button type="submit" class="btn btn-transparent fs-6">Atsijungti</button>
+                            <button type="submit" class="btn btn-transparent fs-6  text-white">Atsijungti</button>
                         </li>
                     </form>
                 @endauth
 
                 @guest
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('auth.login') }}">Prisijungti</a>
+                        <a class="nav-link active  text-white" aria-current="page" href="{{ route('auth.login') }}">Prisijungti</a>
                     </li>
                 @endguest
 
@@ -63,35 +62,32 @@
     </nav>
 
     <div class="container-fluid ms-0 h-100">
-        <div class="row h-100">
-            <div class="d-flex flex-column p-3 col-2 bg-dark text-white">
+        <div class="row h-100 ">
+            <div class="d-flex flex-column p-3 col-2 text-white  bg-custom-dark">
                 <ul class="nav flex-column mb-auto">
                     <li class="nav-item">
-                        <a href="{{ route('dashboard') }}" class="nav-link text-white">Pagrindinis</a>
+                        <a href="{{ route('dashboard') }}" class="nav-link text-white"><i data-feather="home"></i> Pagrindinis</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('reservation') }}" class="nav-link text-white">Rezervacijos</a>
+                        <a href="{{ route('reservation') }}" class="nav-link text-white"><i data-feather="book-open"></i> Rezervacijos</a>
                     </li>
 
                     @auth
 
                         <li class="nav-item">
-                            <a href="{{ route('notes') }}" class="nav-link text-white">Užrašai</a>
+                            <a href="{{ route('notes') }}" class="nav-link text-white"><i data-feather="file-text"></i> Užrašai</a>
                         </li>
 
                         @if (auth()->user()->user_level_id === 1)
                             <li class="nav-item">
-                                <a href="{{ route('allUsers') }}" class="nav-link text-white">Visi vartotojai</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="{{ route('register') }}" class="nav-link text-white">Registruoti</a>
+                                <a href="{{ route('allUsers') }}" class="nav-link text-white"><i data-feather="user"></i> Visi vartotojai</a>
                             </li>
                         @endif
                     @endauth
                 </ul>
                 <hr>
             </div>
-            <div class="col-10 bg-warning">
+            <div class="col-10 mil-background">
                 @yield('content')
             </div>
         </div>

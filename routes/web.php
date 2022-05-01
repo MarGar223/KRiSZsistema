@@ -31,8 +31,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/pagrindinis', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-Route::get('/registracija', [RegisterController::class, 'index'])->name('register');
-Route::post('/registracija', [RegisterController::class, 'addUser']);
+Route::post('/registracija', [RegisterController::class, 'addUser'])->name('register');
 
 Route::get('/prisijungti', [LoginController::class, 'index'])->name('auth.login');
 Route::post('/prisijungti', [LoginController::class, 'loginUser']);
@@ -61,7 +60,6 @@ Route::post('/usrasai/{note}/redaguoti', [NoteFormController::class, 'editNote']
 Route::get('/vartotojai', [UsersController::class, 'index'])->name('allUsers');
 Route::get('/vartotojai/filtras', [UserFilterController::class, 'index'])->name('filterUsers');
 
-Route::get('/vartotojai/{user:name}', [UsersController::class, 'editUserView']);
 Route::post('/vartotojai/{user:name}', [UsersController::class, 'editUser'])->name('editUser');
 Route::get('/vartotojai/{user}/trinti', [UsersController::class, 'deleteUser'])->name('deleteUser');
 

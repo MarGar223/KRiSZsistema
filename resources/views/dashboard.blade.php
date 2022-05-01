@@ -5,7 +5,7 @@
         @auth
             <div class="row">
                 <div class="col-6">
-                    <p class="text-center pt-4 fs-3">Mano rezervacijos</p>
+                    <p class="text-center pt-4 fs-3 text-white">Mano rezervacijos</p>
                     @auth
                     @if ($reservations->count())
                         @foreach ($reservations as $reservation)
@@ -267,9 +267,9 @@
                         @endif
                     @endauth
                 </div>
-                <div class="col-6 bg-success">
+                <div class="col-6">
                     <div>
-                        <p class="text-center pt-4 fs-3">Mano užrašai</p>
+                        <p class="text-center pt-4 fs-3 text-white">Mano užrašai</p>
                         @auth
                         @if($notes->count())
                             @foreach ($notes as $note)
