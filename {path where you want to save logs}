@@ -45,3 +45,55 @@
 [12708] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
 [12708] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="12708" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
 
+[328] Log opened at 2022-04-28 05:38:02.009240
+[328] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[328] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[328] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="328" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[13024] Log opened at 2022-04-28 05:38:53.992575
+[13024] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[13024] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[13024] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="13024" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[13024] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[13024] Log closed at 2022-04-28 05:38:55.008252
+
+[12588] Log opened at 2022-04-28 05:39:01.114886
+[12588] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[12588] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[12588] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="12588" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[12588] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[12588] Log closed at 2022-04-28 05:39:04.254777
+
+[5116] Log opened at 2022-04-29 06:08:47.233792
+[5116] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[5116] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[5116] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="5116" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[4788] Log opened at 2022-04-29 07:01:00.790838
+[4788] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[4788] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[4788] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="4788" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[16048] Log opened at 2022-05-02 09:53:16.332271
+[16048] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[16048] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[16048] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="16048" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[8304] Log opened at 2022-05-02 09:54:48.900257
+[8304] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[8304] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[8304] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="8304" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[22240] Log opened at 2022-05-02 09:55:19.924971
+[22240] [Step Debug] INFO: Connecting to configured address/port: 127.0.0.1:9001.
+[22240] [Step Debug] INFO: Connected to debugging client: 127.0.0.1:9001 (through xdebug.client_host/xdebug.client_port). :-)
+[22240] [Step Debug] -> <init xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" fileuri="file:///C:/Users/mariu/OneDrive/Desktop/bakis/KRiSZ/artisan" language="PHP" xdebug:language_version="8.1.4" protocol_version="1.0" appid="22240" idekey="VSCODE"><engine version="3.1.4"><![CDATA[Xdebug]]></engine><author><![CDATA[Derick Rethans]]></author><url><![CDATA[https://xdebug.org]]></url><copyright><![CDATA[Copyright (c) 2002-2022 by Derick Rethans]]></copyright></init>
+
+[22240] [Step Debug] -> <response xmlns="urn:debugger_protocol_v1" xmlns:xdebug="https://xdebug.org/dbgp/xdebug" status="stopping" reason="ok"></response>
+
+[22240] Log closed at 2022-05-02 09:55:22.299756
+

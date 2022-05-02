@@ -93,3 +93,17 @@ color: #000;
     color: white !important;
 }
 
+.home-page{
+    /* background-color: rgba(255, 255, 255, 0.5); */
+    background: red !important;
+    /* opacity: 0.5; */
+
+}
+
+.bg-secondary {
+    --bs-bg-opacity: 0.2 !important;
+  }
+
+  .text-justify{
+      text-align: justify;
+  }

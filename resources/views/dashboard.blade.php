@@ -394,10 +394,10 @@
 
         @guest
             <div class="container py-4">
-                <div class="p-5 mb-4 bg-light rounded-3">
-                    <div class="container-fluid py-5">
+                <div class="p-5 mb-4 rounded-3 home-page bg-secondary">
+                    <div class="container-fluid py-5 text-white" >
                         <h1 class="display-5 fw-bold">Sveiki atvykę!</h1>
-                        <p class="col-md-8 fs-4">Jūs įsijungėte Kovinio rengimo ir sporto zonų rezervacijos sistemą, trumpiau -
+                        <p class="col-md-8 fs-4 text-justify">Jūs įsijungėte Kovinio rengimo ir sporto zonų rezervacijos sistemą, trumpiau -
                             <span class="fw-bold">KRiSZ</span>. Ši sistema skirta palengvinti zonų rezervacijas, kad jų
                             išnaudojimas būtų kuo efektyvesnis!
                         </p>
@@ -409,15 +409,15 @@
 
                 <div class="row align-items-md-stretch">
                     <div class="col-md-6">
-                        <div class="h-100 p-5 text-white bg-dark rounded-3">
+                        <div class="h-100 p-5 text-white bg-secondary rounded-3">
                             <h2>Naujienos</h2>
-                            <p> KRiSZ sistema yra tobulinama kiekvieną dieną. Apie visas pastabas, pastebėjimus ar patobulinimus
+                            <p class="text-justify"> KRiSZ sistema yra tobulinama kiekvieną dieną. Apie visas pastabas, pastebėjimus ar patobulinimus
                                 praneškite sistemos adminsitratoriui.</p>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="h-100 p-5 bg-light border rounded-3">
-                            <h2>Naujausia rezervacija</h2>
+                        <div class="h-100 p-5 bg-secondary rounded-3">
+                            <h2 class="text-white">Naujausia rezervacija</h2>
                             @if ($reservation)
                                 <p>
                                 <div class="card my-4 shadow">
