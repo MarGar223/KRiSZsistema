@@ -1,5 +1,4 @@
 @extends('index')
-
 @section('content')
     <div class="container-fluid">
         <div class="d-flex justify-content-center">
@@ -50,10 +49,8 @@
 
             </div>
         </div>
-
-
     </div>
     <script>
-        $('#status').delay(5000).fadeOut('slow');
+
     </script>
 @endsection

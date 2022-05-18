@@ -6,6 +6,18 @@
             Visi vartotojai
         </p>
         <div class="d-flex flex-column justify-content-center p-4 mt-3">
+            @if ($errors->any())
+            <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                Registracijoje įvyko klaida
+            </div>
+        @endif
+
+            @if (session()->has('success'))
+            <div class="bg-success text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                {{ session()->get('success') }}
+            </div>
+            @endif
+
             <div class="col-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
                 aria-controls="collapseExample">
                 <button class="btn btn-outline-light" data-bs-trigger="hover" data-bs-placement="bottom"
@@ -26,7 +38,7 @@
                                                     class="text-danger">*</span></label>
                                             <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą"
                                                 pattern="^[a-zA-Z ]*$" value="{{ old('name') }}"
-                                                class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
+                                                class="form-control shadow-sm @error('name') border border-danger text-danger @enderror"  autocomplete="off">
 
                                             @error('name')
                                                 <div class="fs-6 text-danger">
@@ -42,7 +54,7 @@
                                             <input type="text" name="surname" id="surname"
                                                 placeholder="Įveskite vartotojo pavardę" pattern="^[a-zA-Z ]*$"
                                                 value="{{ old('surname') }}"
-                                                class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
+                                                class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror"  autocomplete="off">
 
                                             @error('surname')
                                                 <div class="fs-6 text-danger">
@@ -59,7 +71,7 @@
                                                     class="text-danger">*</span></label>
                                             <input type="text" name="role" id="role"
                                                 placeholder="Įveskite vartotojo pareigas" value="{{ old('role') }}"
-                                                class="form-control shadow-sm @error('role') border border-danger text-danger @enderror">
+                                                class="form-control shadow-sm @error('role') border border-danger text-danger @enderror"  autocomplete="off">
 
                                             @error('role')
                                                 <div class="fs-6 text-danger">
@@ -74,11 +86,11 @@
                                             <input type="email" name="email" id="email"
                                                 placeholder="Įveskite vartotojo el. pašto adresą"
                                                 value="{{ old('email') }}"
-                                                class="form-control shadow-sm @error('email') border border-danger text-danger @enderror">
+                                                class="form-control shadow-sm @error('email') border border-danger text-danger @enderror"  autocomplete="off">
 
                                             @error('email')
                                                 <div class="fs-6 text-danger">
-                                                    <span>Laukas paliktas tuščias arba šis el. pašto adresas jau
+                                                    <span>Laukas paliktas tuščias arba <br> šis el. pašto adresas jau
                                                         užregistruotas</span>
                                                 </div>
                                             @enderror

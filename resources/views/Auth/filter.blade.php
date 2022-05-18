@@ -31,7 +31,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="name" id="name" placeholder="Įveskite vartotojo vardą"
                                                     pattern="^[a-zA-Z ]*$" value="{{ old('name') }}"
-                                                    class="form-control shadow-sm @error('name') border border-danger text-danger @enderror">
+                                                    class="form-control shadow-sm @error('name') border border-danger text-danger @enderror"  autocomplete="off">
 
                                                 @error('name')
                                                     <div class="fs-6 text-danger">
@@ -47,7 +47,7 @@
                                                 <input type="text" name="surname" id="surname"
                                                     placeholder="Įveskite vartotojo pavardę" pattern="^[a-zA-Z ]*$"
                                                     value="{{ old('surname') }}"
-                                                    class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror">
+                                                    class="form-control shadow-sm @error('surname') border border-danger text-danger @enderror"  autocomplete="off">
 
                                                 @error('surname')
                                                     <div class="fs-6 text-danger">
@@ -64,7 +64,7 @@
                                                         class="text-danger">*</span></label>
                                                 <input type="text" name="role" id="role"
                                                     placeholder="Įveskite vartotojo pareigas" value="{{ old('role') }}"
-                                                    class="form-control shadow-sm @error('role') border border-danger text-danger @enderror">
+                                                    class="form-control shadow-sm @error('role') border border-danger text-danger @enderror"  autocomplete="off">
 
                                                 @error('role')
                                                     <div class="fs-6 text-danger">
@@ -79,7 +79,7 @@
                                                 <input type="email" name="email" id="email"
                                                     placeholder="Įveskite vartotojo el. pašto adresą"
                                                     value="{{ old('email') }}"
-                                                    class="form-control shadow-sm @error('email') border border-danger text-danger @enderror">
+                                                    class="form-control shadow-sm @error('email') border border-danger text-danger @enderror"  autocomplete="off">
 
                                                 @error('email')
                                                     <div class="fs-6 text-danger">

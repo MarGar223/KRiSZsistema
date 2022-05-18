@@ -7,9 +7,6 @@ use App\Models\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Symfony\Component\Mailer\Test\Constraint\EmailCount;
-
-use function PHPUnit\Framework\throwException;
 
 class RegisterController extends Controller
 {
@@ -41,6 +38,8 @@ class RegisterController extends Controller
                 'confirmed'],
                 'level' => 'required'
             ]);
+
+
                 User::create([
                 'name' => $request->name,
                 'surname' => $request->surname,
@@ -50,7 +49,7 @@ class RegisterController extends Controller
                 'user_level_id' => $request->level
             ]);
 
-            return redirect()->route('allUsers');
+            return redirect()->route('allUsers')->with('success','Vartotojas sėkmingai sukurtas');
 
     }
 }

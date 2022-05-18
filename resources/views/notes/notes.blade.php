@@ -21,7 +21,7 @@
                                 <div>
                                     <label for="title" class="form-label">Užrašo pavadinimas</label>
                                     <input name="title" id="title" value="{{ old('title') }}"
-                                        class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
+                                        class="form-control shadow-sm @error('title') border border-danger text-danger @enderror"  autocomplete="off">
                                     @error('title')
                                         <div class="px-2 text-red-500 text-sm">
                                             <span>Lauką privaloma užpildyti</span>
@@ -31,7 +31,7 @@
                                 <div>
                                     <label for="body">Turinys</label>
                                     <textarea type="text" name="body" id="body" value="{{ old('body') }}"
-                                        class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror" rows="8" cols="50"></textarea>
+                                        class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror" rows="8" cols="50"  autocomplete="off"></textarea>
                                     @error('body')
                                         <div class="px-2 text-red-500 text-sm">
                                             <span>Lauką privaloma užpildyti</span>

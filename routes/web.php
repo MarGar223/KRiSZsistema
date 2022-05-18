@@ -12,8 +12,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ReservationFilterController;
 use App\Http\Controllers\NoteFilterController;
 use App\Http\Controllers\UserFilterController;
-
-
+use App\Models\Reservation;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,10 +71,11 @@ Route::post('/usrasai/{note}/redaguotiispagrindinio', [NoteFormController::class
 
 
 
-Route::get('/test', [ReservationController::class, 'reservations'])->name('testMap');
+// Route::get('/test', [ReservationController::class, 'ajaxTest']);
+Route::resource('/test', ReservationController::class);
+Route::post('/test/post', [ReservationController::class, 'addAjax']);
 
-Route::resource('reservations', ReservationController::class);
-Route::post('/test', [ReservationController::class, 'testStore']);
+
 
 // Route::get('/test/show', [CalendarController::class, 'showReservations'])->name('calshow');
 

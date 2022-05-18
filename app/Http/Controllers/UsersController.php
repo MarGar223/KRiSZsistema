@@ -52,7 +52,7 @@ class UsersController extends Controller
                 'name' => 'required|string|max:255',
                 'surname' => 'required|string|max:255',
                 'role' => 'required|string|max:255',
-                'email' => ['required','email','unique:users,email'],
+                'email' => ['required','email'],
                 'password' => [ Password::min(8)
                 ->mixedCase()
                 ->numbers()

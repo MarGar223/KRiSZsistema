@@ -6,6 +6,25 @@
 
 
         <div class="d-flex flex-column justify-content-center p-4 mt-3">
+            @if ($errors->any())
+            <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                Rezervuojant įvyko klaida
+            </div>
+
+            @endif
+
+            @if (session('status') )
+                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @if (session()->has('success'))
+            <div class="bg-success text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                {{ session()->get('success') }}
+            </div>
+            @endif
+
             <div class="d-flex inline-flex justify-content-start">
                 <form action="{{ route('reservation') }}" method="GET">
                     <button type="submit" class="btn btn-outline-light" data-bs-trigger="hover" data-bs-placement="bottom"
@@ -33,7 +52,7 @@
 
                                     <label for="zone" class="form-label">Zona</label>
                                     <select name="zone" id="zone"
-                                        class="form-select shadow-sm @error('zone') border border-danger @enderror">
+                                        class="form-select shadow-sm @error('zone') border border-danger @enderror"  autocomplete="off">
                                         <option value="{{ old('zone') }}" id="zone_id" selected>Pasirinkti zoną</option>
                                         @foreach ($zones as $zone)
                                             <option value="{{ $zone->id }}" id="zone_id">{{ $zone->name }}</option>
@@ -50,7 +69,7 @@
                                     <label for="date" class="form-label">Data</label>
                                     <input type="text" name="date_when" id="date_when" value="{{ old('date_when') }}"
                                         class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
-                                        placeholder="Pasirinkite datą">
+                                        placeholder="Pasirinkite datą"  autocomplete="off">
                                     @error('date_when')
                                         <div class="fs-6 text-danger">
                                             <span>Lauką privaloma užpildyti</span>
@@ -62,7 +81,7 @@
                                     <label for="start_time" class="form-label">Laikas nuo</label>
                                     <input name="start_time" id="start_time" value="{{ old('start_time') }}"
                                         class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
-                                        placeholder="Pasirinkite laiką">
+                                        placeholder="Pasirinkite laiką"  autocomplete="off">
                                     @error('start_time')
                                         <div class="fs-6 text-danger">
                                             <span>Lauką privaloma užpildyti</span>
@@ -74,7 +93,7 @@
                                     <label for="end_time" class="form-label">Laikas iki</label>
                                     <input name="end_time" id="end_time" value="{{ old('end_time') }}"
                                         class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
-                                        placeholder="Pasirinkite laiką">
+                                        placeholder="Pasirinkite laiką"  autocomplete="off">
                                     @error('end_time')
                                         <div class="fs-6 text-danger">
                                             <span>Lauką privaloma užpildyti</span>
@@ -87,7 +106,7 @@
                                     <label for="people_count" class="form-label">Žmonių skaičius</label>
                                     <input type="number" name="people_count" id="people_count"
                                         value="{{ old('people_count') }}"
-                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
+                                        class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror"  autocomplete="off" min="1">
                                     @error('people_count')
                                         <div class="fs-6 text-danger">
                                             <span>Lauką privaloma užpildyti</span>
@@ -108,7 +127,7 @@
             </div>
 
             @if (session('status'))
-                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle" id='status'>
+                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
                     {{ session('status') }}
                 </div>
             @endif
@@ -290,8 +309,6 @@
                 @if ($reservations->count())
                     <tbody>
                         @foreach ($reservations as $reservation)
-                            {{-- <tr class="text-center filterDiv {{ $reservation->zone->name }} {{ $reservation->user->name }}"
-                                id="{{ $reservation->user->id }}"> --}}
                             <tr class="text-center align-middle">
 
                                 <td>{{ $reservation->updated_at->diffForHumans() }} <br> <span
@@ -373,16 +390,16 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
-                                                            trinimas</h5>
+                                                            redagavimas</h5>
                                                         <button type="button" class="btn-close"
                                                             data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="mb-3">
-                                                            <label for="zone" class="form-label">Zona</label>
-                                                            <select name="zone" id="zone{{ $reservation->id }}"
+                                                            <label for="zoneMod" class="form-label">Zona</label>
+                                                            <select name="zoneMod" id="zone{{ $reservation->id }}"
                                                                 value="{{ $reservation->name }}"
-                                                                class="form-select  shadow-sm @error('zone') border border-danger text-danger @enderror">
+                                                                class="form-select  shadow-sm @error('zoneMod') border border-danger text-danger @enderror">
                                                                 <option value="{{ $reservation->zone_id }}" id="zone_id"
                                                                     selected>{{ $reservation->zone->name }}
                                                                 </option>
@@ -395,7 +412,7 @@
                                                                     @endif
                                                                 @endforeach
                                                             </select>
-                                                            @error('zone')
+                                                            @error('zoneMod')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
@@ -404,12 +421,12 @@
 
                                                         <div class="mb-3">
                                                             <label for="date" class="form-label">Data</label>
-                                                            <input type="text" name="date_when"
+                                                            <input type="text" name="date_whenMod"
                                                                 id="date_when{{ $reservation->id }}"
                                                                 value="{{ $reservation->date_when }}"
-                                                                class="form-control shadow-sm @error('date_when') border border-danger text-danger @enderror datepicker"
-                                                                placeholder="Pasirinkite datą">
-                                                            @error('date_when')
+                                                                class="form-control shadow-sm @error('date_whenMod') border border-danger text-danger @enderror datepicker"
+                                                                placeholder="Pasirinkite datą" autocomplete="off">
+                                                            @error('date_whenMod')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
@@ -417,14 +434,14 @@
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label for="start_time" class="form-label">Laikas
+                                                            <label for="start_timeMod" class="form-label">Laikas
                                                                 nuo</label>
-                                                            <input name="start_time"
+                                                            <input name="start_timeMod"
                                                                 id="start_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->start_time }}"
-                                                                class="form-control shadow-sm @error('start_time') border border-danger text-danger @enderror timepicker"
-                                                                placeholder="Pasirinkite laiką">
-                                                            @error('start_time')
+                                                                class="form-control shadow-sm @error('start_timeMod') border border-danger text-danger @enderror timepicker"
+                                                                placeholder="Pasirinkite laiką" autocomplete="off">
+                                                            @error('start_timeMod')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
@@ -432,12 +449,12 @@
                                                         </div>
 
                                                         <div class="mb-3">
-                                                            <label for="end_time" class="form-label">laikas iki</label>
-                                                            <input name="end_time" id="end_time{{ $reservation->id }}"
+                                                            <label for="end_timeMod" class="form-label">Laikas iki</label>
+                                                            <input name="end_timeMod" id="end_time{{ $reservation->id }}"
                                                                 value="{{ $reservation->end_time }}"
-                                                                class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror timepicker"
-                                                                placeholder="Pasirinkite laiką">
-                                                            @error('end_time')
+                                                                class="form-control shadow-sm @error('end_timeMod') border border-danger text-danger @enderror timepicker"
+                                                                placeholder="Pasirinkite laiką" autocomplete="off">
+                                                            @error('end_timeMod')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
@@ -446,13 +463,13 @@
 
                                                         <div class="mb-3">
 
-                                                            <label for="people_count" class="form-label">Žmonių
+                                                            <label for="people_countMod" class="form-label">Žmonių
                                                                 skaičius</label>
-                                                            <input type="number" name="people_count"
+                                                            <input type="number" name="people_countMod"
                                                                 id="people_count{{ $reservation->id }}"
                                                                 value="{{ $reservation->people_count }}"
-                                                                class="form-control shadow-sm @error('end_time') border border-danger text-danger @enderror">
-                                                            @error('people_count')
+                                                                class="form-control shadow-sm @error('people_countMod') border border-danger text-danger @enderror" autocomplete="off" min="1">
+                                                            @error('people_countMod')
                                                                 <div class="fs-6 text-danger">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
