@@ -12,7 +12,7 @@ class RegisterController extends Controller
 {
     public function __construct(Request $request)
     {
-            $this->middleware('auth');
+            $this->middleware('CheckIfAdmin');
     }
     public function index()
     {
