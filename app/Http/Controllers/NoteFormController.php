@@ -29,7 +29,7 @@ class NoteFormController extends Controller
             'body' => $request->body
         ]);
 
-        return redirect()->route('notes');
+        return back()->with('success', 'Užrašas sėkmingai sukurtas');
     }
 
     public function showNote(Note $note)
@@ -41,15 +41,21 @@ class NoteFormController extends Controller
 
     public function editNote(Request $request, Note $note)
     {
+
         $this->validate($request, [
-            'title' => 'required',
-            'body' => 'required'
+            'titleMod' => 'required',
+            'bodyMod' => 'required'
         ]);
-        $request->user()->notes()->where('id', $note->id)->update([
-            'title' => $request->title,
-            'body' => $request->body,
-        ]);
-        return redirect()->route('notes');
+        if(($request->titleMod != $note->title) || ($request->bodyMod != $note->body)){
+            $request->user()->notes()->where('id', $note->id)->update([
+                'title' => $request->titleMod,
+                'body' => $request->bodyMod,
+            ]);
+            return back()->with('success', 'Užrašas redaguotas sėkmingai');
+        } else {
+            return back();
+        }
+
     }
 
     public function deleteNote(Request $request, Note $note)
@@ -57,7 +63,7 @@ class NoteFormController extends Controller
 
         $request->user()->notes()->where('id', $note->id)->delete();
 
-        return redirect()->route('notes');
+        return back()->with('success', 'Užrašas ištrintas');
     }
 
     public function editNoteFromDashboard(Request $request, Note $note)
@@ -66,11 +72,16 @@ class NoteFormController extends Controller
             'title' => 'required',
             'body' => 'required'
         ]);
-        $request->user()->notes()->where('id', $note->id)->update([
-            'title' => $request->title,
-            'body' => $request->body,
-        ]);
-        return back();
+        if(($request->title != $note->title) || ($request->body != $note->body)){
+            $request->user()->notes()->where('id', $note->id)->update([
+                'title' => $request->title,
+                'body' => $request->body,
+            ]);
+            return back()->with('success', 'Užrašas redaguotas sėkmingai');
+        } else {
+            return back();
+        }
+
     }
 
     public function deleteNoteFromDashboard(Request $request, Note $note)
@@ -78,6 +89,6 @@ class NoteFormController extends Controller
 
         $request->user()->notes()->where('id', $note->id)->delete();
 
-        return back();
+        return back()->with('success', 'Užrašas ištrintas');
     }
 }

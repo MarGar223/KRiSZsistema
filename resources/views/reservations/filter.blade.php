@@ -126,11 +126,6 @@
                 @endauth
             </div>
 
-            @if (session('status'))
-                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
-                    {{ session('status') }}
-                </div>
-            @endif
             <table class="table table-sm table-light table-hover p-4 mt-3 border-light fw-bold" id="myTable">
                 <thead>
                     <tr class="text-center align-middle table-orange">
@@ -499,7 +494,7 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="exampleModalLabel">Rezervacijos
-                                                    trinimas</h5>
+                                                    trynimas</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>

@@ -5,6 +5,24 @@
         <p class="fs-3 fw-bold text-center text-white mt-3">Visi užrašai</p>
 
         <div class="d-flex-column justify-content-center p-4 mt-3">
+            @if ($errors->any())
+            <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                Kuriant arba redaguojant užrašą įvyko klaida
+            </div>
+
+            @endif
+
+            @if (session('status') )
+                <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                    {{ session('status') }}
+                </div>
+            @endif
+
+            @if (session()->has('success'))
+            <div class="bg-success text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
+                {{ session()->get('success') }}
+            </div>
+            @endif
 
                 <div class="col-1" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false"
                     aria-controls="collapseExample"> <button class="btn btn-outline-light" data-bs-trigger="hover"
@@ -14,7 +32,7 @@
                 <div class="collapse rounded-3 mt-3" id="collapseExample">
 
                     <div class="card card-body rounded-3">
-                        <form action="{{ route('createNote') }}" method="POST" class="">
+                        <form action="{{ route('createNote') }}" method="POST">
                             @csrf
 
 
@@ -23,7 +41,7 @@
                                     <input name="title" id="title" value="{{ old('title') }}"
                                         class="form-control shadow-sm @error('title') border border-danger text-danger @enderror"  autocomplete="off">
                                     @error('title')
-                                        <div class="px-2 text-red-500 text-sm">
+                                        <div class="px-2 text-danger text-sm">
                                             <span>Lauką privaloma užpildyti</span>
                                         </div>
                                     @enderror
@@ -33,7 +51,7 @@
                                     <textarea type="text" name="body" id="body" value="{{ old('body') }}"
                                         class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror" rows="8" cols="50"  autocomplete="off"></textarea>
                                     @error('body')
-                                        <div class="px-2 text-red-500 text-sm">
+                                        <div class="px-2 text-danger text-sm">
                                             <span>Lauką privaloma užpildyti</span>
                                         </div>
                                     @enderror
@@ -175,7 +193,7 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Užrašo
-                                                        trinimas</h5>
+                                                        trynimas</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -207,28 +225,28 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Užrašo
-                                                        trinimas</h5>
+                                                        redagavimas</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div>
                                                         <label for="title" class="form-label">Užrašo pavadinimas</label>
-                                                        <input name="title" id="title{{ $note->id }}"
+                                                        <input name="titleMod" id="title{{ $note->id }}"
                                                             value="{{ $note->title }}"
-                                                            class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
-                                                        @error('title')
-                                                            <div class="px-2 text-red-500 text-sm">
+                                                            class="form-control shadow-sm @error('titleMod') border border-danger text-danger @enderror">
+                                                        @error('titleMod')
+                                                            <div class="px-2 text-danger text-sm">
                                                                 <span>Lauką privaloma užpildyti</span>
                                                             </div>
                                                         @enderror
                                                     </div>
                                                     <div>
                                                         <label for="body">Užrašas</label>
-                                                        <textarea type="text" name="body" id="body{{ $note->id }}"
-                                                            class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror">{{ $note->body }}</textarea>
-                                                        @error('body')
-                                                            <div class="px-2 text-red-500 text-sm">
+                                                        <textarea type="text" name="bodyMod" id="body{{ $note->id }}"
+                                                            class="form-control shadow-sm textareacustom text-break @error('bodyMod') border border-danger text-danger @enderror">{{ $note->body }}</textarea>
+                                                        @error('bodyMod')
+                                                            <div class="px-2 text-danger text-sm">
                                                                 <span>Lauką privaloma užpildyti</span>
                                                             </div>
                                                         @enderror

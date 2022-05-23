@@ -12,7 +12,11 @@ class UsersController extends Controller
 {
     public function __construct()
     {
-       $this->middleware('auth');
+
+            $this->middleware('CheckIfAdmin');
+
+
+
     }
 
     public function index(Request $request) {
@@ -29,57 +33,126 @@ class UsersController extends Controller
 
     public function editUser(Request $request, User $user){
 
-        if($request->input('password') == null){
 
-            $this->validate($request,[
-                'name' => 'required|string|max:255',
-                'surname' => 'required|string|max:255',
-                'role' => 'required|string|max:255',
-                'email' => ['required','email'],
-                'level' => 'required'
-            ]);
 
-            $user->update([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'role' => $request->role,
-                'email' => $request->email,
-                'user_level_id' => $request->level
+
+
+        if(($request->nameMod != $user->name) ||
+            ($request->surnameMod != $user->surname) ||
+            ($request->roleMod != $user->role) ||
+            ($request->emailMod != $user->email) ||
+            ($request->levelMod != $user->user_level_id)
+            )
+            {
+
+                if($request->passwordMod == null){
+
+                    $this->validate($request,[
+                        'nameMod' => 'required|string|max:255',
+                        'surnameMod' => 'required|string|max:255',
+                        'roleMod' => 'required|string|max:255',
+                        'emailMod' => ['required','email'],
+                        'levelMod' => 'required'
+                    ]);
+
+                    $user->update([
+                        'name' => $request->nameMod,
+                        'surname' => $request->surnameMod,
+                        'role' => $request->roleMod,
+                        'email' => $request->emailMod,
+                        'user_level_id' => $request->levelMod
+                        ]);
+
+                } else {
+
+                    $this->validate($request,[
+                        'nameMod' => 'required|string|max:255',
+                        'surnameMod' => 'required|string|max:255',
+                        'roleMod' => 'required|string|max:255',
+                        'emailMod' => ['required','email'],
+                        'passwordMod' => [ Password::min(8)
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols(),
+                        'required',
+                        'confirmed'],
+                        'levelMod' => 'required'
+                    ]);
+
+                    $user->update([
+                        'name' => $request->nameMod,
+                        'surname' => $request->surnameMod,
+                        'role' => $request->roleMod,
+                        'email' => $request->emailMod,
+                        'password' => Hash::make($request->passwordMod),
+                        'user_level_id' => $request->levelMod
+                        ]);
+
+
+                }
+                if($request->passwordMod != null){
+                    dd('aaa');
+                    $this->validate($request,[
+                        'nameMod' => 'required|string|max:255',
+                        'surnameMod' => 'required|string|max:255',
+                        'roleMod' => 'required|string|max:255',
+                        'emailMod' => ['required','email'],
+                        'passwordMod' => [ Password::min(8)
+                        ->mixedCase()
+                        ->numbers()
+                        ->symbols(),
+                        'required',
+                        'confirmed'],
+                        'levelMod' => 'required'
+                    ]);
+
+                    $user->update([
+                        'name' => $request->nameMod,
+                        'surname' => $request->surnameMod,
+                        'role' => $request->roleMod,
+                        'email' => $request->emailMod,
+                        'password' => Hash::make($request->passwordMod),
+                        'user_level_id' => $request->levelMod
+                        ]);
+                }
+                return back()->with('success', 'Vartotojas redaguotas sėkmingai');
+            } else if($request->passwordMod != null){
+
+                $this->validate($request,[
+                    'nameMod' => 'required|string|max:255',
+                    'surnameMod' => 'required|string|max:255',
+                    'roleMod' => 'required|string|max:255',
+                    'emailMod' => ['required','email'],
+                    'passwordMod' => [ Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+                    'required',
+                    'confirmed'],
+                    'levelMod' => 'required'
                 ]);
-        } else {
 
-            $this->validate($request,[
-                'name' => 'required|string|max:255',
-                'surname' => 'required|string|max:255',
-                'role' => 'required|string|max:255',
-                'email' => ['required','email'],
-                'password' => [ Password::min(8)
-                ->mixedCase()
-                ->numbers()
-                ->symbols(),
-                'required',
-                'confirmed'],
-                'level' => 'required'
-            ]);
+                $user->update([
+                    'name' => $request->nameMod,
+                    'surname' => $request->surnameMod,
+                    'role' => $request->roleMod,
+                    'email' => $request->emailMod,
+                    'password' => Hash::make($request->passwordMod),
+                    'user_level_id' => $request->levelMod
+                    ]);
+                    return back()->with('success', 'Vartotojas redaguotas sėkmingai');
+            }
+            return back();
 
-            $user->update([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'role' => $request->role,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'user_level_id' => $request->level
-                ]);
-        }
-        return redirect()->route('allUsers');
+
     }
 
-    public function deleteUser(Request $request, User $user){
+    public function deleteUser(User $user){
 
         if($user->user_level_id != 1){
             $user->delete();
         }
 
-        return redirect()->route('allUsers');
+        return back();
     }
 }

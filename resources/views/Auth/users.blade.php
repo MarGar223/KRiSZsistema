@@ -9,6 +9,7 @@
             @if ($errors->any())
             <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mb-2 align-middle">
                 Registracijoje įvyko klaida
+                {{$errors}}
             </div>
         @endif
 
@@ -365,14 +366,14 @@
                                                                             <label for="name"
                                                                                 class="form-label">Vardas<span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="text" name="name"
+                                                                            <input type="text" name="nameMod"
                                                                                 id="name{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo vardą"
                                                                                 value="{{ $user->name }}"
                                                                                 pattern="^^[a-zA-Z ]*$"
-                                                                                class="form-control shadow-sm @error('name' . $user->id) border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('nameMod' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('name' . $user->id)
+                                                                            @error('nameMod' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -384,14 +385,14 @@
                                                                             <label for="surname"
                                                                                 class="form-label">Pavardė<span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="text" name="surname"
+                                                                            <input type="text" name="surnameMod"
                                                                                 id="surname{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo pavardę"
                                                                                 value="{{ $user->surname }}"
                                                                                 pattern="^^[a-zA-Z ]*$"
-                                                                                class="form-control shadow-sm @error('surname' . $user->id) border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('surnameMod' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('surname' . $user->id)
+                                                                            @error('surnameMod' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -403,13 +404,13 @@
                                                                             <label for="role"
                                                                                 class="form-label">Pareigos<span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="text" name="role"
+                                                                            <input type="text" name="roleMod"
                                                                                 id="role{{ $user->id }}"
                                                                                 placeholder="Įveskite vartotojo pareigas"
                                                                                 value="{{ $user->role }}"
-                                                                                class="form-control shadow-sm @error('role' . $user->id) border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('roleMod' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('role' . $user->id)
+                                                                            @error('roleMod' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -420,13 +421,13 @@
                                                                             <label for="email" class="form-label">El.
                                                                                 paštas<span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="email" name="email"
+                                                                            <input type="email" name="emailMod"
                                                                                 id="email{{ $user->id }}"
                                                                                 placeholder="Įveskite el. pašto adresą"
                                                                                 value="{{ $user->email }}"
-                                                                                class="form-control shadow-sm @error('email' . $user->id) border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('emailMod' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('email' . $user->id)
+                                                                            @error('emailMod' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Laukas paliktas tuščias arba šis
                                                                                         el.
@@ -455,10 +456,10 @@
                                                                             <label for="password"
                                                                                 class="form-label">Slaptažodis<span
                                                                                     class="text-danger">*</span></label>
-                                                                            <input type="password" name="password"
+                                                                            <input type="password" name="passwordMod"
                                                                                 id="password{{ $user->id }}"
                                                                                 placeholder="Įveskite slaptažodį"
-                                                                                class="form-control shadow-sm @error('password' . $user->id) border border-danger text-danger @enderror"
+                                                                                class="form-control shadow-sm @error('passwordMod' . $user->id) border border-danger text-danger @enderror"
                                                                                 data-bs-toggle="popover"
                                                                                 data-bs-placement="right"
                                                                                 title="Slaptažodžio reikalavimai"
@@ -468,7 +469,7 @@
                                                                                                                         - Bent vienas skaičius,
                                                                                                                         - Bent vienas simbolis">
 
-                                                                            @error('password' . $user->id)
+                                                                            @error('passwordMod' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Laukas paliktas tuščias arba
                                                                                         neatitiko
@@ -484,12 +485,12 @@
                                                                                 slaptažodį<span
                                                                                     class="text-danger">*</span></label>
                                                                             <input type="password"
-                                                                                name="password_confirmation"
+                                                                                name="passwordMod_confirmation"
                                                                                 id="password_confirmation{{ $user->id }}"
                                                                                 placeholder="Pakartokite slaptažodį"
-                                                                                class="form-control shadow-sm @error('password_confirmation' . $user->id) border border-danger text-danger @enderror">
+                                                                                class="form-control shadow-sm @error('passwordMod_confirmation' . $user->id) border border-danger text-danger @enderror">
 
-                                                                            @error('password_confirmation' . $user->id)
+                                                                            @error('passwordMod_confirmation' . $user->id)
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Lauką privaloma užpildyti</span>
                                                                                 </div>
@@ -497,12 +498,12 @@
                                                                         </div>
 
                                                                         <div>
-                                                                            <label for="level"
+                                                                            <label for="levels"
                                                                                 class="form-label">Vartotojo
                                                                                 lygis<span
                                                                                     class="text-danger">*</span></label><br>
-                                                                            <select name="level"
-                                                                                class="form-select shadow-sm @error('level') border border-danger text-danger @enderror">
+                                                                            <select name="levelMod"
+                                                                                class="form-select shadow-sm @error('levelMod') border border-danger text-danger @enderror">
                                                                                 <option
                                                                                     value='{{ $user->userLevel->id }}'>
                                                                                     {{ $user->userLevel->name }}
@@ -517,7 +518,7 @@
                                                                                 @endforeach>
                                                                             </select>
 
-                                                                            @error('level')
+                                                                            @error('levelMod')
                                                                                 <div class="fs-6 text-danger">
                                                                                     <span>Privaloma pasirinkti lygį</span>
                                                                                 </div>

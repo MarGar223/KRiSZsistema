@@ -16,16 +16,15 @@ class CheckIfAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        dd($request->expectsJson());
-        if(!$request->input()){
-            return redirect()->route('dashboard');
-        }
 
-        if(auth()->user()->user_level_id === 1){
-            return $next($request);
-        } else {
-            return redirect()->route('dashboard');
+        if(auth()->user()){
+            if((auth()->user()->user_level_id === 1)){
+                return $next($request);
         }
+        } else if(!auth()->user()){
+                return redirect()->route('auth.login');
+        }
+        return redirect()->route('dashboard');
 
     }
 }

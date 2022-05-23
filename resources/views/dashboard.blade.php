@@ -4,6 +4,12 @@
     <div class="container">
         @auth
             <div class="row">
+                @if ($errors->any())
+                    <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mt-3 align-middle">
+                        Operacijoje įvyko klaida
+                    </div>
+                @endif
+
                 @if (session('status'))
                     <div class="bg-danger text-white text-center fs-6 rounded-pill p-3 mt-3 align-middle">
                         {{ session('status') }}
@@ -341,7 +347,7 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h5 class="modal-title" id="exampleModalLabel">Užrašo
-                                                            trinimas</h5>
+                                                            redagavimas</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
@@ -352,7 +358,7 @@
                                                                 value="{{ $note->title }}"
                                                                 class="form-control shadow-sm @error('title') border border-danger text-danger @enderror">
                                                             @error('title')
-                                                                <div class="px-2 text-red-500 text-sm">
+                                                                <div class="px-2 text-danger text-sm">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
                                                             @enderror
@@ -362,7 +368,7 @@
                                                             <textarea type="text" name="body" id="body{{ $note->id }}"
                                                                 class="form-control shadow-sm textareacustom text-break @error('body') border border-danger text-danger @enderror">{{ $note->body }}</textarea>
                                                             @error('body')
-                                                                <div class="px-2 text-red-500 text-sm">
+                                                                <div class="px-2 text-danger text-sm">
                                                                     <span>Lauką privaloma užpildyti</span>
                                                                 </div>
                                                             @enderror

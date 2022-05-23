@@ -7,14 +7,32 @@ use App\Models\Reservation;
 use Illuminate\Http\Request;
 use App\Models\Zone;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $date = date('Y-m-d');
+
         $zones = Zone::get();
         $user = auth()->user();
+
+        $time = Carbon::now()->toTimeString();
+        $date = Carbon::now()->toDateString();
+
+
+
+
+
+        $pastReservation = Reservation::where('date_when', '<=', $date)->where('end_time', '<=', $time)->get();
+
+
+        foreach ($pastReservation as $past) {
+            DB::table('reservations')->where('id', $past->id)->update(['old_reservation' => 1]);
+        }
+
+        $reservations = Reservation::orderBy('updated_at', 'desc')->where('old_reservation', 0)->get();
 
         $pastReservation = Reservation::where('date_when', '<', $date)->get();
         foreach ($pastReservation as $past) {

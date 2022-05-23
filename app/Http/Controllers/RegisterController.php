@@ -49,7 +49,7 @@ class RegisterController extends Controller
                 'user_level_id' => $request->level
             ]);
 
-            return redirect()->route('allUsers')->with('success','Vartotojas sėkmingai sukurtas');
+            return back()->with('success','Vartotojas sėkmingai sukurtas');
 
     }
 }
